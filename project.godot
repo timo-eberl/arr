@@ -15,6 +15,10 @@ run/main_scene="uid://u3cc6pte4xly"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://4q335xxs2p"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
