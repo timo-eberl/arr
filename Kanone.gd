@@ -1,14 +1,95 @@
-extends MeshInstance3D
-	
-func _process(delta):
-	var space_state = get_world_3d().direct_space_state
-	var cam = $"../../../Camera3D"
-	var mousepos = get_viewport().get_mouse_position()
+extends Node3D
 
-	var origin = cam.project_ray_origin(mousepos)
-	var end = origin + cam.project_ray_normal(mousepos) * 1000
-	var query = PhysicsRayQueryParameters3D.create(origin, end, 2)
+@export var bullet_scene: PackedScene
+@export var bullet_speed: float = 50.0
+@export var fire_rate: float = 0.25
+
+@export var ray_length: float = 1000.0
+@export var collision_mask: int = 2
+@export var camera_path: NodePath
+@export var ship_body_path: NodePath       # <-- NEU: RigidBody3D des Schiffs zuweisen
+
+@onready var cam: Camera3D = get_node(camera_path) as Camera3D
+@onready var left_muzzle: Marker3D = $Kanone2/Muzzle
+@onready var right_muzzle: Marker3D = $Kanone1/Muzzle
+@onready var ship_body: RigidBody3D = get_node(ship_body_path)   # <-- NEU
+
+var _cooldown: float = 0.0
+
+func _ready():
+	print("LEFT =", left_muzzle)
+	print("RIGHT =", right_muzzle)
+
+
+func _process(delta: float) -> void:
+	if _cooldown > 0.0:
+		_cooldown -= delta
+
+	if Input.is_action_pressed("shoot"):
+		fire()
+
+
+func fire() -> void:
+	if _cooldown > 0.0:
+		return
+	_cooldown = fire_rate
+
+	if bullet_scene == null:
+		push_warning("No cannon ball scene")
+		return
+
+	var use_right: bool = is_target_on_right_side()
+	var muzzle: Marker3D = right_muzzle if use_right else left_muzzle
+
+	var bullet := bullet_scene.instantiate() as RigidBody3D
+	get_tree().current_scene.add_child(bullet)
+
+	bullet.global_transform = muzzle.global_transform
+
+	var dir: Vector3 = -muzzle.global_transform.basis.z
+
+	# ---------- WICHTIG: Schiffstempo + Shot-Velocity ----------
+	var ship_vel: Vector3 = Vector3.ZERO
+	if ship_body:
+		ship_vel = ship_body.linear_velocity
+
+	bullet.linear_velocity = ship_vel + dir * bullet_speed
+	# ------------------------------------------------------------
+
+
+func is_target_on_right_side() -> bool:
+	if cam == null or get_viewport() == null:
+		var mouse_pos = get_viewport().get_mouse_position()
+		var viewport_size = get_viewport().get_visible_rect().size
+		return mouse_pos.x > viewport_size.x * 0.5
+
+	var space_state = get_world_3d().direct_space_state
+	var mouse_pos = get_viewport().get_mouse_position()
+
+	var origin: Vector3 = cam.project_ray_origin(mouse_pos)
+	var normal: Vector3 = cam.project_ray_normal(mouse_pos)
+	var end: Vector3 = origin + normal * ray_length
+
+	var query := PhysicsRayQueryParameters3D.create(origin, end, collision_mask)
 	query.collide_with_areas = true
 
-	var result = space_state.intersect_ray(query)
-	result
+	var result: Dictionary = space_state.intersect_ray(query)
+
+	var target_pos: Vector3 = end
+	if result.has("position"):
+		target_pos = result["position"]
+
+	var left_pos: Vector3 = left_muzzle.global_transform.origin
+	var right_pos: Vector3 = right_muzzle.global_transform.origin
+	var center: Vector3 = (left_pos + right_pos) * 0.5
+
+	var right_dir: Vector3 = (right_pos - left_pos)
+	if right_dir.length() < 0.001:
+		return true
+	right_dir = right_dir.normalized()
+
+	var to_target: Vector3 = (target_pos - center)
+
+	var dot: float = right_dir.dot(to_target)
+
+	return dot > 0.0

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3ilar5mc8mj1"]
+
+[ext_resource type="Script" path="res://src/cannon.gd" id="1_i10un"]
+[ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="2_23j6s"]
+
+[node name="Cannon" type="Node3D"]
+script = ExtResource("1_i10un")
+bullet_scene = ExtResource("2_23j6s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="Muzzle" type="Marker3D" parent="."]
