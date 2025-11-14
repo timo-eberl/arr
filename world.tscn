@@ -219,11 +219,17 @@ mesh = SubResource("CapsuleMesh_gv5m4")
 transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -108.193375, -6.079632, 35.868454)
 mesh = SubResource("CapsuleMesh_gv5m4")
 
-[node name="Ship" type="Node3D" parent="."]
+[node name="Ship" type="StaticBody3D" parent="."]
 script = ExtResource("2_fj7yv")
 
-[node name="SchiffExport" parent="Ship" instance=ExtResource("4_036b0")]
+[node name="RigidBody3D" type="RigidBody3D" parent="Ship"]
+
+[node name="SchiffExport" parent="Ship/RigidBody3D" instance=ExtResource("4_036b0")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, 0, 0)
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Ship"]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody3D")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.8249832, -0.5158138, 0.23095201, 0.04803238, 0.47116536, 0.88073605, -0.56311256, -0.7154993, 0.41347927, 8.95622, 33.827164, 14.303774)
@@ -239,4 +245,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.329552, 0)
 material_override = SubResource("StandardMaterial3D_dwbse")
 mesh = SubResource("PlaneMesh_pkg7o")
 
-[editable path="Ship/SchiffExport"]
+[editable path="Ship/RigidBody3D/SchiffExport"]
