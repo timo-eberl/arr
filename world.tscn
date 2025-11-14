@@ -1,8 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=15 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
-[ext_resource type="Script" path="res://src/ship.gd" id="2_fj7yv"]
-[ext_resource type="Script" path="res://src/water.gd" id="2_tlwt5"]
+[ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="4_036b0"]
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
 
@@ -275,8 +275,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.329552, 0)
 material_override = SubResource("StandardMaterial3D_dwbse")
 mesh = SubResource("PlaneMesh_pkg7o")
 
-[editable path="RigidBody3D/SchiffExport"]
-
 [node name="Minimap" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -304,3 +302,5 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 174.39096, 0)
+
+[editable path="RigidBody3D/SchiffExport"]
