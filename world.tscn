@@ -223,7 +223,7 @@ mesh = SubResource("CapsuleMesh_gv5m4")
 script = ExtResource("2_fj7yv")
 
 [node name="SchiffExport" parent="Ship" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, 0, 0)
+transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.830965, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.8249832, -0.5158138, 0.23095201, 0.04803238, 0.47116536, 0.88073605, -0.56311256, -0.7154993, 0.41347927, 8.95622, 33.827164, 14.303774)
