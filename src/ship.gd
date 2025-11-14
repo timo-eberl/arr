@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 	var speedinput = Input.get_axis("Gasgeben", "Brenmsen");
 	
 	winkel += lenkinput * _delta * (speed / 10.0);
-	speed += speedinput * _delta;
+	speed += speedinput * _delta * 40.0;
 	
 	global_transform.origin += -global_transform.basis.z * speed * _delta;
 	
