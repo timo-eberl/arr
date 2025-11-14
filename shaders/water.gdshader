@@ -13,6 +13,8 @@ uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, r
 uniform vec4 metallic_texture_channel;
 uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
 
+uniform sampler2D foam_noise : filter_linear_mipmap, repeat_enable;
+
 uniform float specular : hint_range(0.0, 1.0, 0.01);
 uniform float metallic : hint_range(0.0, 1.0, 0.01);
 
@@ -24,6 +26,8 @@ uniform vec3 uv2_offset;
 uniform float time_ms;
 
 varying vec3 vertex_world;
+
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 
 float height(vec2 xz) {
 	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0)
@@ -79,4 +83,20 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 	ALPHA *= albedo.a * albedo_tex.a;
+
+	float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
+	depth = depth * 2.0 - 1.0;
+	vec4 upos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth, 1.0);
+	vec3 pixel_position = upos.xyz / upos.w;
+	vec3 pixel_pos_world = (INV_VIEW_MATRIX * vec4(pixel_position, 1.0)).xyz;
+
+	float t = clamp(distance(pixel_pos_world, vertex_world) * 0.1, 0.0, 1.0);
+	ALBEDO = mix(ALBEDO + 0.2, ALBEDO, t);
+	//ALBEDO = vec3(t);
+	ALPHA = mix(0.5, 1.0, t);
+	
+	t += texture(foam_noise, vertex_world.xz * 0.1).x * 0.1;
+	if (t < 0.1) {
+		ALBEDO = vec3(1.0);
+	}
 }
