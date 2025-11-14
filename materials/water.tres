@@ -1,15 +1,21 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://crg4khkalappj"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://crg4khkalappj"]
 
 [ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_6gfwt"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6gfwt"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4lgl7"]
+noise = SubResource("FastNoiseLite_6gfwt")
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_6gfwt")
-shader_parameter/albedo = Color(0.18, 0.42599994, 1, 0.654902)
+shader_parameter/albedo = Color(0.0684, 0.16187997, 0.38, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.0
 shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/foam_noise = SubResource("NoiseTexture2D_4lgl7")
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
