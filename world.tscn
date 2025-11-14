@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=22 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://Kanone.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
+[ext_resource type="PackedScene" uid="uid://ddxl3y1ygux51" path="res://treasure/gold.tscn" id="8_gbfbk"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(300, 300)
@@ -17,6 +18,15 @@ subdivide_depth = 256
 size = Vector3(300, 1, 300)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gv5m4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pkg7o"]
+size = Vector3(3.2790527, 2.0118408, 10.192383)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gbfbk"]
+size = Vector3(0.34899902, 2.6000671, 10.192383)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ioo17"]
+size = Vector3(3.2790527, 2.0118408, 0.4580078)
 
 [sub_resource type="BoxMesh" id="BoxMesh_036b0"]
 
@@ -29,6 +39,9 @@ sky_material = SubResource("PanoramaSkyMaterial_036b0")
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
 sky = SubResource("Sky_aqk2v")
+tonemap_mode = 3
+tonemap_exposure = 0.7
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwbse"]
 albedo_color = Color(0.29, 0.18579334, 0.066700004, 1)
@@ -268,6 +281,31 @@ angular_spring_z/enabled = true
 angular_spring_z/stiffness = 10.0
 angular_spring_z/damping = 1.0
 
+[node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5059204, 0)
+shape = SubResource("BoxShape3D_pkg7o")
+
+[node name="CollisionShape3DRight" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4650269, 0.80003357, 0)
+shape = SubResource("BoxShape3D_gbfbk")
+
+[node name="CollisionShape3DLeft" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.8, 0)
+shape = SubResource("BoxShape3D_gbfbk")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.847624, -2.3964844)
+shape = SubResource("BoxShape3D_ioo17")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.847624, 2.1922903)
+shape = SubResource("BoxShape3D_ioo17")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="RigidBody3D"]
+remote_path = NodePath("../VaultArea")
+
 [node name="Ship" type="StaticBody3D" parent="."]
 script = ExtResource("2_fj7yv")
 
@@ -305,6 +343,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
+metadata/_edit_use_anchors_ = true
 
 [node name="PanelContainer" type="PanelContainer" parent="Minimap"]
 layout_mode = 2
@@ -324,5 +363,169 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 174.39096, 0)
+
+[node name="Treasure" type="Node3D" parent="."]
+
+[node name="Gold" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, 0)
+
+[node name="Gold2" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, -0.48567915)
+
+[node name="Gold3" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, -0.95987844)
+
+[node name="Gold4" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, -1.46543)
+
+[node name="Gold5" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, -1.8880818)
+
+[node name="Gold6" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.683935, 0.53093195)
+
+[node name="Gold7" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, 0)
+
+[node name="Gold8" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, -0.48567915)
+
+[node name="Gold9" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, -0.95987844)
+
+[node name="Gold10" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, -1.46543)
+
+[node name="Gold11" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, -1.8880818)
+
+[node name="Gold12" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 3.683935, 0.53093195)
+
+[node name="Gold13" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, 0)
+
+[node name="Gold14" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, -0.48567915)
+
+[node name="Gold15" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, -0.95987844)
+
+[node name="Gold16" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, -1.46543)
+
+[node name="Gold17" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, -1.8880818)
+
+[node name="Gold18" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 3.683935, 0.53093195)
+
+[node name="Gold19" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, 0)
+
+[node name="Gold20" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, -0.48567915)
+
+[node name="Gold21" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, -0.95987844)
+
+[node name="Gold22" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, -1.46543)
+
+[node name="Gold23" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, -1.8880818)
+
+[node name="Gold24" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2253428, 0.53093195)
+
+[node name="Gold25" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, 0)
+
+[node name="Gold26" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, -0.48567915)
+
+[node name="Gold27" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, -0.95987844)
+
+[node name="Gold28" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, -1.46543)
+
+[node name="Gold29" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, -1.8880818)
+
+[node name="Gold30" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.2253428, 0.53093195)
+
+[node name="Gold31" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, 0)
+
+[node name="Gold32" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, -0.48567915)
+
+[node name="Gold33" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, -0.95987844)
+
+[node name="Gold34" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, -1.46543)
+
+[node name="Gold35" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, -1.8880818)
+
+[node name="Gold36" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.2253428, 0.53093195)
+
+[node name="Gold37" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, 0)
+
+[node name="Gold38" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, -0.48567915)
+
+[node name="Gold39" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, -0.95987844)
+
+[node name="Gold40" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, -1.46543)
+
+[node name="Gold41" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, -1.8880818)
+
+[node name="Gold42" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8379965, 0.53093195)
+
+[node name="Gold43" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, 0)
+
+[node name="Gold44" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, -0.48567915)
+
+[node name="Gold45" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, -0.95987844)
+
+[node name="Gold46" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, -1.46543)
+
+[node name="Gold47" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, -1.8880818)
+
+[node name="Gold48" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48542333, 4.8379965, 0.53093195)
+
+[node name="Gold49" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, 0)
+
+[node name="Gold50" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, -0.48567915)
+
+[node name="Gold51" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, -0.95987844)
+
+[node name="Gold52" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, -1.46543)
+
+[node name="Gold53" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, -1.8880818)
+
+[node name="Gold54" parent="Treasure" instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550226, 4.8379965, 0.53093195)
 
 [editable path="RigidBody3D/SchiffExport"]
