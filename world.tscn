@@ -1,16 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=18 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="4_036b0"]
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
+[ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://Kanone.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(300, 300)
 subdivide_width = 256
 subdivide_depth = 256
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dwbse"]
+size = Vector3(300, 1, 300)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gv5m4"]
 
@@ -52,6 +56,13 @@ material_override = ExtResource("1_fj7yv")
 mesh = SubResource("PlaneMesh_f3sb7")
 script = ExtResource("2_tlwt5")
 water_material = ExtResource("1_fj7yv")
+
+[node name="Area3D" type="Area3D" parent="Water"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water/Area3D"]
+shape = SubResource("BoxShape3D_dwbse")
 
 [node name="Obstacles" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
@@ -241,13 +252,16 @@ mesh = SubResource("CapsuleMesh_gv5m4")
 [node name="SchiffExport" parent="RigidBody3D" instance=ExtResource("4_036b0")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
 
+[node name="Kanone2" parent="RigidBody3D/SchiffExport" index="2"]
+script = ExtResource("4_dwbse")
+
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="RigidBody3D"]
 node_a = NodePath("../../Ship")
 node_b = NodePath("..")
 angular_limit_x/enabled = false
 angular_limit_z/enabled = false
 angular_spring_x/enabled = true
-angular_spring_x/stiffness = 10.0
+angular_spring_x/stiffness = 20.0
 angular_spring_x/damping = 1.0
 angular_spring_y/enabled = true
 angular_spring_z/enabled = true
