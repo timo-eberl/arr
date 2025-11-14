@@ -11,4 +11,4 @@ func _process(delta):
 	query.collide_with_areas = true
 
 	var result = space_state.intersect_ray(query)
-	print(result)
+	result
