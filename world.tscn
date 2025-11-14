@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="4_036b0"]
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://Kanone.gd" id="4_dwbse"]
-[ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="5_dwbse"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(300, 300)
@@ -261,12 +261,12 @@ node_b = NodePath("..")
 angular_limit_x/enabled = false
 angular_limit_z/enabled = false
 angular_spring_x/enabled = true
-angular_spring_x/stiffness = 20.0
-angular_spring_x/damping = 1.0
+angular_spring_x/stiffness = 60.0
+angular_spring_x/damping = 10.0
 angular_spring_y/enabled = true
 angular_spring_z/enabled = true
-angular_spring_z/stiffness = 10.0
-angular_spring_z/damping = 1.0
+angular_spring_z/stiffness = 60.0
+angular_spring_z/damping = 10.0
 
 [node name="Ship" type="StaticBody3D" parent="."]
 script = ExtResource("2_fj7yv")
