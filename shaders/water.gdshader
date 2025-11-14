@@ -21,16 +21,44 @@ uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
 
+uniform float time_ms;
+
+varying vec3 vertex_world;
+
+float height(vec2 xz) {
+	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0)
+		+ ((sin(-xz.x * 0.2 + time_ms * 0.001)) * 0.5);
+}
+
+vec3 calculateNormal(vec2 xz) {
+	// A small offset value to sample neighboring points
+	float epsilon = 0.05;
+
+	// Sample the height at the current point and at points slightly offset in x and z
+	float h = height(xz);
+	float hx = height(vec2(xz.x + epsilon, xz.y));
+	float hz = height(vec2(xz.x, xz.y + epsilon));
+
+	// Create two tangent vectors
+	vec3 tangentX = normalize(vec3(epsilon, hx - h, 0.0));
+	vec3 tangentZ = normalize(vec3(0.0, hz - h, epsilon));
+
+	// The normal is the cross product of the two tangents
+	vec3 normal = normalize(cross(tangentZ, tangentX));
+
+	return normal;
+}
+
 void vertex() {
-	vec3 vertex_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	
-	vertex_world.y += -abs(sin(vertex_world.z * 0.2 + TIME)) * 2.0;
-	
+	vertex_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+
+	vertex_world.y += height(vertex_world.xz);
+
 	VERTEX = (VIEW_MATRIX * vec4(vertex_world, 1.0)).xyz;
-	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	//NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
 	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
-	
+
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
 }
 
@@ -39,6 +67,9 @@ void fragment() {
 
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	NORMAL = calculateNormal(vertex_world.xz);
+	//ALBEDO = NORMAL;
+	NORMAL = normalize((VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 
 	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
 	METALLIC = metallic_tex * metallic;
