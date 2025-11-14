@@ -1,8 +1,8 @@
 extends MeshInstance3D
 	
-func _process(delta):
+func _process(_delta):
 	var space_state = get_world_3d().direct_space_state
-	var cam = $"../../../Camera3D"
+	var cam = $"../../../CameraLookAt/Camera3D"
 	var mousepos = get_viewport().get_mouse_position()
 
 	var origin = cam.project_ray_origin(mousepos)

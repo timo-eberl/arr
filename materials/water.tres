@@ -10,7 +10,7 @@ noise = SubResource("FastNoiseLite_6gfwt")
 [resource]
 render_priority = 0
 shader = ExtResource("1_6gfwt")
-shader_parameter/albedo = Color(0.0684, 0.16187997, 0.38, 1)
+shader_parameter/albedo = Color(0.07049999, 0.43005005, 0.47, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.0
