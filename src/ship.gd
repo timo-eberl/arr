@@ -1,6 +1,6 @@
 extends Node3D
-@export var winkel = 0.0;
-@export var speed = 0.0;
+@export var winkel = 0;
+@export var speed = 0;
 
 var schiffLaenge = 1;
 var Laenge = 1;
@@ -12,9 +12,7 @@ func height(xz: Vector2) -> float:
 
 func setShipLength() -> void:
 	if Laenge != schiffLaenge:
-		schiffLaenge = Laenge
-		
-		
+		schiffLaenge = Laenge;
 	pass
 
 
