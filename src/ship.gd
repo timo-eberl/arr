@@ -21,7 +21,10 @@ func _process(_delta: float) -> void:
 	var speedinput = Input.get_axis("Gasgeben", "Brenmsen");
 	
 	winkel += lenkinput * _delta * (speed / 10.0);
-	speed += speedinput * _delta;
+	speed += speedinput * _delta * 40.0;
+	
+
+	#$"../RigidBody3D".add_constant_force(transform.basis.x * lenkinput * _delta * 20.0, transform.basis.y * 2.0);
 	
 	global_transform.origin += -global_transform.basis.z * speed * _delta;
 	
@@ -31,7 +34,7 @@ func _process(_delta: float) -> void:
 	var normal = calculateNormal(global_2d)
 	
 	var basis = Basis()               # identity basis
-	basis.y = normal.normalized()     # set the UP direction
+	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
 	basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
 	basis.z = basis.x.cross(basis.y).normalized()
 
