@@ -2,13 +2,18 @@ class_name Ship
 extends Node3D
 @export var winkel = 0;
 @export var speed := 0.0;
+var kippen = 0;
 
 @export var speed_slow := 7.0
 @export var speed_fast := 16.0
 
+@export var sails : Array[Node3D]
+
 var speed_mode : SPEED_MODE
 
 enum SPEED_MODE { NO, SLOW, FAST }
+var target_sail_scale := 0.0
+var sail_scale := 0.2
 
 var schiffLaenge = 1;
 var Laenge = 1;
@@ -31,13 +36,21 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Gasgeben"):
 		if speed_mode == SPEED_MODE.NO:
 			speed_mode = SPEED_MODE.SLOW
+			target_sail_scale = 0.5
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.FAST
+			target_sail_scale = 1
 	if Input.is_action_just_pressed("Brenmsen"):
 		if speed_mode == SPEED_MODE.FAST:
 			speed_mode = SPEED_MODE.SLOW
+			target_sail_scale = 0.5
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.NO
+			target_sail_scale = 0.2
+	
+	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
+	for sail in sails:
+		sail.scale = Vector3(1,sail_scale,1)
 	
 	print(speed_mode)
 	
@@ -54,12 +67,18 @@ func _process(delta: float) -> void:
 	
 	var normal = calculateNormal(global_2d)
 	
-	var basis = Basis()               # identity basis
-	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
+	if abs(kippen) > 0:
+		kippen *= 0.95;
+	
+	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0 + kippen).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
 	basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
 	basis.z = basis.x.cross(basis.y).normalized()
 
 	global_transform = Transform3D(basis, position)
+
+func SetKippen(k: float):
+	kippen += k
+
 
 func calculateNormal(xz: Vector2) -> Vector3:
 	# A small offset value to sample neighboring points

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://m1tm3c0vjmhn"
-path="res://.godot/imported/SchiffExport.blend-11156ab4ee85691b9c23b0ac846d4bbe.scn"
+uid="uid://b1pmn55d2u5b"
+path="res://.godot/imported/pirateShip_applied.blend-17e9bfc8d3f78c3aa2e3735bfe3c9661.scn"
 
 [deps]
 
-source_file="res://Modelle/SchiffExport.blend"
-dest_files=["res://.godot/imported/SchiffExport.blend-11156ab4ee85691b9c23b0ac846d4bbe.scn"]
+source_file="res://Modelle/pirateShip_applied.blend"
+dest_files=["res://.godot/imported/pirateShip_applied.blend-17e9bfc8d3f78c3aa2e3735bfe3c9661.scn"]
 
 [params]
 
@@ -22,7 +22,7 @@ nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
-meshes/generate_lods=false
+meshes/generate_lods=true
 meshes/create_shadow_meshes=true
 meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
@@ -37,37 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"meshes": {
-"SchiffExport_Plane_002": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": false,
-"save_to_file/fallback_path": "res://Modelle/materials/sail2.tres",
-"save_to_file/path": "uid://cvu384gggxafa"
-},
-"SchiffExport_Plane_003": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": false,
-"save_to_file/fallback_path": "res://Modelle/materials/sail3.tres",
-"save_to_file/path": "uid://d2xbln8civ0kq"
-},
-"SchiffExport_Plane_004": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": false,
-"save_to_file/fallback_path": "res://Modelle/materials/sail.tres",
-"save_to_file/path": "uid://nxabwj7yuba5"
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true
