@@ -93,7 +93,9 @@ func _physics_process(delta: float) -> void:
 	self.apply_central_force(global_basis.z * sail_down * 15)
 
 	# experimental wind volume
-	ship_sound.volume_db = -60.0 + clampf(linear_velocity.length() / max_speed, 0.0, 1.0) * 30.0
+	var velocity_sound: float = clampf(linear_velocity.length() / max_speed, 0.0, 0.8)
+	ship_sound.volume_db = -60.0 + velocity_sound ** 4 * 60.0
+	#print(" VOLUME    ", sail_down)
 	if(!ship_sound.playing):
 		ship_sound.play()
 
