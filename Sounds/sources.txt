@@ -21,3 +21,5 @@ https://freesound.org/people/codefhd/sounds/465605/ CC0
 
 Wind:
 https://freesound.org/people/craigsmith/sounds/481144/ CC0
+
+menu-move/menu-select: sfxr
