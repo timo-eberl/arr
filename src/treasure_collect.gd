@@ -3,6 +3,7 @@ extends Area3D
 @onready var collected_treasure_parent : Node3D = $"../../CollectedTreasure"
 @onready var treasure_spawn : Marker3D = $"../TreasureSpawn"
 @onready var ship_body : RigidBody3D = $".."
+@onready var music_player: AudioStreamPlayer = $"../../MusicPlayer"
 
 var gold_sounds = ["res://Sounds/gold1.wav", "res://Sounds/gold2.wav", "res://Sounds/gold3.wav", "res://Sounds/gold4.wav"]
 
@@ -28,3 +29,9 @@ func _on_area_entered(area: Area3D) -> void:
 		gold_sound_player.play()
 		await gold_sound_player.finished
 		gold_sound_player.queue_free()
+		
+		# Very unfinished dynamic music based on collected treasure
+		var collected_treasure: int = collected_treasure_parent.get_child_count()
+		var stream: AudioStreamSynchronized = music_player.stream
+		var main_volume: float = stream.get_sync_stream_volume(0)
+		stream.set_sync_stream_volume(3, lerp(-96.0, main_volume, clampf(collected_treasure, 0.0, 50.0) / 50.0))
