@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://djmvuu3bc31c1"]
+
+[ext_resource type="Script" uid="uid://b0xh0q6h46pei" path="res://src/plank.gd" id="1_pkcor"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n00cy"]
+albedo_color = Color(0.21044463, 0.10686689, 0.037409205, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uw3nf"]
+material = SubResource("StandardMaterial3D_n00cy")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ljfbf"]
+size = Vector3(1, 0.05, 0.15)
+
+[node name="Plank" type="RigidBody3D"]
+script = ExtResource("1_pkcor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.05, 0, 0, 0, 0.15, 0, 0, 0)
+mesh = SubResource("BoxMesh_uw3nf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ljfbf")
