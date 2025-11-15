@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var bullet_scene: PackedScene
-@export var bullet_speed: float = 70.0
+@export var bullet_speed: float = 40.0
 @export var fire_rate: float = 0.3
 
 @export var ray_length: float = 1000.0
