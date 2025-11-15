@@ -182,11 +182,11 @@ void fragment() {
 	reflectionFactor = mix(1.0, reflectionFactor, 0.7);
 	ALBEDO += clamp(1. - waterDist*0.1, 0.0, 0.3);
 
-	ALBEDO += clamp(0., 1., pow(
+	ALBEDO += pow(
 		(visual_height(vertex_world.xz)
 		+gameplay_height(vertex_world.xz)*0.45
 		+texture(foam_noise, vertex_world.zx*0.01).x)*worldNormal.y*0.6,4.
-	));
+	);
 
 	float t = clamp(pow(waterDist * 0.5, 2.0), 0.0, 1.0);
 	ALBEDO = mix(ALBEDO + reflectionFactor, ALBEDO, t);
