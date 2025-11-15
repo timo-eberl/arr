@@ -15,7 +15,6 @@ https://freesound.org/people/bruno.auzet/sounds/529794/ CC0
 
 Explosion:
 https://freesound.org/people/Artninja/sounds/827962/ CC-BY
-MAYBE
-https://freesound.org/people/newagesoup/sounds/347310/ CC-BY
-https://freesound.org/people/Logicogonist/sounds/264031/ CC0
-https://freesound.org/people/florianreichelt/sounds/459973/ CC0
+
+Sail:
+https://freesound.org/people/codefhd/sounds/465605/ CC0
