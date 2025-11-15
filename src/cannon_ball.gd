@@ -49,6 +49,7 @@ func _physics_process(delta: float) -> void:
 		if water_height > self.global_position.y:
 			water.add_splash(global_position)
 			water.add_foam(global_position, 8.0)
+			self.linear_velocity *= 0.7
 			splash_spawned = true
 
 
