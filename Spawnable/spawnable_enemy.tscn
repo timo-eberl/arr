@@ -1,10 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://crhavc22gfhgg"]
+[gd_scene load_steps=6 format=4 uid="uid://crhavc22gfhgg"]
 
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="1_a2ych"]
 [ext_resource type="Script" uid="uid://dpeb0nphkfwxj" path="res://src/gegner.gd" id="1_c05d7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wse8f"]
 size = Vector3(5, 11.425995, 12.340088)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c05d7"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.615647, 0.08198663, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8qp5j"]
+resource_name = "Pfeil_Cube"
+_surfaces = [{
+"aabb": AABB(-1.3927194, -0.16062166, -1.3790135, 2.7854388, 0.33900002, 2.7854385),
+"attribute_data": PackedByteArray("AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8="),
+"format": 34359742487,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0A"),
+"material": SubResource("StandardMaterial3D_c05d7"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 64,
+"vertex_data": PackedByteArray("AAAAAIB2ETz3+B6/AACAP9GoNj4AAIA/vnYbP4B2ETyG9Bc/AAAAANGoNj4AAIC/vnYbP4B2ETyG9Bc/AAAAAAF6JL4AAIC/AAAAAIB2ETz3+B6/AACAPwF6JL4AAIA/oUSyP4B2ETy9BbQ/AAAAANGoNj4AAIC/AAAAAIB2ETyEg7C/AACAP9GoNj4AAIA/AAAAAIB2ETyEg7C/AACAPwF6JL4AAIA/oUSyP4B2ETy9BbQ/AAAAAAF6JL4AAIC/vnYbP4B2ETyG9Bc/AAAAANGoNj5SqOk+AAAAAIB2ETza4IY+AACAP9GoNj4AAIA/AAAAAIB2ETza4IY+AACAPwF6JL4AAIA/vnYbP4B2ETyG9Bc/AAAAAAF6JL5SqOk+AAAAAIB2ETzlNyY/AACAP9GoNj4AAIA/oUSyP4B2ETy9BbQ/AAAAANGoNj5SqOk+oUSyP4B2ETy9BbQ/AAAAAAF6JL5SqOk+AAAAAIB2ETzlNyY/AACAPwF6JL4AAIA/AAAAAIB2ETza4IY+AACAv9GoNj4AAIA/vnYbv4B2ETyG9Bc/AAAAANGoNj5SqOk+vnYbv4B2ETyG9Bc/AAAAAAF6JL5SqOk+AAAAAIB2ETza4IY+AACAvwF6JL4AAIA/oUSyv4B2ETy9BbQ/AAAAANGoNj5SqOk+AAAAAIB2ETzlNyY/AACAv9GoNj4AAIA/AAAAAIB2ETzlNyY/AACAvwF6JL4AAIA/oUSyv4B2ETy9BbQ/AAAAAAF6JL5SqOk+vnYbv4B2ETyG9Bc/AAAAANGoNj4AAIC/AAAAAIB2ETz3+B6/AACAv9GoNj4AAIA/AAAAAIB2ETz3+B6/AACAvwF6JL4AAIA/vnYbv4B2ETyG9Bc/AAAAAAF6JL4AAIC/AAAAAIB2ETyEg7C/AACAv9GoNj4AAIA/oUSyv4B2ETy9BbQ/AAAAANGoNj4AAIC/oUSyv4B2ETy9BbQ/AAAAAAF6JL4AAIC/AAAAAIB2ETyEg7C/AACAvwF6JL4AAIA/Gk+otv///z8aT6i2////PxpPqLb///8/Gk+otv///z8aT1ZJ////PxpPVkn///8/Gk9WSf///z8aT1ZJ////P1XJGs////8/Vckaz////z9VyRrP////P1XJGs////8/VcnkMP///z9VyeQw////P1XJ5DD///8/VcnkMP///z+ryQzm////P6vJDOb///8/q8kM5v///z+ryQzm////P6vJ8hn///8/q8nyGf///z+ryfIZ////P6vJ8hn///8/DWZTtv///z8NZlO2////Pw1mU7b///8/DWZTtv///z8NZqtJ////Pw1mq0n///8/DWarSf///z8NZqtJ////P1M2DOb///8/UzYM5v///z9TNgzm////P1M2DOb///8/UzbyGf///z9TNvIZ////P1M28hn///8/UzbyGf///z/xmVO2////P/GZU7b///8/8ZlTtv///z/xmVO2////P/GZq0n///8/8ZmrSf///z/xmatJ////P/GZq0n///8/5LCotv///z/ksKi2////P+SwqLb///8/5LCotv///z/ksFZJ////P+SwVkn///8/5LBWSf///z/ksFZJ////P6k2Gs////8/qTYaz////z+pNhrP////P6k2Gs////8/qTbkMP///z+pNuQw////P6k25DD///8/qTbkMP///z8=")
+}]
+blend_shape_mode = 0
 
 [node name="TestEnemy" type="RigidBody3D" groups=["enemy_ship"]]
 collision_layer = 2
@@ -28,5 +50,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16942215, 2.3343048, 0.435
 shape = SubResource("BoxShape3D_wse8f")
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
+
+[node name="Pfeil" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.4630628, 0)
+
+[node name="Cube" type="MeshInstance3D" parent="Pfeil"]
+transform = Transform3D(6.938398, 0, 0, 0, 6.938398, 0, 0, 0, 6.938398, 0, 0, 0)
+layers = 2
+mesh = SubResource("ArrayMesh_8qp5j")
+skeleton = NodePath("")
 
 [editable path="SchiffExport"]

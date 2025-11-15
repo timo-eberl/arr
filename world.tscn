@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=44 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -13,10 +13,10 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" path="res://enemy_spawner.gd" id="23_il2jm"]
+[ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
@@ -215,6 +215,28 @@ _data = {
 &"sail_animation_3": SubResource("Animation_wjb0r")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wukud"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(4.813075e-07, 0.48639572, 0.75980365, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_il2jm"]
+resource_name = "Pfeil_Cube"
+_surfaces = [{
+"aabb": AABB(-1.3927194, -0.16062166, -1.3790135, 2.7854388, 0.33900002, 2.7854385),
+"attribute_data": PackedByteArray("AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8="),
+"format": 34359742487,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0A"),
+"material": SubResource("StandardMaterial3D_wukud"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 64,
+"vertex_data": PackedByteArray("AAAAAIB2ETz3+B6/AACAP9GoNj4AAIA/vnYbP4B2ETyG9Bc/AAAAANGoNj4AAIC/vnYbP4B2ETyG9Bc/AAAAAAF6JL4AAIC/AAAAAIB2ETz3+B6/AACAPwF6JL4AAIA/oUSyP4B2ETy9BbQ/AAAAANGoNj4AAIC/AAAAAIB2ETyEg7C/AACAP9GoNj4AAIA/AAAAAIB2ETyEg7C/AACAPwF6JL4AAIA/oUSyP4B2ETy9BbQ/AAAAAAF6JL4AAIC/vnYbP4B2ETyG9Bc/AAAAANGoNj5SqOk+AAAAAIB2ETza4IY+AACAP9GoNj4AAIA/AAAAAIB2ETza4IY+AACAPwF6JL4AAIA/vnYbP4B2ETyG9Bc/AAAAAAF6JL5SqOk+AAAAAIB2ETzlNyY/AACAP9GoNj4AAIA/oUSyP4B2ETy9BbQ/AAAAANGoNj5SqOk+oUSyP4B2ETy9BbQ/AAAAAAF6JL5SqOk+AAAAAIB2ETzlNyY/AACAPwF6JL4AAIA/AAAAAIB2ETza4IY+AACAv9GoNj4AAIA/vnYbv4B2ETyG9Bc/AAAAANGoNj5SqOk+vnYbv4B2ETyG9Bc/AAAAAAF6JL5SqOk+AAAAAIB2ETza4IY+AACAvwF6JL4AAIA/oUSyv4B2ETy9BbQ/AAAAANGoNj5SqOk+AAAAAIB2ETzlNyY/AACAv9GoNj4AAIA/AAAAAIB2ETzlNyY/AACAvwF6JL4AAIA/oUSyv4B2ETy9BbQ/AAAAAAF6JL5SqOk+vnYbv4B2ETyG9Bc/AAAAANGoNj4AAIC/AAAAAIB2ETz3+B6/AACAv9GoNj4AAIA/AAAAAIB2ETz3+B6/AACAvwF6JL4AAIA/vnYbv4B2ETyG9Bc/AAAAAAF6JL4AAIC/AAAAAIB2ETyEg7C/AACAv9GoNj4AAIA/oUSyv4B2ETy9BbQ/AAAAANGoNj4AAIC/oUSyv4B2ETy9BbQ/AAAAAAF6JL4AAIC/AAAAAIB2ETyEg7C/AACAvwF6JL4AAIA/Gk+otv///z8aT6i2////PxpPqLb///8/Gk+otv///z8aT1ZJ////PxpPVkn///8/Gk9WSf///z8aT1ZJ////P1XJGs////8/Vckaz////z9VyRrP////P1XJGs////8/VcnkMP///z9VyeQw////P1XJ5DD///8/VcnkMP///z+ryQzm////P6vJDOb///8/q8kM5v///z+ryQzm////P6vJ8hn///8/q8nyGf///z+ryfIZ////P6vJ8hn///8/DWZTtv///z8NZlO2////Pw1mU7b///8/DWZTtv///z8NZqtJ////Pw1mq0n///8/DWarSf///z8NZqtJ////P1M2DOb///8/UzYM5v///z9TNgzm////P1M2DOb///8/UzbyGf///z9TNvIZ////P1M28hn///8/UzbyGf///z/xmVO2////P/GZU7b///8/8ZlTtv///z/xmVO2////P/GZq0n///8/8ZmrSf///z/xmatJ////P/GZq0n///8/5LCotv///z/ksKi2////P+SwqLb///8/5LCotv///z/ksFZJ////P+SwVkn///8/5LBWSf///z/ksFZJ////P6k2Gs////8/qTYaz////z+pNhrP////P6k2Gs////8/qTbkMP///z+pNuQw////P6k25DD///8/qTbkMP///z8=")
+}]
+blend_shape_mode = 0
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_036b0"]
 panorama = ExtResource("4_aqk2v")
 
@@ -257,6 +279,14 @@ stream_3/stream = ExtResource("27_bh8nc")
 stream_3/volume = -60.0
 stream_4/stream = ExtResource("28_jjr1n")
 stream_4/volume = -60.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il2jm"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.029399972, 0.53638667, 0.98, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_wjb0r"]
+material = SubResource("StandardMaterial3D_il2jm")
 
 [node name="World" type="Node3D"]
 
@@ -379,11 +409,21 @@ script = ExtResource("5_dwbse")
 transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 0, 0, 0)
 current = true
 
+[node name="Pfeil" type="Node3D" parent="RigidBody3D"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cube" type="MeshInstance3D" parent="RigidBody3D/Pfeil"]
+transform = Transform3D(6.938398, 0, 0, 0, 6.938398, 0, 0, 0, 6.938398, 0, 1.5174521, 0)
+layers = 2
+mesh = SubResource("ArrayMesh_il2jm")
+skeleton = NodePath("")
+
 [node name="CameraLookAt" type="Node3D" parent="."]
 transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraLookAt"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 61.835)
+cull_mask = 1048573
 fov = 40.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -415,11 +455,12 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Minimap/PanelContainer/SubViewportContainer"]
 handle_input_locally = false
+scaling_3d_scale = 2.0
 size = Vector2i(200, 200)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 174.39096, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 181.36992, -3.0505996e-07)
 
 [node name="CollectedTreasure" type="Node3D" parent="."]
 
@@ -1203,6 +1244,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.896175, 0, -199.25504)
 stream = SubResource("AudioStreamSynchronized_gggvi")
 volume_db = -12.0
 autoplay = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, -114.383, 10.069, 53.013)
+layers = 2
+mesh = SubResource("SphereMesh_wjb0r")
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
