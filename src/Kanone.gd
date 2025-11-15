@@ -13,6 +13,7 @@ extends Node3D
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
 @onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 @onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
+@onready var cannon_sound_player: RandomSoundPlayer = $"../../Ship/CannonSounds"
 
 var _cooldown: float = 0.0
 
@@ -86,6 +87,7 @@ func fire() -> void:
 
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
 
+	cannon_sound_player.play_sound()
 
 
 func is_target_on_right_side() -> bool:
