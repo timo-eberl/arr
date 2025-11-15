@@ -1165,6 +1165,7 @@ visible = false
 
 [node name="TestEnemy2" parent="." instance=ExtResource("9_70uel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.93544, 0.001897335, -25.1822)
+target_container_path = NodePath("../Targets")
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
 transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -118.78506, 2.3619688, 52.880516)
@@ -1194,27 +1195,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.034138, 0, -49.086514)
 script = ExtResource("23_il2jm")
 enemy_scene = ExtResource("9_70uel")
 spawn_points_path = NodePath("../Spawns")
+min_spawn_distance = 20.0
+target_container_path = NodePath("../Targets")
 
 [node name="Spawns" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27.148647)
 
 [node name="Spawn1" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.165472e-07, 0, 169.29431)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7.831609e-06, 0, 81.0443)
 
-[node name="Spawn2" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 103.15134, 0, 195.53479)
+[node name="Node3D" type="Node3D" parent="."]
 
-[node name="Spawn3" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 200.97827, 0, 21.38205)
+[node name="Spawn2" type="Marker3D" parent="Node3D"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 103.15134, 0, 222.68344)
 
-[node name="Spawn4" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 205.47083, 0, -118.53809)
+[node name="Spawn3" type="Marker3D" parent="Node3D"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 200.97827, 0, 48.530697)
 
-[node name="Spawn5" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.07016, 0, -230.99998)
+[node name="Spawn4" type="Marker3D" parent="Node3D"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 205.47083, 0, -91.38945)
 
-[node name="Spawn6" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.896175, 0, -226.40369)
+[node name="Spawn5" type="Marker3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.07016, 0, -203.85133)
+
+[node name="Spawn6" type="Marker3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.896175, 0, -199.25504)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 

@@ -2,7 +2,7 @@ extends Node3D
 
 @export var bullet_scene: PackedScene
 @export var bullet_speed: float = 40.0
-@export var fire_rate: float = 0.3
+@export var fire_rate: float = 1
 
 @export var ray_length: float = 1000.0
 @export var collision_mask: int = 2
@@ -56,9 +56,9 @@ func fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	if use_right:
-		$"../../Ship".SetKippen(.8)
+		$"../../Ship".SetKippen(.4)
 	else:
-		$"../../Ship".SetKippen(-.8)
+		$"../../Ship".SetKippen(-.4)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
