@@ -24,8 +24,15 @@ var _time_passed: float = 0.0
 # Wird von der Kanone gesetzt (Richtung, in die die Kugel fliegt)
 var shoot_direction: Vector3 = Vector3.FORWARD
 
+var explosion_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var splash_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var explosion_sounds = ["res://Sounds/explosion1.wav", "res://Sounds/explosion2.wav", "res://Sounds/explosion3.wav", "res://Sounds/explosion4.wav", "res://Sounds/explosion5.wav", "res://Sounds/explosion6.wav", "res://Sounds/explosion7.wav", "res://Sounds/explosion8.wav"]
+var splash_sounds = ["res://Sounds/splash1.wav", "res://Sounds/splash2.wav", "res://Sounds/splash3.wav", "res://Sounds/splash4.wav"]
 
 func _ready() -> void:
+	explosion_sound_player.stream = load(explosion_sounds.pick_random())
+	splash_sound_player.stream = load(splash_sounds.pick_random())
+
 	linear_damp = 0.0
 	angular_damp = 0.0
 	randomize()
@@ -53,6 +60,9 @@ func _physics_process(delta: float) -> void:
 			water.add_foam(global_position, 8.0)
 			self.linear_velocity *= 0.7
 			splash_spawned = true
+			splash_sound_player.position = self.global_position
+			splash_sound_player.play()
+
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
@@ -64,6 +74,8 @@ func _on_body_entered(body: Node) -> void:
 			-1.0,
 			enter_direction_alignment
 		)
+		explosion_sound_player.position = self.global_position
+		explosion_sound_player.play()
 
 
 
