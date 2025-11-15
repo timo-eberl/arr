@@ -52,8 +52,6 @@ func _process(delta: float) -> void:
 	for sail in sails:
 		sail.scale = Vector3(1,sail_scale,1)
 	
-	print(speed_mode)
-	
 	winkel += lenkinput * delta * (speed / 10.0);
 	speed = lerp(speed, -get_target_speed(), delta)
 	
