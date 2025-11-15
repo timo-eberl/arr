@@ -6,7 +6,7 @@ extends Node3D
 @onready var ship : Ship = $"../../Ship"
 
 func _ready() -> void:
-	while true
+	while true:
 		print(ship.speed)
 		var time_diff := remap(abs(ship.speed), 0.0, 17.0, time_diff_from, time_diff_to)
 		water.add_splash(self.global_position)
