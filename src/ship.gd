@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
 	var target_height := WaveHeight.height(global_2d)
 	var d : float = target_height - global_position.y
-	linear_velocity.y = d
+	linear_velocity.y = d * 20.0
 	
 	var lenkinput := Input.get_axis("RechtsLenken", "LinksLenken")
 	angular_velocity.y += lenkinput * 4 * delta
@@ -69,18 +69,23 @@ func _physics_process(delta: float) -> void:
 
 	var rotation_axis = current_up.cross(target_up)
 	var angle = current_up.angle_to(target_up)
-	var up_strength = 0.05
+	var up_strength = 0.24
 
 	if rotation_axis.length() > 0.0001:
 		angular_velocity += rotation_axis.normalized() * angle * up_strength
+		angular_velocity -= lenkinput * basis.z * 0.05
 	
 	var lenkWinkel = Vector3(linear_velocity.x, 0, linear_velocity.z).signed_angle_to(basis.z, Vector3.UP)
-	print(lenkWinkel)
 	
 	linear_velocity = linear_velocity.rotated(Vector3(0,1.0,0), lenkWinkel / 2.0)
 	
-	if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
-		self.apply_central_force(self.global_basis.z * 2000 * delta)
+	var speedInput := Input.get_axis("Brenmsen", "Gasgeben") 
+	sail_down += speedInput * 0.04
+	sail_down = clamp(sail_down, -.1, 1.0)
+	
+	
+	#if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
+	self.apply_central_force(global_basis.z * sail_down * 1.5)
 
 func calculateNormal(xz: Vector2) -> Vector3:
 	# A small offset value to sample neighboring points
