@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="4_036b0"]
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
-[ext_resource type="Script" path="res://src/Kanone.gd" id="4_dwbse"]
+[ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://src/Kanone.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="Script" uid="uid://c2jpj4f4qafxa" path="res://src/play_random_sound.gd" id="10_2o6r5"]
 [ext_resource type="AudioStream" uid="uid://b2vmqfrng7dea" path="res://Sounds/cannon1.wav" id="11_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
@@ -400,7 +400,7 @@ script = ExtResource("5_dwbse")
 
 [node name="CannonSounds" type="AudioStreamPlayer3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.431942, 0, 0)
-autoplay = true
+max_polyphony = 5
 script = ExtResource("10_2o6r5")
 sounds = Array[AudioStream]([ExtResource("11_cbp6q"), ExtResource("12_26xuy"), ExtResource("13_bc84e"), ExtResource("14_wukud"), ExtResource("15_il2jm"), ExtResource("16_wjb0r")])
 
