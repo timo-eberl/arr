@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=39 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -9,14 +9,13 @@
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
-[ext_resource type="Material" uid="uid://ds46abve12x5e" path="res://materials/sail.tres" id="6_bc84e"]
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" path="res://enemy_spawner.gd" id="23_il2jm"]
+[ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
@@ -294,18 +293,6 @@ transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
-
-[node name="WindDriver" parent="RigidBody3D/SchiffExport" index="7"]
-transform = Transform3D(9.033336, 0, 0, 0, 9.033336, 0, 0, 0, 9.033336, -0.36592558, 45.926785, 4.486027)
-
-[node name="Segel01" parent="RigidBody3D/SchiffExport" index="8"]
-material_override = ExtResource("6_bc84e")
-
-[node name="Segel02" parent="RigidBody3D/SchiffExport" index="10"]
-material_override = ExtResource("6_bc84e")
-
-[node name="Segel03" parent="RigidBody3D/SchiffExport" index="12"]
-material_override = ExtResource("6_bc84e")
 
 [node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
 
@@ -1128,7 +1115,10 @@ transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.851
 transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 50.57934, 0, 61.552956)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.400924, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -6.9961224, 0)
+
+[node name="Plane" parent="terrain_collapsed" index="0"]
+transform = Transform3D(500, 0, 0, 0, 50, 0, 0, 0, 500, 0, 8.83144, 0)
 
 [node name="Plane_001" parent="terrain_collapsed" index="1"]
 visible = false
@@ -1146,7 +1136,7 @@ visible = false
 visible = false
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -118.78506, 2.3619688, 52.880516)
+transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 3.2717075, 43.77764)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_2o6r5")
