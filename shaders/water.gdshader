@@ -25,6 +25,11 @@ uniform vec3 uv2_offset;
 
 uniform float time_ms;
 
+const int MAX_SPLASHES = 64; // Limit loops for performance
+uniform vec3 splash_positions[MAX_SPLASHES];
+uniform float splash_start_times[MAX_SPLASHES];
+uniform sampler2D splash_texture : source_color, filter_linear_mipmap, repeat_enable;
+
 varying vec3 vertex_world;
 
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
@@ -112,8 +117,52 @@ float visual_height(vec2 xz) {
 	return height;
 }
 
+float get_splash_height(vec2 vertex_pos) {
+	float h = 0.0;
+	float current_time = time_ms * 0.001; // Convert ms to seconds
+
+	for (int i = 0; i < MAX_SPLASHES; i++) {
+		vec3 pos = splash_positions[i];
+		float start_time = splash_start_times[i];
+		float time_diff = current_time - start_time;
+
+		// Optimization: If splash is too old or hasn't happened yet, skip
+		if (time_diff < 0.0 || time_diff > 2.0) continue; 
+
+		float dist = distance(vertex_pos, pos.xz);
+		
+		// Splash Shape Parameters
+		float frequency = 6.0;
+		float speed = 10.0;
+		float decay_dist = 0.4;
+		float decay_time = 1.0;
+		float fade_in_duration = 0.3; // <-- The duration of the fade-in in seconds
+
+		// The Wave Math
+		float wave = sin(dist * frequency - time_diff * speed);
+		
+		// Calculate base amplitude
+		float amplitude = 1.0 * exp(-dist * decay_dist) * exp(-time_diff * decay_time);
+		
+		// === THIS IS THE NEW PART ===
+		// Create a fade-in factor that goes from 0.0 to 1.0 over fade_in_duration
+		float fade_in_factor = smoothstep(0.0, fade_in_duration, time_diff);
+		amplitude *= fade_in_factor;
+		// ===========================
+		
+		// Create a central "crater" immediately after impact
+		if (time_diff < 0.2) {
+			float crater = smoothstep(0.5, 0.0, dist) * smoothstep(0.2, 0.0, time_diff);
+			h -= crater * 0.5; 
+		}
+
+		h += wave * amplitude * 0.3;
+	}
+	return h;
+}
+
 float height(vec2 xz) {
-	return gameplay_height(xz) + visual_height(xz);
+	return gameplay_height(xz) + visual_height(xz) + get_splash_height(xz);
 }
 
 vec3 calculateNormal(vec2 xz) {
@@ -147,6 +196,57 @@ void vertex() {
 //	TANGENT = normalize((VIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
 
 //	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+float get_splash_foam(vec2 world_pos_xz) {
+	float foam = 0.0;
+	float current_time = time_ms * 0.001;
+
+	for (int i = 0; i < MAX_SPLASHES; i++) {
+		float start_time = splash_start_times[i];
+		float time_diff = current_time - start_time;
+
+		// --- Foam Lifetime ---
+		float life_time = 3.0; // How long foam is visible in seconds
+		if (time_diff < 0.0 || time_diff > life_time) continue;
+
+		// --- Sizing and Animation ---
+		// The splash will grow from start_size to end_size over its lifetime
+		float start_size = 4.0;  // Size in world units when it starts
+		float end_size = 8.0;    // Size in world units when it fades out
+		
+		// Interpolate the size based on how old the splash is
+		float current_size = mix(start_size, end_size, time_diff / life_time);
+
+		// --- UV Calculation ---
+		// 1. Get the vector from the splash center to the current pixel's world position.
+		vec2 relative_pos = world_pos_xz - splash_positions[i].xz;
+		
+		// 2. Map this world-space vector to the texture's UV coordinates ([0,1] space).
+		// Dividing by 'current_size' makes the texture scale up over time.
+		// We add 0.5 to center the texture at the splash origin.
+		vec2 uv = relative_pos / current_size + 0.5;
+
+		float foam_from_tex = 0.0;
+		// 3. Only sample the texture if the calculated UVs are within the valid [0,1] range.
+		if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {
+			// We're inside the splash area, sample the texture (using .r for grayscale)
+			foam_from_tex = texture(splash_texture, uv).r;
+		}
+
+		// --- Intensity and Fades ---
+		float fade_in = smoothstep(0.0, 0.4, time_diff);
+		// Start fading out in the last 60% of the lifetime for a smooth exit
+		float fade_out = smoothstep(life_time, life_time * 0.4, time_diff);
+
+		float intensity = fade_in * fade_out;
+		
+		float dist_from_center = distance(uv, vec2(0.5));
+		float edge_mask = smoothstep(0.5, 0.3, dist_from_center);
+
+		foam += foam_from_tex * intensity * edge_mask;
+	}
+	return clamp(foam, 0.0, 1.0);
 }
 
 void fragment() {
@@ -195,4 +295,8 @@ void fragment() {
 	//ALBEDO = vec3(t);
 	ALPHA = mix(0.1, 1.0, t) * reflectionFactor;
 	ALPHA -= pow(clamp(1.-waterDist*0.05, 0.0, 1.0)*distorsion.y,2.0);
+	
+	// splash foam
+	float splash_foam_intensity = get_splash_foam(vertex_world.xz);
+	ALBEDO += vec3(splash_foam_intensity * 0.8); // Add white foam (0.8 is brightness)
 }

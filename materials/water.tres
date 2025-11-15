@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://crg4khkalappj"]
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://crg4khkalappj"]
 
 [ext_resource type="Shader" uid="uid://cxro026dwu1vm" path="res://shaders/water.gdshader" id="1_6gfwt"]
 
@@ -8,6 +8,15 @@
 noise = SubResource("FastNoiseLite_6gfwt")
 seamless = true
 invert = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4lgl7"]
+noise_type = 2
+fractal_octaves = 3
+fractal_lacunarity = 2.08
+fractal_gain = 0.64
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6tan1"]
+noise = SubResource("FastNoiseLite_4lgl7")
 
 [resource]
 render_priority = 0
@@ -25,3 +34,6 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/time_ms = 0.0
+shader_parameter/splash_positions = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/splash_start_times = PackedFloat32Array(0, 0, 0, 0)
+shader_parameter/splash_texture = SubResource("NoiseTexture2D_6tan1")
