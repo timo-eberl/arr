@@ -5,13 +5,13 @@ extends RigidBody3D
 
 @export var plank_scene: PackedScene
 
-@export var enter_plank_count: int = 7
+@export var enter_plank_count: int = 5
 @export var enter_plank_impulse: float = 10.0
 @export_range(0.0, 1.0) var enter_direction_alignment: float = 0.4
 
 @export_range(0.0, 1.0) var enter_speed_factor: float = 0.5
 
-@export var exit_plank_count: int = 15
+@export var exit_plank_count: int = 10
 @export var exit_plank_impulse: float = 10
 @export_range(0.0, 1.0) var exit_direction_alignment: float = 0.4
 
