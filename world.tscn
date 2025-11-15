@@ -50,7 +50,7 @@ tonemap_exposure = 0.7
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwbse"]
-albedo_color = Color(0.29, 0.18579334, 0.066700004, 1)
+albedo_color = Color(0.38, 0.32528, 0.1748, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pkg7o"]
 size = Vector2(300, 300)
@@ -355,7 +355,7 @@ transform = Transform3D(1, 0, 0, 0, 0.4217797, 0.90669835, 0, -0.90669835, 0.421
 environment = SubResource("Environment_036b0")
 
 [node name="Ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.329552, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.7460766, 0)
 material_override = SubResource("StandardMaterial3D_dwbse")
 mesh = SubResource("PlaneMesh_pkg7o")
 

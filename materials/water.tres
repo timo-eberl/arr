@@ -12,7 +12,7 @@ invert = true
 [resource]
 render_priority = 0
 shader = ExtResource("1_6gfwt")
-shader_parameter/albedo = Color(0.03858149, 0.27597556, 0.38105404, 0.80784315)
+shader_parameter/albedo = Color(0.08099999, 0.5323501, 0.54, 0.80784315)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
 shader_parameter/roughness = 0.0
