@@ -387,6 +387,9 @@ shape = SubResource("BoxShape3D_wse8f")
 
 [node name="Ship" type="StaticBody3D" parent="." node_paths=PackedStringArray("sails")]
 script = ExtResource("2_fj7yv")
+cam_dist_idle = 30
+cam_dist_slow = 60
+cam_dist_fast = 90
 sails = [NodePath("../RigidBody3D/SchiffExport/Segel01"), NodePath("../RigidBody3D/SchiffExport/Segel02"), NodePath("../RigidBody3D/SchiffExport/Segel03")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ship"]

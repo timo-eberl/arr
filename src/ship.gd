@@ -7,6 +7,12 @@ var kippen = 0;
 @export var speed_slow := 7.0
 @export var speed_fast := 16.0
 
+@export var cam_dist_idle := 40
+@export var cam_dist_slow := 50
+@export var cam_dist_fast := 70
+
+@onready var camera_controller : CameraController = $CameraTarget
+
 @export var sails : Array[Node3D]
 
 var speed_mode : SPEED_MODE
@@ -30,6 +36,9 @@ func get_target_speed() -> float:
 		return speed_fast
 	return 0.0
 
+func _ready() -> void:
+	camera_controller.target_cam_distance = cam_dist_idle
+
 func _process(delta: float) -> void:
 	var lenkinput = Input.get_axis("LinksLenken", "RechtsLenken")
 	
@@ -37,16 +46,20 @@ func _process(delta: float) -> void:
 		if speed_mode == SPEED_MODE.NO:
 			speed_mode = SPEED_MODE.SLOW
 			target_sail_scale = 0.5
+			camera_controller.target_cam_distance = cam_dist_slow
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.FAST
 			target_sail_scale = 1
+			camera_controller.target_cam_distance = cam_dist_fast
 	if Input.is_action_just_pressed("Brenmsen"):
 		if speed_mode == SPEED_MODE.FAST:
 			speed_mode = SPEED_MODE.SLOW
 			target_sail_scale = 0.5
+			camera_controller.target_cam_distance = cam_dist_slow
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.NO
 			target_sail_scale = 0.2
+			camera_controller.target_cam_distance = cam_dist_idle
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
 	for sail in sails:
