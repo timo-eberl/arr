@@ -52,11 +52,10 @@ func _physics_process(delta: float) -> void:
 
 	var rotation_axis = current_up.cross(target_up)
 	var angle = current_up.angle_to(target_up)
-	var up_strength = 0.05
+	var up_strength = 0.25
 
 	if rotation_axis.length() > 0.0001:
-		angular_velocity += rotation_axis.normalized() * angle * up_strength
-
+		angular_velocity = rotation_axis.normalized() * angle
 
 	if is_waiting:
 		wait_timer -= delta

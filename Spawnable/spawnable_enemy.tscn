@@ -11,7 +11,7 @@ collision_layer = 2
 axis_lock_linear_y = true
 gravity_scale = 0.0
 linear_damp = 5.0
-angular_damp = 1.0
+angular_damp = 25.0
 script = ExtResource("1_c05d7")
 
 [node name="SchiffExport" parent="." instance=ExtResource("1_a2ych")]

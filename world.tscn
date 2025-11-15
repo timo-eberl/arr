@@ -1184,10 +1184,6 @@ visible = false
 [node name="SchiffVorne" parent="terrain_collapsed" index="5"]
 visible = false
 
-[node name="TestEnemy2" parent="." instance=ExtResource("9_70uel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.93544, 0.001897335, -25.1822)
-target_container_path = NodePath("../Targets")
-
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
 transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -118.78506, 2.3619688, 52.880516)
 
