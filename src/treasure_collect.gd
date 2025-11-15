@@ -27,11 +27,13 @@ func _on_area_entered(area: Area3D) -> void:
 		gold_sound_player.position = global_position
 		gold_sound_player.volume_db = -24
 		gold_sound_player.play()
-		await gold_sound_player.finished
-		gold_sound_player.queue_free()
 		
 		# Very unfinished dynamic music based on collected treasure
 		var collected_treasure: int = collected_treasure_parent.get_child_count()
 		var stream: AudioStreamSynchronized = music_player.stream
 		var main_volume: float = stream.get_sync_stream_volume(0)
 		stream.set_sync_stream_volume(3, lerp(-96.0, main_volume, clampf(collected_treasure, 0.0, 50.0) / 50.0))
+
+		# Free sound player once it finished playing
+		await gold_sound_player.finished
+		gold_sound_player.queue_free()
