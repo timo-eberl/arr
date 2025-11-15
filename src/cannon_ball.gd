@@ -32,6 +32,8 @@ var splash_sounds = ["res://Sounds/splash1.wav", "res://Sounds/splash2.wav", "re
 func _ready() -> void:
 	explosion_sound_player.stream = load(explosion_sounds.pick_random())
 	splash_sound_player.stream = load(splash_sounds.pick_random())
+	get_tree().root.add_child(explosion_sound_player)
+	get_tree().root.add_child(splash_sound_player)
 
 	linear_damp = 0.0
 	angular_damp = 0.0

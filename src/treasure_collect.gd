@@ -4,6 +4,8 @@ extends Area3D
 @onready var treasure_spawn : Marker3D = $"../TreasureSpawn"
 @onready var ship_body : RigidBody3D = $".."
 
+var gold_sounds = ["res://Sounds/gold1.wav", "res://Sounds/gold2.wav", "res://Sounds/gold3.wav", "res://Sounds/gold4.wav"]
+
 func _on_area_entered(area: Area3D) -> void:
 	if area is CollectableTreasure:
 		#var rb := RigidBody3D.new()
@@ -17,3 +19,12 @@ func _on_area_entered(area: Area3D) -> void:
 		collected.global_position = treasure_spawn.global_position
 		
 		area.queue_free()
+
+		var gold_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+		gold_sound_player.stream = load(gold_sounds.pick_random())
+		get_tree().root.add_child(gold_sound_player)
+		gold_sound_player.position = global_position
+		gold_sound_player.volume_db = -24
+		gold_sound_player.play()
+		await gold_sound_player.finished
+		gold_sound_player.queue_free()
