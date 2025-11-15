@@ -78,18 +78,19 @@ func _physics_process(delta: float) -> void:
 	if rotation_axis.length() > 0.0001:
 		angular_velocity += rotation_axis.normalized() * angle * up_strength
 		angular_velocity -= lenkinput * basis.z * 0.05
+		angular_velocity += -abs(lenkinput) * basis.x * 0.02
 	
 	var lenkWinkel = Vector3(linear_velocity.x, 0, linear_velocity.z).signed_angle_to(basis.z, Vector3.UP)
 	
 	linear_velocity = linear_velocity.rotated(Vector3(0,1.0,0), lenkWinkel / 2.0)
 	
 	var speedInput := Input.get_axis("Brenmsen", "Gasgeben") 
-	sail_down += speedInput * 0.04
+	sail_down += speedInput * 0.01
 	sail_down = clamp(sail_down, -.1, 1.0)
-	
+	#print(sail_down)
 	
 	#if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
-	self.apply_central_force(global_basis.z * sail_down * 1.5)
+	self.apply_central_force(global_basis.z * sail_down * 15)
 
 	# experimental wind volume
 	ship_sound.volume_db = -60.0 + clampf(linear_velocity.length() / max_speed, 0.0, 1.0) * 30.0

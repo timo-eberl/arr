@@ -276,6 +276,7 @@ shape = SubResource("BoxShape3D_dwbse")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["ship"]]
 gravity_scale = 0.0
+linear_damp = 1.0
 angular_damp = 2.0
 script = ExtResource("2_fj7yv")
 cam_dist_idle = 30
