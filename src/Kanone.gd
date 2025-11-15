@@ -87,7 +87,7 @@ func fire() -> void:
 
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
 
-	cannon_sound_player.play_sound()
+	#cannon_sound_player.play_sound()
 
 
 func is_target_on_right_side() -> bool:
