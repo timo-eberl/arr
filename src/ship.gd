@@ -21,6 +21,8 @@ var sail_scale := 0.2
 var schiffLaenge = 1;
 var Laenge = 1;
 
+var ship_sound: AudioStreamPlayer = AudioStreamPlayer.new()
+
 func setShipLength() -> void:
 	if Laenge != schiffLaenge:
 		schiffLaenge = Laenge;
@@ -28,6 +30,8 @@ func setShipLength() -> void:
 
 func _ready() -> void:
 	camera_controller.target_cam_distance = cam_dist_idle
+	ship_sound.stream = load("res://Sounds/wind_in_sail.wav")
+	self.add_child(ship_sound)
 
 func _process(delta: float) -> void:
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
@@ -81,6 +85,11 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
 		self.apply_central_force(self.global_basis.z * 2000 * delta)
+
+	# experimental wind volume
+	ship_sound.volume_db = -60.0 + clampf(linear_velocity.length() / max_speed, 0.0, 1.0) * 30.0
+	if(!ship_sound.playing):
+		ship_sound.play()
 
 func calculateNormal(xz: Vector2) -> Vector3:
 	# A small offset value to sample neighboring points
