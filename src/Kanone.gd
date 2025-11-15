@@ -51,10 +51,15 @@ func fire() -> void:
 
 	var use_right: bool = is_target_on_right_side()
 	var muzzle: Marker3D = right_muzzle if use_right else left_muzzle
-
+	
 	var bullet := bullet_scene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(bullet)
-
+	
+	if use_right:
+		$"../../Ship".SetKippen(1.4)
+	else:
+		$"../../Ship".SetKippen(-1.4)
+	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
 	dir.y = 0.0
