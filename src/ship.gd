@@ -1,3 +1,4 @@
+class_name Ship
 extends Node3D
 @export var winkel = 0;
 @export var speed = 0;
@@ -5,7 +6,7 @@ extends Node3D
 var schiffLaenge = 1;
 var Laenge = 1;
 
-func height(xz: Vector2) -> float:
+static func height(xz: Vector2) -> float:
 	var time_ms := Time.get_ticks_msec()
 	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0) \
 		+ ((sin(-xz.x * 0.2 + time_ms * 0.001)) * 0.5);

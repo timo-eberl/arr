@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=24 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://Kanone.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
+[ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
+[ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
+[ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
+[ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(300, 300)
@@ -17,6 +21,19 @@ subdivide_depth = 256
 size = Vector3(300, 1, 300)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gv5m4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pkg7o"]
+size = Vector3(3.2790527, 2.0118408, 10.192383)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gbfbk"]
+size = Vector3(0.34899902, 2.6000671, 10.192383)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ioo17"]
+size = Vector3(3.2790527, 2.0118408, 0.4580078)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ioo17"]
+radius = 3.0
+height = 9.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_036b0"]
 
@@ -29,6 +46,9 @@ sky_material = SubResource("PanoramaSkyMaterial_036b0")
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
 sky = SubResource("Sky_aqk2v")
+tonemap_mode = 3
+tonemap_exposure = 0.7
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwbse"]
 albedo_color = Color(0.29, 0.18579334, 0.066700004, 1)
@@ -251,9 +271,15 @@ mesh = SubResource("CapsuleMesh_gv5m4")
 
 [node name="SchiffExport" parent="RigidBody3D" instance=ExtResource("4_036b0")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="Kanone2" parent="RigidBody3D/SchiffExport" index="2"]
 script = ExtResource("4_dwbse")
+bullet_scene = ExtResource("5_gbfbk")
+camera_path = NodePath("../../CameraLookAt/Camera3D")
+
+[node name="MuzzleKanone2" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone2" index="0"]
+transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
+
+[node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
+transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="RigidBody3D"]
 node_a = NodePath("../../Ship")
@@ -267,6 +293,43 @@ angular_spring_y/enabled = true
 angular_spring_z/enabled = true
 angular_spring_z/stiffness = 60.0
 angular_spring_z/damping = 10.0
+
+[node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5059204, 0)
+shape = SubResource("BoxShape3D_pkg7o")
+
+[node name="CollisionShape3DRight" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4650269, 0.80003357, 0)
+shape = SubResource("BoxShape3D_gbfbk")
+
+[node name="CollisionShape3DLeft" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.8, 0)
+shape = SubResource("BoxShape3D_gbfbk")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.847624, -2.3964844)
+shape = SubResource("BoxShape3D_ioo17")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.847624, 2.1922903)
+shape = SubResource("BoxShape3D_ioo17")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="RigidBody3D"]
+remote_path = NodePath("../VaultArea")
+
+[node name="TreasureSpawn" type="Marker3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5741878, -2.0746303)
+
+[node name="TreasureCollectArea" type="Area3D" parent="RigidBody3D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("5_wse8f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/TreasureCollectArea"]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ioo17")
 
 [node name="Ship" type="StaticBody3D" parent="."]
 script = ExtResource("2_fj7yv")
@@ -305,6 +368,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
+metadata/_edit_use_anchors_ = true
 
 [node name="PanelContainer" type="PanelContainer" parent="Minimap"]
 layout_mode = 2
@@ -324,5 +388,713 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 174.39096, 0)
+
+[node name="CollectedTreasure" type="Node3D" parent="."]
+
+[node name="Collectable" type="Node3D" parent="."]
+
+[node name="CollectableGold" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.276439, 0, 8.575605)
+
+[node name="CollectableGold2" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.987573, 0, 25.412315)
+
+[node name="CollectableGold3" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.797547, 0, 17.30401)
+
+[node name="CollectableGold4" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.23994, 0, 35.858643)
+
+[node name="CollectableGold5" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.413641, 0, 48.357155)
+
+[node name="CollectableGold6" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85242844, -4.7683716e-07, 23.272842)
+
+[node name="CollectableGold7" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.166729, -9.536743e-07, 23.26883)
+
+[node name="CollectableGold8" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.327672, -9.536743e-07, 40.719276)
+
+[node name="CollectableGold9" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.766378, -9.536743e-07, 11.126992)
+
+[node name="CollectableGold10" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.258457, 0, 25.268433)
+
+[node name="CollectableGold11" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.911153, 0, 8.575605)
+
+[node name="CollectableGold12" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.622287, 0, 25.412315)
+
+[node name="CollectableGold13" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.432261, 0, 17.30401)
+
+[node name="CollectableGold14" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.874655, 0, 35.858643)
+
+[node name="CollectableGold15" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.778927, 0, 48.357155)
+
+[node name="CollectableGold16" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2177143, -4.7683716e-07, 23.272842)
+
+[node name="CollectableGold17" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.801443, -9.536743e-07, 23.26883)
+
+[node name="CollectableGold18" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.962386, -9.536743e-07, 40.719276)
+
+[node name="CollectableGold19" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.401093, -9.536743e-07, 11.126992)
+
+[node name="CollectableGold20" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.893171, 0, 25.268433)
+
+[node name="CollectableGold21" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.566983, 0, 14.288433)
+
+[node name="CollectableGold22" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.278117, 0, 31.125143)
+
+[node name="CollectableGold23" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0880914, 0, 23.016838)
+
+[node name="CollectableGold24" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.530485, 0, 41.571472)
+
+[node name="CollectableGold25" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1230965, 0, 54.069984)
+
+[node name="CollectableGold26" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5618839, -4.7683716e-07, 28.98567)
+
+[node name="CollectableGold27" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4572735, -9.536743e-07, 28.981657)
+
+[node name="CollectableGold28" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6182165, -9.536743e-07, 46.432106)
+
+[node name="CollectableGold29" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.056923, -9.536743e-07, 16.83982)
+
+[node name="CollectableGold30" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.549002, 0, 30.98126)
+
+[node name="CollectableGold31" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.110117, 0, 11.21311)
+
+[node name="CollectableGold32" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.821251, 0, 28.04982)
+
+[node name="CollectableGold33" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.631225, 0, 19.941515)
+
+[node name="CollectableGold34" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.073619, 0, 38.496147)
+
+[node name="CollectableGold35" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5799627, 0, 50.99466)
+
+[node name="CollectableGold36" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0187502, -4.7683716e-07, 25.910347)
+
+[node name="CollectableGold37" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.000407, -9.536743e-07, 25.906334)
+
+[node name="CollectableGold38" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16135, -9.536743e-07, 43.35678)
+
+[node name="CollectableGold39" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.600056, -9.536743e-07, 13.764498)
+
+[node name="CollectableGold40" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.092136, 0, 27.905937)
+
+[node name="CollectableGold41" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.476373, 0, 8.89522)
+
+[node name="CollectableGold42" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.187507, 0, 25.73193)
+
+[node name="CollectableGold43" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.997481, 0, 17.623625)
+
+[node name="CollectableGold44" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.439875, 0, 36.178257)
+
+[node name="CollectableGold45" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.213707, 0, 48.67677)
+
+[node name="CollectableGold46" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6524944, -4.7683716e-07, 23.592457)
+
+[node name="CollectableGold47" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.366663, -9.536743e-07, 23.588444)
+
+[node name="CollectableGold48" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.527606, -9.536743e-07, 41.03889)
+
+[node name="CollectableGold49" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.966312, -9.536743e-07, 11.446608)
+
+[node name="CollectableGold50" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.458393, 0, 25.588047)
+
+[node name="CollectableGold51" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.788813, 0, 6.9134426)
+
+[node name="CollectableGold52" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4999466, 0, 23.750153)
+
+[node name="CollectableGold53" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.309921, 0, 15.641848)
+
+[node name="CollectableGold54" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.752315, 0, 34.19648)
+
+[node name="CollectableGold55" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.901267, 0, 46.694992)
+
+[node name="CollectableGold56" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3400545, -4.7683716e-07, 21.61068)
+
+[node name="CollectableGold57" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.679103, -9.536743e-07, 21.606667)
+
+[node name="CollectableGold58" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.840046, -9.536743e-07, 39.057114)
+
+[node name="CollectableGold59" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.278751, -9.536743e-07, 9.46483)
+
+[node name="CollectableGold60" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.770832, 0, 23.60627)
+
+[node name="CollectableGold61" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.15769, 0, 8.575605)
+
+[node name="CollectableGold62" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.86882, 0, 25.412315)
+
+[node name="CollectableGold63" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.678795, 0, 17.30401)
+
+[node name="CollectableGold64" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.12119, 0, 35.858643)
+
+[node name="CollectableGold65" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.467607, 0, 48.357155)
+
+[node name="CollectableGold66" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.02882, -4.7683716e-07, 23.272842)
+
+[node name="CollectableGold67" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.047977, -9.536743e-07, 23.26883)
+
+[node name="CollectableGold68" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.20892, -9.536743e-07, 40.719276)
+
+[node name="CollectableGold69" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.64763, -9.536743e-07, 11.126992)
+
+[node name="CollectableGold70" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.139706, 0, 25.268433)
+
+[node name="CollectableGold71" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.7924, 0, 8.575605)
+
+[node name="CollectableGold72" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.503536, 0, 25.412315)
+
+[node name="CollectableGold73" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.31351, 0, 17.30401)
+
+[node name="CollectableGold74" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.755905, 0, 35.858643)
+
+[node name="CollectableGold75" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.102322, 0, 48.357155)
+
+[node name="CollectableGold76" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.663534, -4.7683716e-07, 23.272842)
+
+[node name="CollectableGold77" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.682693, -9.536743e-07, 23.26883)
+
+[node name="CollectableGold78" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.843636, -9.536743e-07, 40.719276)
+
+[node name="CollectableGold79" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.28234, -9.536743e-07, 11.126992)
+
+[node name="CollectableGold80" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.77442, 0, 25.268433)
+
+[node name="CollectableGold81" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44823, 0, 14.288433)
+
+[node name="CollectableGold82" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.159367, 0, 31.125143)
+
+[node name="CollectableGold83" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.96934, 0, 23.016838)
+
+[node name="CollectableGold84" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.411736, 0, 41.571472)
+
+[node name="CollectableGold85" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.758152, 0, 54.069984)
+
+[node name="CollectableGold86" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.319365, -4.7683716e-07, 28.98567)
+
+[node name="CollectableGold87" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.338524, -9.536743e-07, 28.981657)
+
+[node name="CollectableGold88" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.499466, -9.536743e-07, 46.432106)
+
+[node name="CollectableGold89" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.93817, -9.536743e-07, 16.83982)
+
+[node name="CollectableGold90" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.430252, 0, 30.98126)
+
+[node name="CollectableGold91" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.991364, 0, 11.21311)
+
+[node name="CollectableGold92" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.7025, 0, 28.04982)
+
+[node name="CollectableGold93" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.512474, 0, 19.941515)
+
+[node name="CollectableGold94" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.95487, 0, 38.496147)
+
+[node name="CollectableGold95" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.301285, 0, 50.99466)
+
+[node name="CollectableGold96" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8625, -4.7683716e-07, 25.910347)
+
+[node name="CollectableGold97" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.881657, -9.536743e-07, 25.906334)
+
+[node name="CollectableGold98" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.0426, -9.536743e-07, 43.35678)
+
+[node name="CollectableGold99" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.481304, -9.536743e-07, 13.764498)
+
+[node name="CollectableGold100" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.973385, 0, 27.905937)
+
+[node name="CollectableGold101" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.35762, 0, 8.89522)
+
+[node name="CollectableGold102" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.068756, 0, 25.73193)
+
+[node name="CollectableGold103" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.87873, 0, 17.623625)
+
+[node name="CollectableGold104" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.32112, 0, 36.178257)
+
+[node name="CollectableGold105" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.667542, 0, 48.67677)
+
+[node name="CollectableGold106" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.228754, -4.7683716e-07, 23.592457)
+
+[node name="CollectableGold107" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.24791, -9.536743e-07, 23.588444)
+
+[node name="CollectableGold108" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.408855, -9.536743e-07, 41.03889)
+
+[node name="CollectableGold109" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.84756, -9.536743e-07, 11.446608)
+
+[node name="CollectableGold110" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.33964, 0, 25.588047)
+
+[node name="CollectableGold111" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.67006, 0, 6.9134426)
+
+[node name="CollectableGold112" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.381195, 0, 23.750153)
+
+[node name="CollectableGold113" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.19117, 0, 15.641848)
+
+[node name="CollectableGold114" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.633564, 0, 34.19648)
+
+[node name="CollectableGold115" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.97998, 0, 46.694992)
+
+[node name="CollectableGold116" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.541195, -4.7683716e-07, 21.61068)
+
+[node name="CollectableGold117" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.560352, -9.536743e-07, 21.606667)
+
+[node name="CollectableGold118" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.721294, -9.536743e-07, 39.057114)
+
+[node name="CollectableGold119" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.16, -9.536743e-07, 9.46483)
+
+[node name="CollectableGold120" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.65208, 0, 23.60627)
+
+[node name="CollectableGold121" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 19.384323, 0, 80.21694)
+
+[node name="CollectableGold122" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -2.2692585, 0, 92.715454)
+
+[node name="CollectableGold123" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 2.291954, -4.7683716e-07, 67.63114)
+
+[node name="CollectableGold124" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 18.311111, -9.536743e-07, 67.62713)
+
+[node name="CollectableGold125" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 12.472054, -9.536743e-07, 85.077576)
+
+[node name="CollectableGold126" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 20.910763, -9.536743e-07, 55.48529)
+
+[node name="CollectableGold127" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 26.40284, 0, 69.62673)
+
+[node name="CollectableGold128" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 12.055534, 0, 52.933907)
+
+[node name="CollectableGold129" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 9.76667, 0, 69.770615)
+
+[node name="CollectableGold130" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 7.576645, 0, 61.662308)
+
+[node name="CollectableGold131" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 17.01904, 0, 80.21694)
+
+[node name="CollectableGold132" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -4.6345444, 0, 92.715454)
+
+[node name="CollectableGold133" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -0.07333183, -4.7683716e-07, 67.63114)
+
+[node name="CollectableGold134" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 15.9458275, -9.536743e-07, 67.62713)
+
+[node name="CollectableGold135" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 10.10677, -9.536743e-07, 85.077576)
+
+[node name="CollectableGold136" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 18.545475, -9.536743e-07, 55.48529)
+
+[node name="CollectableGold137" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 24.037556, 0, 69.62673)
+
+[node name="CollectableGold138" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 13.711365, 0, 58.646732)
+
+[node name="CollectableGold139" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 11.422501, 0, 75.483444)
+
+[node name="CollectableGold140" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 9.232475, 0, 67.37514)
+
+[node name="CollectableGold141" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 18.67487, 0, 85.92977)
+
+[node name="CollectableGold142" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -2.978714, 0, 98.42828)
+
+[node name="CollectableGold143" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 1.5824986, -4.7683716e-07, 73.34397)
+
+[node name="CollectableGold144" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 17.601658, -9.536743e-07, 73.33996)
+
+[node name="CollectableGold145" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 11.7626, -9.536743e-07, 90.790405)
+
+[node name="CollectableGold146" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 20.201305, -9.536743e-07, 61.19812)
+
+[node name="CollectableGold147" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 25.693386, 0, 75.33956)
+
+[node name="CollectableGold148" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 13.254498, 0, 55.57141)
+
+[node name="CollectableGold149" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 10.965633, 0, 72.40812)
+
+[node name="CollectableGold150" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 8.775608, 0, 64.29981)
+
+[node name="CollectableGold151" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 18.218002, 0, 82.85445)
+
+[node name="CollectableGold152" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -3.4355812, 0, 95.35296)
+
+[node name="CollectableGold153" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 1.1256332, -4.7683716e-07, 70.26865)
+
+[node name="CollectableGold154" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 17.14479, -9.536743e-07, 70.26463)
+
+[node name="CollectableGold155" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 11.305733, -9.536743e-07, 87.71508)
+
+[node name="CollectableGold156" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 19.744438, -9.536743e-07, 58.122795)
+
+[node name="CollectableGold157" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 25.236519, 0, 72.26424)
+
+[node name="CollectableGold158" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 13.620754, 0, 53.253517)
+
+[node name="CollectableGold159" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 11.33189, 0, 70.090225)
+
+[node name="CollectableGold160" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 9.141865, 0, 61.981926)
+
+[node name="CollectableGold161" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 18.584255, 0, 80.53656)
+
+[node name="CollectableGold162" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -3.0693245, 0, 93.035065)
+
+[node name="CollectableGold163" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 1.491888, -4.7683716e-07, 67.95076)
+
+[node name="CollectableGold164" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 17.511044, -9.536743e-07, 67.94675)
+
+[node name="CollectableGold165" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 11.671989, -9.536743e-07, 85.39719)
+
+[node name="CollectableGold166" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 20.110695, -9.536743e-07, 55.80491)
+
+[node name="CollectableGold167" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 25.602776, 0, 69.94635)
+
+[node name="CollectableGold168" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 12.933193, 0, 51.271744)
+
+[node name="CollectableGold169" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 10.644329, 0, 68.10845)
+
+[node name="CollectableGold170" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 8.454304, 0, 60.000145)
+
+[node name="CollectableGold171" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 17.896698, 0, 78.55478)
+
+[node name="CollectableGold172" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, -3.7568855, 0, 91.05329)
+
+[node name="CollectableGold173" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 0.8043289, -4.7683716e-07, 65.96898)
+
+[node name="CollectableGold174" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 16.823486, -9.536743e-07, 65.964966)
+
+[node name="CollectableGold175" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 10.984428, -9.536743e-07, 83.41541)
+
+[node name="CollectableGold176" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 19.423134, -9.536743e-07, 53.823128)
+
+[node name="CollectableGold177" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 24.915215, 0, 67.96457)
+
+[node name="CollectableGold178" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 45.04845, 0, 73.80533)
+
+[node name="CollectableGold179" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 23.394869, 0, 86.30384)
+
+[node name="CollectableGold180" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 27.956081, -4.7683716e-07, 61.21953)
+
+[node name="CollectableGold181" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 43.97524, -9.536743e-07, 61.215515)
+
+[node name="CollectableGold182" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 38.13618, -9.536743e-07, 78.66596)
+
+[node name="CollectableGold183" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 46.57489, -9.536743e-07, 49.073677)
+
+[node name="CollectableGold184" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 52.066967, 0, 63.21512)
+
+[node name="CollectableGold185" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 37.71966, 0, 46.522293)
+
+[node name="CollectableGold186" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 35.430798, 0, 63.359)
+
+[node name="CollectableGold187" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 33.240772, 0, 55.250694)
+
+[node name="CollectableGold188" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 42.683167, 0, 73.80533)
+
+[node name="CollectableGold189" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 21.029583, 0, 86.30384)
+
+[node name="CollectableGold190" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 25.590796, -4.7683716e-07, 61.21953)
+
+[node name="CollectableGold191" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 41.609955, -9.536743e-07, 61.215515)
+
+[node name="CollectableGold192" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 35.770897, -9.536743e-07, 78.66596)
+
+[node name="CollectableGold193" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 44.209602, -9.536743e-07, 49.073677)
+
+[node name="CollectableGold194" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 49.701683, 0, 63.21512)
+
+[node name="CollectableGold195" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 39.375492, 0, 52.23512)
+
+[node name="CollectableGold196" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 37.086628, 0, 69.07183)
+
+[node name="CollectableGold197" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 34.896603, 0, 60.963524)
+
+[node name="CollectableGold198" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 44.338997, 0, 79.51816)
+
+[node name="CollectableGold199" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 22.685413, 0, 92.01667)
+
+[node name="CollectableGold200" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 27.246626, -4.7683716e-07, 66.93236)
+
+[node name="CollectableGold201" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 43.265785, -9.536743e-07, 66.928345)
+
+[node name="CollectableGold202" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 37.426727, -9.536743e-07, 84.37879)
+
+[node name="CollectableGold203" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 45.865433, -9.536743e-07, 54.786507)
+
+[node name="CollectableGold204" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 51.357513, 0, 68.92795)
+
+[node name="CollectableGold205" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 38.918625, 0, 49.159798)
+
+[node name="CollectableGold206" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 36.62976, 0, 65.996506)
+
+[node name="CollectableGold207" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 34.439735, 0, 57.8882)
+
+[node name="CollectableGold208" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 43.88213, 0, 76.44283)
+
+[node name="CollectableGold209" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 22.228546, 0, 88.941345)
+
+[node name="CollectableGold210" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 26.78976, -4.7683716e-07, 63.857033)
+
+[node name="CollectableGold211" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 42.808918, -9.536743e-07, 63.85302)
+
+[node name="CollectableGold212" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 36.96986, -9.536743e-07, 81.30347)
+
+[node name="CollectableGold213" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 45.408566, -9.536743e-07, 51.71118)
+
+[node name="CollectableGold214" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 50.900646, 0, 65.85262)
+
+[node name="CollectableGold215" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 39.28488, 0, 46.841904)
+
+[node name="CollectableGold216" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 36.996017, 0, 63.67861)
+
+[node name="CollectableGold217" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 34.805992, 0, 55.570313)
+
+[node name="CollectableGold218" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 44.248383, 0, 74.12495)
+
+[node name="CollectableGold219" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 22.594803, 0, 86.62345)
+
+[node name="CollectableGold220" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 27.156015, -4.7683716e-07, 61.539146)
+
+[node name="CollectableGold221" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 43.17517, -9.536743e-07, 61.535133)
+
+[node name="CollectableGold222" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 37.336117, -9.536743e-07, 78.98557)
+
+[node name="CollectableGold223" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 45.774822, -9.536743e-07, 49.393295)
+
+[node name="CollectableGold224" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 51.266903, 0, 63.534737)
+
+[node name="CollectableGold225" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 38.59732, 0, 44.86013)
+
+[node name="CollectableGold226" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 36.308456, 0, 61.69684)
+
+[node name="CollectableGold227" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 34.11843, 0, 53.58853)
+
+[node name="CollectableGold228" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 43.560825, 0, 72.143166)
+
+[node name="CollectableGold229" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 21.907242, 0, 84.64168)
+
+[node name="CollectableGold230" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 26.468456, -4.7683716e-07, 59.557365)
+
+[node name="CollectableGold231" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 42.487614, -9.536743e-07, 59.553352)
+
+[node name="CollectableGold232" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 36.648556, -9.536743e-07, 77.0038)
+
+[node name="CollectableGold233" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 45.08726, -9.536743e-07, 47.411514)
+
+[node name="CollectableGold234" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 50.57934, 0, 61.552956)
+
+[connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
 [editable path="RigidBody3D/SchiffExport"]
