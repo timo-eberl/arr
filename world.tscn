@@ -147,14 +147,14 @@ transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, 
 shape = SubResource("CapsuleShape3D_ioo17")
 
 [node name="SplashSpawner" type="Node3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.8416371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.3024569)
 script = ExtResource("7_k3n1d")
-time_diff = 0.07
+time_diff_from = 0.3
 
 [node name="FoamSpawner" type="Node3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.28616953)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.64001226)
 script = ExtResource("8_2o6r5")
-time_diff = 0.2
+time_diff_from = 1.2
 
 [node name="TestEnemy" type="RigidBody3D" parent="." groups=["enemy_ship"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.599628, 0, 0.19351959)
