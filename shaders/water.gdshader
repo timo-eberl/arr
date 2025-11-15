@@ -201,12 +201,24 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 
-	float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
-	depth = depth * 2.0 - 1.0;
-	vec4 upos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth, 1.0);
-	vec3 pixel_position = upos.xyz / upos.w;
-	vec3 pixel_pos_world = (INV_VIEW_MATRIX * vec4(pixel_position, 1.0)).xyz;
-	float waterDist = distance(pixel_pos_world, vertex_world);
+	vec3  pixel_pos_world;
+	float waterDist = 0.;
+	float dEpsilon = 0.;
+	float angle = 0.;
+	float angleDelta = 3.14 / 3.;
+	for (int i = 0; i < 8; i++) {
+		float depth = textureLod(depth_texture, SCREEN_UV + vec2(0.5*dEpsilon*sin(angle),dEpsilon*(-2.+cos(angle))), 0.0).r;;
+		depth = depth * 2.0 - 1.0;
+		vec4 upos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth, 1.0);
+		vec3 pixel_position = upos.xyz / upos.w;
+		vec3 pixel_pos_world_local = (INV_VIEW_MATRIX * vec4(pixel_position, 1.0)).xyz;
+		if (i == 0) {
+			pixel_pos_world = pixel_pos_world_local;
+		}
+		waterDist += length(vertex_world - pixel_pos_world_local) * 0.1;
+		dEpsilon += 0.0005 * (1.-depth);
+		angle += angleDelta;
+	}
 
 	vec4 distorsion = texture(foam_noise, vertex_world.xz * 0.5) * clamp(1. - waterDist * 0.02, 0.3, 1.) * 0.7;
 	distorsion *= mix(1.0, 1.5 * texture(foam_noise, vertex_world.xz * 0.01).x, 1.0);
