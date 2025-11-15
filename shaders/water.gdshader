@@ -173,6 +173,7 @@ void fragment() {
 	float waterDist = distance(pixel_pos_world, vertex_world);
 
 	vec4 distorsion = texture(foam_noise, vertex_world.xz*0.5) * clamp(1. - waterDist*0.02, 0.3, 1.) * 0.7;
+	distorsion *=  mix(1.,1.5*texture(foam_noise, vertex_world.xz*0.01).x, 1.0);
 	worldNormal -= distorsion.xyz;
 	worldNormal = normalize(worldNormal);
 	NORMAL = normalize((VIEW_MATRIX * vec4(worldNormal, 0.0)).xyz);
@@ -192,7 +193,6 @@ void fragment() {
 
 	float t = clamp(pow(waterDist * 0.5, 2.0), 0.0, 1.0);
 	ALBEDO = mix(ALBEDO + reflectionFactor, ALBEDO, t);
-	//ALBEDO = vec3(t);
 	ALPHA = mix(0.1, 1.0, t) * reflectionFactor;
 	ALPHA -= pow(clamp(1.-waterDist*0.05, 0.0, 1.0)*distorsion.y,2.0);
 }
