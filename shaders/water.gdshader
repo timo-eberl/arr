@@ -29,14 +29,31 @@ varying vec3 vertex_world;
 
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 
+mat2 rotate(float angle) {
+    float s = sin(angle);
+    float c = cos(angle);
+    return mat2(vec2(c, -s), vec2(s, c));
+}
+
 float height(vec2 xz) {
 	float height = 0.;
-	float  amp = 0.3;
+	float  amp = 0.2;
 	vec2 freq = vec2(0.9,0.7)*0.9;
 	vec2 diff = vec2(1.03, 0.96);
-	float speed = 5.0;
+	// The 'speed' variable was not used in the original function.
+	// You might want to integrate it into the TIME calculation, for example: TIME * speed
+	float speed = 5.0; 
+
 	for (int i = 0; i < 7; i++) {
-		height += (sin(xz.x*freq.x + TIME*diff.x+sin(xz.y*freq.y+TIME*0.3)) + sin((xz.y+sin(xz.x*freq.x+TIME*0.7))*freq.y + TIME*diff.y)) * amp;
+		// Rotate the coordinates for each wave layer.
+		// The angle of rotation is changed in each iteration.
+		vec2 p = rotate(float(i) * 0.85) * xz;
+
+		height += (
+			sin(p.x*freq.x + TIME*diff.x+sin(p.y*freq.y+TIME*0.3))
+			+ sin((p.y+sin(p.x*freq.x+TIME*0.7))*freq.y + TIME*diff.y)
+		) * amp;
+		
 		amp *= 0.7;
 		freq *= 1.3;
 		diff += 1.7;
@@ -100,7 +117,7 @@ void fragment() {
 	vec3 pixel_pos_world = (INV_VIEW_MATRIX * vec4(pixel_position, 1.0)).xyz;
 	float waterDist = distance(pixel_pos_world, vertex_world);
 
-	vec4 distorsion = texture(foam_noise, vertex_world.xz*1.5) * clamp(1. - waterDist*0.02, 0.3, 1.);
+	vec4 distorsion = texture(foam_noise, vertex_world.xz*0.5) * clamp(1. - waterDist*0.02, 0.3, 1.) * 0.7;
 	worldNormal -= distorsion.xyz;
 	worldNormal = normalize(worldNormal);
 	NORMAL = normalize((VIEW_MATRIX * vec4(worldNormal, 0.0)).xyz);
@@ -110,7 +127,7 @@ void fragment() {
 	reflectionFactor = mix(1.0, reflectionFactor, 0.7);
 	ALBEDO += clamp(1. - waterDist*0.1, 0.0, 0.3);
 
-	ALBEDO += clamp(0., 1., pow((height(vertex_world.xz)+texture(foam_noise, vertex_world.zx*0.01).x)*worldNormal.y*0.6,8.));
+	ALBEDO += clamp(0., 1., pow((height(vertex_world.xz)+texture(foam_noise, vertex_world.zx*0.01).x)*worldNormal.y*0.6,4.));
 
 	float t = clamp(pow(waterDist * 0.5, 2.0), 0.0, 1.0);
 	ALBEDO = mix(ALBEDO + reflectionFactor, ALBEDO, t);

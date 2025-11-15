@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://crg4khkalappj"]
 
-[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_6gfwt"]
+[ext_resource type="Shader" uid="uid://cxro026dwu1vm" path="res://shaders/water.gdshader" id="1_6gfwt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_6gfwt"]
 
@@ -12,7 +12,7 @@ invert = true
 [resource]
 render_priority = 0
 shader = ExtResource("1_6gfwt")
-shader_parameter/albedo = Color(0.03858149, 0.27597556, 0.38105404, 0.80784315)
+shader_parameter/albedo = Color(0.08099999, 0.5323501, 0.54, 0.80784315)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
 shader_parameter/roughness = 0.0
