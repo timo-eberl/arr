@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta)
 	for sail in sails:
-		sail.scale = Vector3(sail_scale,sail_scale,sail_scale) * 1.71 # remove * 1.71 when proper sails are added
+		sail.scale = Vector3(sail_scale,sail_scale,sail_scale)
 	
 	print(speed_mode)
 	
