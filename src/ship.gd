@@ -1,7 +1,14 @@
 class_name Ship
 extends Node3D
 @export var winkel = 0;
-@export var speed = 0;
+@export var speed := 0.0;
+
+@export var speed_slow := 7.0
+@export var speed_fast := 16.0
+
+var speed_mode : SPEED_MODE
+
+enum SPEED_MODE { NO, SLOW, FAST }
 
 var schiffLaenge = 1;
 var Laenge = 1;
@@ -11,18 +18,36 @@ func setShipLength() -> void:
 		schiffLaenge = Laenge;
 	pass
 
+func get_target_speed() -> float:
+	if speed_mode == SPEED_MODE.SLOW:
+		return speed_slow
+	elif speed_mode == SPEED_MODE.FAST:
+		return speed_fast
+	return 0.0
 
-func _process(_delta: float) -> void:
-	var lenkinput = Input.get_axis("LinksLenken", "RechtsLenken");
-	var speedinput = Input.get_axis("Gasgeben", "Brenmsen");
+func _process(delta: float) -> void:
+	var lenkinput = Input.get_axis("LinksLenken", "RechtsLenken")
 	
-	winkel += lenkinput * _delta * (speed / 10.0);
-	speed += speedinput * _delta * 40.0;
+	if Input.is_action_just_pressed("Gasgeben"):
+		if speed_mode == SPEED_MODE.NO:
+			speed_mode = SPEED_MODE.SLOW
+		elif speed_mode == SPEED_MODE.SLOW:
+			speed_mode = SPEED_MODE.FAST
+	if Input.is_action_just_pressed("Brenmsen"):
+		if speed_mode == SPEED_MODE.FAST:
+			speed_mode = SPEED_MODE.SLOW
+		elif speed_mode == SPEED_MODE.SLOW:
+			speed_mode = SPEED_MODE.NO
+	
+	print(speed_mode)
+	
+	winkel += lenkinput * delta * (speed / 10.0);
+	speed = lerp(speed, -get_target_speed(), delta)
 	
 
 	#$"../RigidBody3D".add_constant_force(transform.basis.x * lenkinput * _delta * 20.0, transform.basis.y * 2.0);
 	
-	global_transform.origin += -global_transform.basis.z * speed * _delta;
+	global_transform.origin += -global_transform.basis.z * speed * delta;
 	
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
 	self.global_position.y = WaveHeight.height(global_2d)
