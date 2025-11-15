@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ddxl3y1ygux51"]
 
-[ext_resource type="PhysicsMaterial" uid="uid://c754gwxb37cd4" path="res://treasure/treasure_physics.tres" id="1_qorgv"]
+[ext_resource type="PhysicsMaterial" uid="uid://c754gwxb37cd4" path="res://treasure/treasure_physics.tres" id="1_kqw4f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pkg7o"]
 margin = 0.1
@@ -14,8 +14,9 @@ emission_enabled = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_pkg7o"]
 
-[node name="Gold" type="RigidBody3D"]
-physics_material_override = ExtResource("1_qorgv")
+[node name="CollectedGold" type="RigidBody3D"]
+physics_material_override = ExtResource("1_kqw4f")
+gravity_scale = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_pkg7o")

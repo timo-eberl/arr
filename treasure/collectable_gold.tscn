@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkf8kdtpn8bst"]
+
+[ext_resource type="Script" uid="uid://bxjquo8sh5wur" path="res://src/collectable_treasure.gd" id="1_rcygt"]
+[ext_resource type="PackedScene" uid="uid://ddxl3y1ygux51" path="res://treasure/collected_gold.tscn" id="2_ogso7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pkg7o"]
+margin = 0.1
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qorgv"]
+albedo_color = Color(2.805782, 1.9019015, 0, 1)
+metallic = 1.0
+roughness = 0.16
+emission_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_pkg7o"]
+
+[node name="CollectableGold" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_rcygt")
+collected_variant = ExtResource("2_ogso7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_pkg7o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_qorgv")
+mesh = SubResource("SphereMesh_pkg7o")
