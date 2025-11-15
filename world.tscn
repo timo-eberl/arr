@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=24 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -10,16 +10,15 @@
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
+[ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
-size = Vector2(300, 300)
+size = Vector2(500, 500)
 subdivide_width = 256
 subdivide_depth = 256
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dwbse"]
 size = Vector3(300, 1, 300)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_gv5m4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pkg7o"]
 size = Vector3(3.2790527, 2.0118408, 10.192383)
@@ -52,12 +51,6 @@ tonemap_mode = 3
 tonemap_exposure = 0.7
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwbse"]
-albedo_color = Color(0.38, 0.32528, 0.1748, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_pkg7o"]
-size = Vector2(300, 300)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_036b0"]
 content_margin_left = 6.0
 content_margin_top = 6.0
@@ -86,189 +79,6 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Water/Area3D"]
 shape = SubResource("BoxShape3D_dwbse")
 
-[node name="Obstacles" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
-
-[node name="Coast" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -107.77763, -6.079632, 13.748444)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast2" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -107.34577, -6.079632, -7.5747414)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast3" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -95.14416, -6.079632, -27.329983)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast4" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -84.72664, -6.079632, -47.907047)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast5" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -74.589645, -6.079632, -64.89198)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast7" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -68.10066, -6.0796394, -89.98931)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast8" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -57.68314, -6.0796394, -110.566376)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast9" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -47.546143, -6.0796394, -127.551315)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast10" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -59.45606, -6.0796394, -123.58545)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast11" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -49.038544, -6.0796394, -144.1625)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast12" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -38.901546, -6.0796394, -161.14743)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast13" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -88.76531, -6.0796394, -70.255035)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast14" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -78.34779, -6.0796394, -90.8321)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast15" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -68.2108, -6.0796394, -107.81704)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast16" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -116.805435, -6.0796394, -14.192896)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast17" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -106.38792, -6.0796394, -34.76995)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast18" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -96.250916, -6.0796394, -51.754887)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast19" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -137.163, -6.079632, 45.403793)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast20" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -126.745476, -6.079632, 24.826729)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast21" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -116.608475, -6.079632, 7.8417892)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast22" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -139.59015, -6.079632, 99.958435)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast23" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -129.17264, -6.079632, 79.381386)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast24" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -119.03563, -6.079632, 62.396454)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast25" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -158.05402, -6.0796394, 114.66015)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast26" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -147.6365, -6.0796394, 94.083084)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast27" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -137.49951, -6.0796394, 77.098145)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast28" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -142.70813, -6.079647, 128.15775)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast29" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -132.2906, -6.079647, 107.58068)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast30" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -122.15361, -6.079647, 90.59574)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast31" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(15.568172, -7.6631413, -0.32292247, 4.2458364e-08, -0.73068583, 17.339611, -7.669943, -15.554367, -0.6554563, -104.76784, -6.079647, 143.54355)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast32" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(15.568172, -7.6631413, -0.32292247, 4.2458364e-08, -0.73068583, 17.339611, -7.669943, -15.554367, -0.6554563, -110.42493, -6.079647, 121.18427)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast33" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(15.568172, -7.6631413, -0.32292247, 4.2458364e-08, -0.73068583, 17.339611, -7.669943, -15.554367, -0.6554563, -113.934555, -6.079647, 101.71818)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast34" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(10.101021, 14.100086, 0.5941732, 6.737152e-08, -0.73068583, 17.339611, 14.112599, -10.092062, -0.42527658, -44.31591, -6.079647, -137.88977)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast35" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(10.101021, 14.100086, 0.5941732, 6.737152e-08, -0.73068583, 17.339611, 14.112599, -10.092062, -0.42527658, -23.175179, -6.079647, -147.10983)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast36" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(10.101021, 14.100086, 0.5941732, 6.737152e-08, -0.73068583, 17.339611, 14.112599, -10.092062, -0.42527658, -4.5396194, -6.079647, -153.74026)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast37" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -96.901695, -6.079632, 8.078514)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast38" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -87.418434, -6.079632, -12.945468)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast39" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -78.05416, -6.079632, -30.368359)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast40" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -92.63366, -6.079632, 26.19239)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast41" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -83.1504, -6.079632, 5.1684113)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast42" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.95991, 3.6787832, 0.1550226, 6.7371516e-08, -0.7306858, 17.33961, 3.6820464, -16.94487, -0.7140516, -73.786125, -6.079632, -12.254481)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast43" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(17.018744, -3.39674, -0.14313778, 9.6396626e-08, -0.73068583, 17.339611, -3.3997536, -17.003654, -0.7165288, -63.35105, -6.079632, -27.461266)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast44" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(17.018744, -3.39674, -0.14313778, 9.6396626e-08, -0.73068583, 17.339611, -3.3997536, -17.003654, -0.7165288, -63.056133, -6.079632, -50.52321)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast45" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(17.018744, -3.39674, -0.14313778, 9.6396626e-08, -0.73068583, 17.339611, -3.3997536, -17.003654, -0.7165288, -61.431717, -6.079632, -70.23636)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
-[node name="Coast6" type="MeshInstance3D" parent="Obstacles"]
-transform = Transform3D(16.777515, 4.435767, 0.18692186, 0, -0.7306859, 17.339611, 4.439704, -16.76264, -0.7063725, -108.193375, -6.079632, 35.868454)
-mesh = SubResource("CapsuleMesh_gv5m4")
-
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["ship"]]
 
 [node name="SchiffExport" parent="RigidBody3D" instance=ExtResource("4_036b0")]
@@ -278,10 +88,10 @@ bullet_scene = ExtResource("5_gbfbk")
 camera_path = NodePath("../../CameraLookAt/Camera3D")
 
 [node name="MuzzleKanone2" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
+transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9999999, -4.3711385e-08, 0, 4.8739967, 2.1304919e-07)
 
 [node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
+transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="RigidBody3D"]
 node_a = NodePath("../../Ship")
@@ -373,11 +183,6 @@ transform = Transform3D(1, 0, 0, 0, 0.4217797, 0.90669835, 0, -0.90669835, 0.421
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_036b0")
-
-[node name="Ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.7460766, 0)
-material_override = SubResource("StandardMaterial3D_dwbse")
-mesh = SubResource("PlaneMesh_pkg7o")
 
 [node name="Minimap" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -1250,6 +1055,24 @@ transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
 shape = SubResource("BoxShape3D_wse8f")
 
+[node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.400924, 0)
+
+[node name="Plane_001" parent="terrain_collapsed" index="1"]
+visible = false
+
+[node name="SchiffGanz" parent="terrain_collapsed" index="2"]
+visible = false
+
+[node name="SchiffHinten" parent="terrain_collapsed" index="3"]
+visible = false
+
+[node name="SchiffMitte" parent="terrain_collapsed" index="4"]
+visible = false
+
+[node name="SchiffVorne" parent="terrain_collapsed" index="5"]
+visible = false
+
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
 [editable path="RigidBody3D/SchiffExport"]
@@ -1262,3 +1085,4 @@ shape = SubResource("BoxShape3D_wse8f")
 [editable path="TestEnemy7/SchiffExport"]
 [editable path="TestEnemy8/SchiffExport"]
 [editable path="TestEnemy9/SchiffExport"]
+[editable path="terrain_collapsed"]

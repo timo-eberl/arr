@@ -4,7 +4,7 @@ extends RigidBody3D
 
 @export var plank_scene: PackedScene
 @export var plank_count: int = 20
-@export var plank_impulse: float = 5
+@export var plank_impulse: float = 10
 
 var _time_passed: float = 0.0
 
@@ -73,19 +73,13 @@ func _spawn_planks() -> void:
 		var t := plank.global_transform
 		t.origin = origin + random_offset
 
-		# ✅ Godot 4-kompatibel:
-		# Variante A: über Quaternion
 		var q := Quaternion.from_euler(random_rot)
 		t.basis = Basis(q)
-
-		# (Alternativ, falls deine Version es unterstützt:)
-		# t.basis = Basis.from_euler(random_rot)
 
 		plank.global_transform = t
 
 		parent.add_child(plank)
 
-		# Zufällige Flugrichtung nach außen / oben
 		var dir := Vector3(
 			randf_range(-1.0, 1.0),
 			randf_range(0.2, 1.0),
@@ -94,7 +88,6 @@ func _spawn_planks() -> void:
 
 		plank.apply_impulse(dir * plank_impulse)
 
-		# optional: zufälliger Drall / Drehimpuls
 		var torque := Vector3(
 			randf_range(-1.0, 1.0),
 			randf_range(-1.0, 1.0),
