@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=32 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -11,7 +11,14 @@
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
+[ext_resource type="Script" uid="uid://c2jpj4f4qafxa" path="res://src/play_random_sound.gd" id="10_2o6r5"]
+[ext_resource type="AudioStream" uid="uid://b2vmqfrng7dea" path="res://Sounds/cannon1.wav" id="11_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
+[ext_resource type="AudioStream" uid="uid://cetp7txgupokl" path="res://Sounds/cannon2.wav" id="12_26xuy"]
+[ext_resource type="AudioStream" uid="uid://cs2j0f6a3pke2" path="res://Sounds/cannon3.wav" id="13_bc84e"]
+[ext_resource type="AudioStream" uid="uid://cuva3tpkf31xo" path="res://Sounds/cannon4.wav" id="14_wukud"]
+[ext_resource type="AudioStream" uid="uid://bn2pd4m88p7ek" path="res://Sounds/cannon5.wav" id="15_il2jm"]
+[ext_resource type="AudioStream" uid="uid://c40jhxs3mcfrh" path="res://Sounds/cannon6.wav" id="16_wjb0r"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(500, 500)
@@ -94,6 +101,8 @@ transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9
 
 [node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="RigidBody3D"]
 node_a = NodePath("../../Ship")
@@ -180,12 +189,26 @@ mesh = SubResource("BoxMesh_036b0")
 [node name="CameraTarget" type="Node3D" parent="Ship"]
 script = ExtResource("5_dwbse")
 
+[node name="CannonSounds" type="AudioStreamPlayer3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.431942, 0, 0)
+autoplay = true
+script = ExtResource("10_2o6r5")
+sounds = Array[AudioStream]([ExtResource("11_cbp6q"), ExtResource("12_26xuy"), ExtResource("13_bc84e"), ExtResource("14_wukud"), ExtResource("15_il2jm"), ExtResource("16_wjb0r")])
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ship/CannonSounds"]
+transform = Transform3D(1.749, 0, 0, 0, 13.62, 0, 0, 0, 1.749, 0, 0, 0)
+mesh = SubResource("BoxMesh_036b0")
+skeleton = NodePath("../..")
+
 [node name="CameraLookAt" type="Node3D" parent="."]
 transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraLookAt"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 61.835)
 fov = 40.0
+
+[node name="AudioListener3D" type="AudioListener3D" parent="CameraLookAt"]
+current = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.4217797, 0.90669835, 0, -0.90669835, 0.4217797, 0, 33.39187, 0)
