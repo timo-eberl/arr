@@ -9,8 +9,8 @@
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
-[ext_resource type="Script" uid="uid://bvwbk7vlsw3xw" path="res://src/splash_spawner.gd" id="7_k3n1d"]
-[ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
+[ext_resource type="Script" path="res://src/splash_spawner.gd" id="7_k3n1d"]
+[ext_resource type="Script" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 
@@ -146,9 +146,6 @@ script = ExtResource("5_wse8f")
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ioo17")
 
-[node name="TestEnemy" type="RigidBody3D" parent="." groups=["enemy_ship"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.599628, 0, 0.19351959)
-collision_layer = 2
 [node name="SplashSpawner" type="Node3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.8416371)
 script = ExtResource("7_k3n1d")
@@ -159,8 +156,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.28616953)
 script = ExtResource("8_2o6r5")
 time_diff = 0.2
 
-[node name="TestEnemy" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.599628, 0, 0)
+[node name="TestEnemy" type="RigidBody3D" parent="." groups=["enemy_ship"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.599628, 0, 0.19351959)
+collision_layer = 2
 gravity_scale = 0.0
 
 [node name="SchiffExport" parent="TestEnemy" instance=ExtResource("4_036b0")]
@@ -935,142 +933,6 @@ transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.851
 [node name="CollectableGold234" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 50.57934, 0, 61.552956)
 
-[node name="TestEnemy2" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.7059952, 0, 0.7082166, 0, 1, 0, -0.7082166, 0, 0.7059952, 10.984249, 0, -25.952927)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy2" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy2/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy2/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy3" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.542496, 0, -25.952927)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy3" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy3/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy3/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy4" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.7290642, 0, -0.6844453, 0, 1, 0, 0.6844453, 0, 0.7290642, 9.519335, 0, 27.331596)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy4" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy4/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy4/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy5" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.83044034, 0, 0.55710757, 0, 1, 0, -0.55710757, 0, 0.83044034, -21.519257, 0, 8.213821)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy5" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy5/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy5/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy6" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.7059952, 0, 0.7082166, 0, 1, 0, -0.7082166, 0, 0.7059952, 34.61236, 0, -49.655384)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy6" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy6/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy6/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy7" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.0103, 0, -25.952927)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy7" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy7/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy7/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy8" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.7290642, 0, -0.6844453, 0, 1, 0, 0.6844453, 0, 0.7290642, 33.919518, 0, 50.23848)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy8" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy8/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy8/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
-[node name="TestEnemy9" type="RigidBody3D" parent="." groups=["ship"]]
-transform = Transform3D(0.83044034, 0, 0.55710757, 0, 1, 0, -0.55710757, 0, 0.83044034, 6.2737617, 0, -10.431347)
-gravity_scale = 0.0
-
-[node name="SchiffExport" parent="TestEnemy9" instance=ExtResource("4_036b0")]
-transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
-
-[node name="MuzzleKanone2" type="Marker3D" parent="TestEnemy9/SchiffExport/Kanone2" index="0"]
-transform = Transform3D(0.99999994, 0, 0, 0, -0.3420201, -0.93969256, 0, 0.9396925, -0.3420201, 0, 4.8739967, 2.1304919e-07)
-
-[node name="MuzzleKanone1" type="Marker3D" parent="TestEnemy9/SchiffExport/Kanone1" index="0"]
-transform = Transform3D(-0.99999994, 8.215053e-08, 2.9900352e-08, 0, 0.34202012, -0.9396926, -8.742277e-08, -0.9396925, -0.34202015, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy9"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0134277, 2.3343048, 1.4354248)
-shape = SubResource("BoxShape3D_wse8f")
-
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.400924, 0)
 
@@ -1093,12 +955,4 @@ visible = false
 
 [editable path="RigidBody3D/SchiffExport"]
 [editable path="TestEnemy/SchiffExport"]
-[editable path="TestEnemy2/SchiffExport"]
-[editable path="TestEnemy3/SchiffExport"]
-[editable path="TestEnemy4/SchiffExport"]
-[editable path="TestEnemy5/SchiffExport"]
-[editable path="TestEnemy6/SchiffExport"]
-[editable path="TestEnemy7/SchiffExport"]
-[editable path="TestEnemy8/SchiffExport"]
-[editable path="TestEnemy9/SchiffExport"]
 [editable path="terrain_collapsed"]
