@@ -19,6 +19,10 @@ config/icon="uid://4q335xxs2p"
 
 window/stretch/mode="canvas_items"
 
+[global_group]
+
+ship=""
+
 [input]
 
 LinksLenken={
