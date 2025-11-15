@@ -6,7 +6,7 @@ var is_initialized := false
 @export var turn_strength: float = 1.5
 
 @export var target_container_path: NodePath 
-@export var wait_at_target_time: float = 5.0
+@export var wait_at_target_time: float = 0.0
 @export var arrival_distance: float = 3.0   
 
 @onready var nav_agent: NavigationAgent3D = $NavAgent

@@ -1,0 +1,132 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dhy2beikmdk0d"
+path="res://.godot/imported/pirateShip_applied_material.blend-af4b1c3c4e431d53b2ea0e62608584a9.scn"
+
+[deps]
+
+source_file="res://Modelle/pirateShip_applied_material.blend"
+dest_files=["res://.godot/imported/pirateShip_applied_material.blend-af4b1c3c4e431d53b2ea0e62608584a9.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Kanone": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.tres",
+"use_external/path": "uid://d3aesh1jlds2q"
+},
+"Kanone.001": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.001.tres",
+"use_external/path": "uid://b2o0bikmk6t77"
+},
+"Kanone.002": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.002.tres",
+"use_external/path": "uid://d0d47cqs1uqv1"
+},
+"Kanone.003": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.003.tres",
+"use_external/path": "uid://bs7ses5ebokjr"
+},
+"Kanone.004": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.004.tres",
+"use_external/path": "uid://dk10mwqqecgvr"
+},
+"Kanone.005": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.005.tres",
+"use_external/path": "uid://bs2xt224pt8i6"
+},
+"Kanone.006": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.006.tres",
+"use_external/path": "uid://dkftc4pljq6fb"
+},
+"Kanone.007": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.007.tres",
+"use_external/path": "uid://rjpw6hpxk34d"
+},
+"Kanone.008": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.008.tres",
+"use_external/path": "uid://oq1nq2igl7y2"
+},
+"Kanone.009": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Kanone.009.tres",
+"use_external/path": "uid://2ry8w0k2x6uu"
+},
+"PiratenschiffMaterial1": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/PiratenschiffMaterial1.tres",
+"use_external/path": "uid://dno5j8nj5rphm"
+},
+"PiratenschiffMaterial2": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/PiratenschiffMaterial2.tres",
+"use_external/path": "uid://pc7imotmm0b0"
+},
+"PiratenschiffSegel": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/PiratenschiffSegel.tres",
+"use_external/path": "uid://bx2i60i0f58j"
+},
+"Schiff1": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/pirateShip_materials/Schiff1.tres",
+"use_external/path": "uid://c0nd31bemg1a4"
+}
+}
+}
+blender/nodes/visible=0
+blender/nodes/active_collection_only=false
+blender/nodes/punctual_lights=true
+blender/nodes/cameras=true
+blender/nodes/custom_properties=true
+blender/nodes/modifiers=1
+blender/meshes/colors=false
+blender/meshes/uvs=true
+blender/meshes/normals=true
+blender/meshes/export_geometry_nodes_instances=false
+blender/meshes/tangents=true
+blender/meshes/skins=2
+blender/meshes/export_bones_deforming_mesh_only=false
+blender/materials/unpack_enabled=true
+blender/materials/export_materials=1
+blender/animation/limit_playback=true
+blender/animation/always_sample=true
+blender/animation/group_tracks=true
+gltf/naming_version=2
