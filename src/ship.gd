@@ -6,9 +6,13 @@ extends Node3D
 @export var speed_slow := 7.0
 @export var speed_fast := 16.0
 
+@export var sails : Array[Node3D]
+
 var speed_mode : SPEED_MODE
 
 enum SPEED_MODE { NO, SLOW, FAST }
+var target_sail_scale := 0.0
+var sail_scale := 0.0
 
 var schiffLaenge = 1;
 var Laenge = 1;
@@ -31,13 +35,21 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Gasgeben"):
 		if speed_mode == SPEED_MODE.NO:
 			speed_mode = SPEED_MODE.SLOW
+			target_sail_scale = 0.5
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.FAST
+			target_sail_scale = 1
 	if Input.is_action_just_pressed("Brenmsen"):
 		if speed_mode == SPEED_MODE.FAST:
 			speed_mode = SPEED_MODE.SLOW
+			target_sail_scale = 0.5
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.NO
+			target_sail_scale = 0
+	
+	sail_scale = lerp(sail_scale, target_sail_scale, delta)
+	for sail in sails:
+		sail.scale = Vector3(sail_scale,sail_scale,sail_scale) * 1.71 # remove * 1.71 when proper sails are added
 	
 	print(speed_mode)
 	
