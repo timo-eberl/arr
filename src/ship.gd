@@ -1,10 +1,59 @@
 extends Node3D
+@export var winkel = 0;
+@export var speed = 0;
+
+var schiffLaenge = 1;
+var Laenge = 1;
 
 func height(xz: Vector2) -> float:
 	var time_ms := Time.get_ticks_msec()
 	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0) \
 		+ ((sin(-xz.x * 0.2 + time_ms * 0.001)) * 0.5);
 
+func setShipLength() -> void:
+	if Laenge != schiffLaenge:
+		schiffLaenge = Laenge;
+	pass
+
+
 func _process(_delta: float) -> void:
+	var lenkinput = Input.get_axis("LinksLenken", "RechtsLenken");
+	var speedinput = Input.get_axis("Gasgeben", "Brenmsen");
+	
+	winkel += lenkinput * _delta * (speed / 10.0);
+	speed += speedinput * _delta * 40.0;
+	
+
+	#$"../RigidBody3D".add_constant_force(transform.basis.x * lenkinput * _delta * 20.0, transform.basis.y * 2.0);
+	
+	global_transform.origin += -global_transform.basis.z * speed * _delta;
+	
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
 	self.global_position.y = height(global_2d)
+	
+	var normal = calculateNormal(global_2d)
+	
+	var basis = Basis()               # identity basis
+	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
+	basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
+	basis.z = basis.x.cross(basis.y).normalized()
+
+	global_transform = Transform3D(basis, position)
+
+func calculateNormal(xz: Vector2) -> Vector3:
+	# A small offset value to sample neighboring points
+	var epsilon = 0.05;
+
+	# Sample the height at the current point and at points slightly offset in x and z
+	var h = height(xz);
+	var hx = height(Vector2(xz.x + epsilon, xz.y));
+	var hz = height(Vector2(xz.x, xz.y + epsilon));
+
+	# Create two tangent vectors
+	var tangentX = Vector3(epsilon, hx - h, 0.0).normalized();
+	var tangentZ = Vector3(0.0, hz - h, epsilon).normalized();
+
+	# The normal is the cross product of the two tangents
+	var normal = tangentZ.cross(tangentX);
+
+	return normal;
