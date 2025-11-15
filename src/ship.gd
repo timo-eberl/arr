@@ -13,7 +13,7 @@ var speed_mode : SPEED_MODE
 
 enum SPEED_MODE { NO, SLOW, FAST }
 var target_sail_scale := 0.0
-var sail_scale := 0.0
+var sail_scale := 0.2
 
 var schiffLaenge = 1;
 var Laenge = 1;
@@ -46,11 +46,11 @@ func _process(delta: float) -> void:
 			target_sail_scale = 0.5
 		elif speed_mode == SPEED_MODE.SLOW:
 			speed_mode = SPEED_MODE.NO
-			target_sail_scale = 0
+			target_sail_scale = 0.2
 	
-	sail_scale = lerp(sail_scale, target_sail_scale, delta)
+	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
 	for sail in sails:
-		sail.scale = Vector3(sail_scale,sail_scale,sail_scale)
+		sail.scale = Vector3(1,sail_scale,1)
 	
 	print(speed_mode)
 	
