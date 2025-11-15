@@ -26,14 +26,15 @@ uniform vec3 uv2_offset;
 uniform float time_ms;
 
 // --- Splash (Height) Data ---
-const int MAX_SPLASHES = 64;
+const int MAX_SPLASHES = 32;
 uniform vec3 splash_positions[MAX_SPLASHES];
 uniform float splash_start_times[MAX_SPLASHES];
 
 // --- Foam (Visual) Data ---
-const int MAX_FOAM = 64;
+const int MAX_FOAM = 16;
 uniform vec3 foam_positions[MAX_FOAM];
 uniform float foam_start_times[MAX_FOAM];
+uniform float foam_sizes[MAX_FOAM];
 uniform sampler2D splash_texture : source_color, filter_linear_mipmap, repeat_enable;
 
 
@@ -146,19 +147,24 @@ float get_foam_effect(vec2 world_pos_xz) {
 	float foam = 0.0;
 	float current_time = time_ms * 0.001;
 
-	// This loop now uses the dedicated foam arrays
 	for (int i = 0; i < MAX_FOAM; i++) {
-		float start_time = foam_start_times[i]; // Changed from splash_start_times
+		float start_time = foam_start_times[i];
 		float time_diff = current_time - start_time;
 
 		float life_time = 3.0;
 		if (time_diff < 0.0 || time_diff > life_time) continue;
 
-		float start_size = 4.0;
-		float end_size = 8.0;
+		// --- Sizing and Animation (MODIFIED) ---
+		// The size is now controlled by the uniform array passed from the script.
+		// The foam will animate from half its target size to its full target size.
+		float end_size = foam_sizes[i];    // Final size in world units
+		float start_size = end_size * 0.6; // Start at half the final size for a nice growing effect
+		
+		// Interpolate the size based on how old the foam is
 		float current_size = mix(start_size, end_size, time_diff / life_time);
 
-		vec2 relative_pos = world_pos_xz - foam_positions[i].xz; // Changed from splash_positions
+		// --- UV Calculation ---
+		vec2 relative_pos = world_pos_xz - foam_positions[i].xz;
 		vec2 uv = relative_pos / current_size + 0.5;
 
 		float foam_from_tex = 0.0;
@@ -166,7 +172,8 @@ float get_foam_effect(vec2 world_pos_xz) {
 			foam_from_tex = texture(splash_texture, uv).r;
 		}
 
-		float fade_in = smoothstep(0.0, 0.4, time_diff);
+		// --- Intensity and Fades ---
+		float fade_in = smoothstep(0.0, 0.2, time_diff);
 		float fade_out = smoothstep(life_time, life_time * 0.4, time_diff);
 		float intensity = fade_in * fade_out;
 		
@@ -203,7 +210,7 @@ void fragment() {
 
 	vec4 distorsion = texture(foam_noise, vertex_world.xz * 0.5) * clamp(1. - waterDist * 0.02, 0.3, 1.) * 0.7;
 	distorsion *= mix(1.0, 1.5 * texture(foam_noise, vertex_world.xz * 0.01).x, 1.0);
-	worldNormal -= distorsion.xyz;
+	//worldNormal -= distorsion.xyz;
 	worldNormal = normalize(worldNormal);
 	NORMAL = normalize((VIEW_MATRIX * vec4(worldNormal, 0.0)).xyz);
 
