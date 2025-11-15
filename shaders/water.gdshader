@@ -26,8 +26,18 @@ uniform float time_ms;
 varying vec3 vertex_world;
 
 float height(vec2 xz) {
-	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0)
-		+ ((sin(-xz.x * 0.2 + time_ms * 0.001)) * 0.5);
+	float height = 0.;
+	float  amp = 0.31;
+	vec2 freq = vec2(0.9,0.7)*1.0;
+	vec2 diff = vec2(1.03, 0.96);
+	float speed = 5.0;
+	for (int i = 0; i < 7; i++) {
+		height += (sin(xz.x*freq.x + TIME*diff.x+sin(xz.y*freq.y+TIME*0.3)) + sin((xz.y+sin(xz.x*freq.x+TIME*0.7))*freq.y + TIME*diff.y)) * amp;
+		amp *= 0.7;
+		freq *= 1.3;
+		diff += 1.7;
+	}
+	return height;
 }
 
 vec3 calculateNormal(vec2 xz) {
@@ -55,11 +65,12 @@ void vertex() {
 	vertex_world.y += height(vertex_world.xz);
 
 	VERTEX = (VIEW_MATRIX * vec4(vertex_world, 1.0)).xyz;
-	//NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
-	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
-	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+//	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+//	NORMAL = vertex_world.xyz;
+//	BINORMAL = normalize((VIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+//	TANGENT = normalize((VIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
 
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
+//	UV = UV * uv1_scale.xy + uv1_offset.xy;
 }
 
 void fragment() {
@@ -78,5 +89,5 @@ void fragment() {
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
-	ALPHA *= albedo.a * albedo_tex.a;
+	ALPHA *= albedo.a * albedo_tex.a * (0.3 + 0.7*smoothstep(-0.3,0.3,NORMAL.y));
 }
