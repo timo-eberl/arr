@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bs2xt224pt8i6"]
+
+[resource]
+resource_name = "Kanone.005"
+cull_mode = 2
+albedo_color = Color(0.17721063, 0.17721063, 0.17721063, 1)
+roughness = 0.5

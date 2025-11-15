@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=41 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
 [ext_resource type="Script" path="res://enemy_spawner.gd" id="23_il2jm"]
+[ext_resource type="PackedScene" uid="uid://dhy2beikmdk0d" path="res://Modelle/pirateShip_applied_material.blend" id="23_wjb0r"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
@@ -1205,7 +1206,11 @@ stream = SubResource("AudioStreamSynchronized_gggvi")
 volume_db = -12.0
 autoplay = true
 
+[node name="pirateShip_applied_material" parent="." instance=ExtResource("23_wjb0r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.52458, 42.374073, -27.772623)
+
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
 [editable path="RigidBody3D/SchiffExport"]
 [editable path="terrain_collapsed"]
+[editable path="pirateShip_applied_material"]
