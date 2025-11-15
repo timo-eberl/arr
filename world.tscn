@@ -1,18 +1,20 @@
-[gd_scene load_steps=34 format=3 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=40 format=3 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://m1tm3c0vjmhn" path="res://Modelle/SchiffExport.blend" id="4_036b0"]
 [ext_resource type="Texture2D" uid="uid://c88sxs47tey05" path="res://hdri/citrus_orchard_road_puresky_2k.hdr" id="4_aqk2v"]
-[ext_resource type="Script" uid="uid://dwm1i8ruafrh2" path="res://src/Kanone.gd" id="4_dwbse"]
+[ext_resource type="Script" path="res://src/Kanone.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://dcbj8garovowg" path="res://src/camera_controller.gd" id="5_dwbse"]
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
+[ext_resource type="Material" uid="uid://ds46abve12x5e" path="res://materials/sail.tres" id="6_bc84e"]
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" path="res://src/play_random_sound.gd" id="10_2o6r5"]
+[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" uid="uid://c2jpj4f4qafxa" path="res://src/play_random_sound.gd" id="10_2o6r5"]
 [ext_resource type="AudioStream" uid="uid://b2vmqfrng7dea" path="res://Sounds/cannon1.wav" id="11_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="AudioStream" uid="uid://cetp7txgupokl" path="res://Sounds/cannon2.wav" id="12_26xuy"]
@@ -42,6 +44,177 @@ size = Vector3(3.2790527, 2.0118408, 0.4580078)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ioo17"]
 radius = 3.0
 height = 9.0
+
+[sub_resource type="Animation" id="Animation_wukud"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SchiffExport/Segel01:blend_shapes/SailWind")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-4.2870936),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SchiffExport/Segel02:blend_shapes/SailWind")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SchiffExport/Segel03:blend_shapes/SailWind")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bc84e"]
+resource_name = "sail_animation"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SchiffExport/Segel01:blend_shapes/SailWind")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.35, 0.6),
+"transitions": PackedFloat32Array(-2.7320802, -1.2745605, -6.062864),
+"update": 0,
+"values": [1.0, 0.8999999999999999, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("SchiffExport/Segel02:blend_shapes/SailWind")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(-2.8284268, -3.0314326, -1.8660659),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("SchiffExport/Segel03:blend_shapes/SailWind")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.35, 0.65),
+"transitions": PackedFloat32Array(-2.462289, -1.5157166, -3.6050012),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_il2jm"]
+resource_name = "sail_animation_2"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("SchiffExport/Segel01:blend_shapes/SailWind")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.35, 0.6),
+"transitions": PackedFloat32Array(-2.7320802, -1.2745605, -6.062864),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SchiffExport/Segel02:blend_shapes/SailWind")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(-2.8284268, -1.8660668, -1.8660659),
+"update": 0,
+"values": [1.0, 0.8500000000000001, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("SchiffExport/Segel03:blend_shapes/SailWind")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.35, 0.65),
+"transitions": PackedFloat32Array(-2.462289, -1.5157166, -3.6050012),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_wjb0r"]
+resource_name = "sail_animation_3"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("SchiffExport/Segel01:blend_shapes/SailWind")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.35, 0.6),
+"transitions": PackedFloat32Array(-2.7320802, -1.2745605, -6.062864),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("SchiffExport/Segel02:blend_shapes/SailWind")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(-2.8284268, -3.0314326, -1.8660659),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SchiffExport/Segel03:blend_shapes/SailWind")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.35, 0.65),
+"transitions": PackedFloat32Array(-2.462289, -1.5157166, -3.6050012),
+"update": 0,
+"values": [1.0, 0.8999999999999999, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_il2jm"]
+_data = {
+&"RESET": SubResource("Animation_wukud"),
+&"sail_animation": SubResource("Animation_bc84e"),
+&"sail_animation_2": SubResource("Animation_il2jm"),
+&"sail_animation_3": SubResource("Animation_wjb0r")
+}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wse8f"]
 size = Vector3(5, 11.425995, 12.340088)
@@ -74,6 +247,10 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.20784314)
 shadow_size = 16
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_2o6r5"]
+vertices = PackedVector3Array(-149.5, 1, -149.5, -149.5, 1, 149.5, 149.5, 1, 149.5, 149.5, 1, -149.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [node name="World" type="Node3D"]
 
 [node name="Water" type="MeshInstance3D" parent="."]
@@ -105,6 +282,18 @@ transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
+
+[node name="WindDriver" parent="RigidBody3D/SchiffExport" index="7"]
+transform = Transform3D(9.033336, 0, 0, 0, 9.033336, 0, 0, 0, 9.033336, -0.36592558, 45.926785, 4.486027)
+
+[node name="Segel01" parent="RigidBody3D/SchiffExport" index="8"]
+material_override = ExtResource("6_bc84e")
+
+[node name="Segel02" parent="RigidBody3D/SchiffExport" index="10"]
+material_override = ExtResource("6_bc84e")
+
+[node name="Segel03" parent="RigidBody3D/SchiffExport" index="12"]
+material_override = ExtResource("6_bc84e")
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="RigidBody3D"]
 node_a = NodePath("../../Ship")
@@ -161,6 +350,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.64001226)
 script = ExtResource("8_2o6r5")
 time_diff_from = 1.2
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RigidBody3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_il2jm")
+}
+speed_scale = 1.2
+script = ExtResource("9_wukud")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="RigidBody3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_il2jm")
+}
+speed_scale = 1.5
+script = ExtResource("9_wukud")
+animation = "sail_animation_2"
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="RigidBody3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_il2jm")
+}
+speed_scale = 1.7
+script = ExtResource("9_wukud")
+animation = "sail_animation_3"
+
 [node name="TestEnemy" type="RigidBody3D" parent="." groups=["enemy_ship"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.599628, 0, 0.19351959)
 collision_layer = 2
@@ -181,7 +393,7 @@ shape = SubResource("BoxShape3D_wse8f")
 
 [node name="Ship" type="StaticBody3D" parent="." node_paths=PackedStringArray("sails")]
 script = ExtResource("2_fj7yv")
-sails = [NodePath("../RigidBody3D/SchiffExport/Plane_001")]
+sails = [NodePath("../RigidBody3D/SchiffExport/Segel01"), NodePath("../RigidBody3D/SchiffExport/Segel02"), NodePath("../RigidBody3D/SchiffExport/Segel03")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ship"]
 transform = Transform3D(1.749, 0, 0, 0, 13.62, 0, 0, 0, 1.749, 0, 0, 0)
@@ -193,7 +405,7 @@ script = ExtResource("5_dwbse")
 
 [node name="CannonSounds" type="AudioStreamPlayer3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.431942, 0, 0)
-autoplay = true
+max_polyphony = 5
 script = ExtResource("10_2o6r5")
 sounds = Array[AudioStream]([ExtResource("11_cbp6q"), ExtResource("12_26xuy"), ExtResource("13_bc84e"), ExtResource("14_wukud"), ExtResource("15_il2jm"), ExtResource("16_wjb0r")])
 
@@ -976,9 +1188,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.93544, 0.001897335, -25.18
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
 transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -118.78506, 2.3619688, 52.880516)
+target_container_path = NodePath("../Targets")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_2o6r5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+visible = false
+size = Vector3(300, 1, 300)
+
+[node name="Targets" type="Node3D" parent="."]
+
+[node name="Target1" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.402016, 0, 0.3976593)
+
+[node name="Target2" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -59.868095)
+
+[node name="Target3" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.195816)
+
+[node name="Target4" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.034138, 0, -49.086514)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
 [editable path="RigidBody3D/SchiffExport"]
-[editable path="TestEnemy/SchiffExport"]
 [editable path="terrain_collapsed"]
