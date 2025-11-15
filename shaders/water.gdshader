@@ -30,8 +30,18 @@ varying vec3 vertex_world;
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 
 float height(vec2 xz) {
-	return ((sin(xz.y * 0.3 + time_ms * 0.001)) * 1.0)
-		+ ((sin(-xz.x * 0.2 + time_ms * 0.001)) * 0.5);
+	float height = 0.;
+	float  amp = 0.3;
+	vec2 freq = vec2(0.9,0.7)*0.9;
+	vec2 diff = vec2(1.03, 0.96);
+	float speed = 5.0;
+	for (int i = 0; i < 7; i++) {
+		height += (sin(xz.x*freq.x + TIME*diff.x+sin(xz.y*freq.y+TIME*0.3)) + sin((xz.y+sin(xz.x*freq.x+TIME*0.7))*freq.y + TIME*diff.y)) * amp;
+		amp *= 0.7;
+		freq *= 1.3;
+		diff += 1.7;
+	}
+	return height;
 }
 
 vec3 calculateNormal(vec2 xz) {
@@ -59,11 +69,12 @@ void vertex() {
 	vertex_world.y += height(vertex_world.xz);
 
 	VERTEX = (VIEW_MATRIX * vec4(vertex_world, 1.0)).xyz;
-	//NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
-	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
-	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+//	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+//	NORMAL = vertex_world.xyz;
+//	BINORMAL = normalize((VIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+//	TANGENT = normalize((VIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
 
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
+//	UV = UV * uv1_scale.xy + uv1_offset.xy;
 }
 
 void fragment() {
@@ -71,9 +82,8 @@ void fragment() {
 
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	NORMAL = calculateNormal(vertex_world.xz);
+	vec3 worldNormal = calculateNormal(vertex_world.xz);
 	//ALBEDO = NORMAL;
-	NORMAL = normalize((VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 
 	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
 	METALLIC = metallic_tex * metallic;
@@ -82,21 +92,29 @@ void fragment() {
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
-	ALPHA *= albedo.a * albedo_tex.a;
 
 	float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
 	depth = depth * 2.0 - 1.0;
 	vec4 upos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth, 1.0);
 	vec3 pixel_position = upos.xyz / upos.w;
 	vec3 pixel_pos_world = (INV_VIEW_MATRIX * vec4(pixel_position, 1.0)).xyz;
+	float waterDist = distance(pixel_pos_world, vertex_world);
 
-	float t = clamp(distance(pixel_pos_world, vertex_world) * 0.1, 0.0, 1.0);
-	ALBEDO = mix(ALBEDO + 0.2, ALBEDO, t);
+	vec4 distorsion = texture(foam_noise, vertex_world.xz*1.5) * clamp(1. - waterDist*0.02, 0.3, 1.);
+	worldNormal -= distorsion.xyz;
+	worldNormal = normalize(worldNormal);
+	NORMAL = normalize((VIEW_MATRIX * vec4(worldNormal, 0.0)).xyz);
+
+	vec3 cameraDirection = normalize(pixel_pos_world - CAMERA_POSITION_WORLD);
+	float reflectionFactor = 1.-dot(-cameraDirection, worldNormal)*-cameraDirection.y;
+	reflectionFactor = mix(1.0, reflectionFactor, 0.7);
+	ALBEDO += clamp(1. - waterDist*0.1, 0.0, 0.3);
+
+	ALBEDO += clamp(0., 1., pow((height(vertex_world.xz)+texture(foam_noise, vertex_world.zx*0.01).x)*worldNormal.y*0.6,8.));
+
+	float t = clamp(pow(waterDist * 0.5, 2.0), 0.0, 1.0);
+	ALBEDO = mix(ALBEDO + reflectionFactor, ALBEDO, t);
 	//ALBEDO = vec3(t);
-	ALPHA = mix(0.5, 1.0, t);
-	
-	t += texture(foam_noise, vertex_world.xz * 0.1).x * 0.1;
-	if (t < 0.1) {
-		ALBEDO = vec3(1.0);
-	}
+	ALPHA = mix(0.1, 1.0, t) * reflectionFactor;
+	ALPHA -= pow(clamp(1.-waterDist*0.05, 0.0, 1.0)*distorsion.y,2.0);
 }
