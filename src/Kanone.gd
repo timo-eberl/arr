@@ -13,7 +13,6 @@ extends Node3D
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
 @onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 @onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
-@onready var cannon_sound_player: RandomSoundPlayer = $"../../Ship/CannonSounds"
 
 var _cooldown: float = 0.0
 
@@ -57,9 +56,9 @@ func fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	if use_right:
-		$"../../Ship".SetKippen(1.4)
+		$"../../Ship".SetKippen(.8)
 	else:
-		$"../../Ship".SetKippen(-1.4)
+		$"../../Ship".SetKippen(-.8)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
@@ -86,8 +85,6 @@ func fire() -> void:
 		bullet.add_collision_exception_with(ship_body)
 
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
-	
-	cannon_sound_player.play_sound()
 
 
 
