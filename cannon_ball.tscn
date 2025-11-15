@@ -15,10 +15,8 @@ script = ExtResource("1_gskqm")
 plank_scene = ExtResource("2_k1y7j")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_gskqm")
 mesh = SubResource("SphereMesh_gskqm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("SphereShape3D_k1y7j")

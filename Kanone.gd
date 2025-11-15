@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var bullet_scene: PackedScene
-@export var bullet_speed: float = 100.0
+@export var bullet_speed: float = 70.0
 @export var fire_rate: float = 0.3
 
 @export var ray_length: float = 1000.0
@@ -53,12 +53,25 @@ func fire() -> void:
 	var bullet := bullet_scene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(bullet)
 
-	bullet.global_transform = muzzle.global_transform
-
 	var dir: Vector3 = -muzzle.global_transform.basis.z
+	dir.y = 0.0
+	dir = dir.normalized()
 
-	# Kugelgeschwindigkeit = Schiffsgeschwindigkeit + Kanonengeschwindigkeit
+	var spawn_offset: float = 2.0
+	var spawn_pos: Vector3 = muzzle.global_transform.origin + dir * spawn_offset
+
+	var t := bullet.global_transform
+	t.origin = spawn_pos
+	t.basis = Basis.looking_at(dir, Vector3.UP)
+	bullet.global_transform = t
+
+	var ship_body := _find_ship_body()
+	if ship_body != null:
+		bullet.add_collision_exception_with(ship_body)
+
+	# Geschwindigkeit setzen
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
+
 
 
 func is_target_on_right_side() -> bool:
@@ -97,3 +110,11 @@ func is_target_on_right_side() -> bool:
 	var dot: float = right_dir.dot(to_target)
 
 	return dot > 0.0
+
+func _find_ship_body() -> PhysicsBody3D:
+	var node: Node = self
+	while node != null:
+		if node is PhysicsBody3D:
+			return node as PhysicsBody3D
+		node = node.get_parent()
+	return null
