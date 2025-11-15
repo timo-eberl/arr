@@ -1,27 +1,36 @@
 extends Node3D
 
 @export var bullet_scene: PackedScene
-@export var bullet_speed: float = 50.0
-@export var fire_rate: float = 0.25
+@export var bullet_speed: float = 100.0
+@export var fire_rate: float = 0.3
 
 @export var ray_length: float = 1000.0
 @export var collision_mask: int = 2
 @export var camera_path: NodePath
-@export var ship_body_path: NodePath       # <-- NEU: RigidBody3D des Schiffs zuweisen
 
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
-@onready var left_muzzle: Marker3D = $Kanone2/Muzzle
-@onready var right_muzzle: Marker3D = $Kanone1/Muzzle
-@onready var ship_body: RigidBody3D = get_node(ship_body_path)   # <-- NEU
+@onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
+@onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
 
 var _cooldown: float = 0.0
 
+var _ship_velocity: Vector3 = Vector3.ZERO
+var _last_global_pos: Vector3
+
 func _ready():
+	_last_global_pos = global_transform.origin
 	print("LEFT =", left_muzzle)
 	print("RIGHT =", right_muzzle)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	# Schiffsgeschwindigkeit aus Positionsänderung berechnen
+	var current_pos: Vector3 = global_transform.origin
+	if delta > 0.0:
+		_ship_velocity = (current_pos - _last_global_pos) / delta
+	_last_global_pos = current_pos
+
+	# Feuerrate / Input wie vorher
 	if _cooldown > 0.0:
 		_cooldown -= delta
 
@@ -48,13 +57,8 @@ func fire() -> void:
 
 	var dir: Vector3 = -muzzle.global_transform.basis.z
 
-	# ---------- WICHTIG: Schiffstempo + Shot-Velocity ----------
-	var ship_vel: Vector3 = Vector3.ZERO
-	if ship_body:
-		ship_vel = ship_body.linear_velocity
-
-	bullet.linear_velocity = ship_vel + dir * bullet_speed
-	# ------------------------------------------------------------
+	# Kugelgeschwindigkeit = Schiffsgeschwindigkeit + Kanonengeschwindigkeit
+	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
 
 
 func is_target_on_right_side() -> bool:
