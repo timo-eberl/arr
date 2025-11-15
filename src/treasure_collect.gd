@@ -33,12 +33,12 @@ func _on_area_entered(area: Area3D) -> void:
 		var stream: AudioStreamSynchronized = music_player.stream
 		var main_volume: float = db_to_linear(stream.get_sync_stream_volume(0))
 		var gold_per_stage: float = 50.0
-		for stage in range(1, 4):
-			stream.set_sync_stream_volume(stage, linear_to_db(lerp(0.0, main_volume, 1.0 - clampf(abs(stage * gold_per_stage - collected_treasure), 0.0, gold_per_stage) / gold_per_stage)))
-		#print(linear_to_db(lerp(0.0, main_volume, 1.0 - clampf(abs(25 - collected_treasure), 0.0, 25.0) / 25.0)), "  ",
-		#	   linear_to_db(lerp(0.0, main_volume, 1.0 - clampf(abs(50 - collected_treasure), 0.0, 25.0) / 25.0)), "  ",
-		#	   linear_to_db(lerp(0.0, main_volume, 1.0 - clampf(abs(75 - collected_treasure), 0.0, 25.0) / 25.0)), "  ",
-		#	   linear_to_db(lerp(0.0, main_volume, 1.0 - clampf(abs(100 - collected_treasure), 0.0, 25.0) / 25.0)))
+		for stage in range(1, 5):
+			var linear_volume: float = lerp(0.0, main_volume, 1.0 - clampf(abs(stage * gold_per_stage - collected_treasure), 0.0, gold_per_stage) / gold_per_stage)
+			# never fade out last stage
+			if(stage == 4 && collected_treasure >= stage * gold_per_stage):
+				linear_volume = 1
+			stream.set_sync_stream_volume(stage, linear_to_db(linear_volume))
 
 		# Free sound player once it finished playing
 		await gold_sound_player.finished
