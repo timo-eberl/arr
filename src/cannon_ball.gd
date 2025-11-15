@@ -124,6 +124,9 @@ func _spawn_planks(
 			randf_range(0.0, TAU),
 			randf_range(0.0, TAU)
 		)
+		
+		parent.add_child(plank)
+
 
 		var t := plank.global_transform
 		t.origin = origin + random_offset
@@ -131,7 +134,6 @@ func _spawn_planks(
 		t.basis = Basis(q)
 		plank.global_transform = t
 
-		parent.add_child(plank)
 
 		# Zufallsrichtung (für Streuung)
 		var random_dir := Vector3(
