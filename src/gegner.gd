@@ -1,11 +1,13 @@
 extends RigidBody3D
 
-@export var forward_speed: float = 5.0      # konstante Fahrtgeschwindigkeit
-@export var turn_strength: float = 1.5      # wie stark es Richtung Ziel dreht
+var is_initialized := false
 
-@export var target_container_path: NodePath # Node, der die Zielpunkte als Kinder hat
+@export var forward_speed: float = 5.0
+@export var turn_strength: float = 1.5
+
+@export var target_container_path: NodePath 
 @export var wait_at_target_time: float = 5.0
-@export var arrival_distance: float = 3.0   # wie nah dran ist "Ziel erreicht"?
+@export var arrival_distance: float = 3.0   
 
 @onready var nav_agent: NavigationAgent3D = $NavAgent
 @onready var target_container: Node3D = get_node_or_null(target_container_path)
@@ -21,11 +23,20 @@ func _ready() -> void:
 	linear_damp = 0.1
 	angular_damp = 0.2
 
+	add_to_group("enemy_ship")
+
+	if target_container_path != NodePath(""):
+		target_container = get_node_or_null(target_container_path)
+
 	_pick_new_random_target()
+	
+	is_initialized = true
+	
+	if target_container != null:
+		_pick_new_random_target()
 
 
 func _physics_process(delta: float) -> void:
-	# --- 1) Wellen-Logik: Schiff auf Wasserhöhe + an Normalen ausrichten ---
 
 	var global_2d := Vector2(global_position.x, global_position.z)
 	global_position.y = WaveHeight.height(global_2d)
@@ -41,12 +52,10 @@ func _physics_process(delta: float) -> void:
 
 	var rotation_axis = current_up.cross(target_up)
 	var angle = current_up.angle_to(target_up)
-	var up_strength = 0.05
+	var up_strength = 0.25
 
 	if rotation_axis.length() > 0.0001:
-		angular_velocity += rotation_axis.normalized() * angle * up_strength
-
-	# --- 2) Warten am Ziel? ---
+		angular_velocity = rotation_axis.normalized() * angle
 
 	if is_waiting:
 		wait_timer -= delta
@@ -58,7 +67,6 @@ func _physics_process(delta: float) -> void:
 		# Wellen kippen das Schiff weiter schön → daher kein return vor der Wellenlogik
 		return
 
-	# --- 3) Navigation zum aktuellen Zielpunkt ---
 
 	if current_target == null:
 		# Kein Ziel -> einfach geradeaus fahren
@@ -109,7 +117,6 @@ func _physics_process(delta: float) -> void:
 		var yaw_velocity := delta_yaw * turn_strength
 		angular_velocity.y = yaw_velocity
 
-	# --- 4) Konstante Vorwärtsbewegung (nur XZ, +Z-Richtung) ---
 
 	var move_forward: Vector3 = global_transform.basis.z
 	move_forward.y = 0.0
@@ -125,7 +132,6 @@ func _pick_new_random_target() -> void:
 		return
 
 	var candidates: Array[Node3D] = []
-
 	for child in target_container.get_children():
 		if child is Node3D:
 			candidates.append(child)
@@ -138,7 +144,6 @@ func _pick_new_random_target() -> void:
 	current_target = candidates[randi() % candidates.size()]
 	print("Neues Ziel gewählt:", current_target.name)
 
-	# NavigationAgent bekommt gleich die neue Zielposition
 	nav_agent.target_position = current_target.global_transform.origin
 
 
@@ -154,3 +159,9 @@ func calculateNormal(xz: Vector2) -> Vector3:
 
 	var normal = tangentZ.cross(tangentX)
 	return normal
+
+func set_target_container(container: Node3D) -> void:
+	target_container = container
+
+	if is_initialized:
+		_pick_new_random_target()

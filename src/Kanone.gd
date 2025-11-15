@@ -2,7 +2,7 @@ extends Node3D
 
 @export var bullet_scene: PackedScene
 @export var bullet_speed: float = 40.0
-@export var fire_rate: float = 0.3
+@export var fire_rate: float = 1
 
 @export var ray_length: float = 1000.0
 @export var collision_mask: int = 2
@@ -13,6 +13,8 @@ extends Node3D
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
 @onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 @onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
+
+var cannon_sounds = ["res://Sounds/cannon1.wav", "res://Sounds/cannon2.wav", "res://Sounds/cannon3.wav", "res://Sounds/cannon4.wav"]
 
 var _cooldown: float = 0.0
 
@@ -56,9 +58,9 @@ func fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	if use_right:
-		$"..".SetKippen(.8)
+		$"..".SetKippen(.4)
 	else:
-		$"..".SetKippen(-.8)
+		$"..".SetKippen(-.4)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
@@ -86,6 +88,17 @@ func fire() -> void:
 
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
 
+	#cannon_sound_player.play_sound()
+	var cannon_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+	cannon_sound_player.stream = load(cannon_sounds.pick_random())
+	get_tree().root.add_child(cannon_sound_player)
+	cannon_sound_player.position = self.global_position
+	cannon_sound_player.volume_db = -6
+	cannon_sound_player.play()
+
+	# Free cannon sound player once it finished playing
+	await cannon_sound_player.finished
+	cannon_sound_player.queue_free()
 
 
 func is_target_on_right_side() -> bool:
