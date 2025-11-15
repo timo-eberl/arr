@@ -5,20 +5,21 @@ extends RigidBody3D
 
 @export var plank_scene: PackedScene
 
-# --- Parameter für Eintritt in Schiff ---
-@export var enter_plank_count: int = 5
-@export var enter_plank_impulse: float = 5
+@export var enter_plank_count: int = 7
+@export var enter_plank_impulse: float = 10.0
+@export_range(0.0, 1.0) var enter_direction_alignment: float = 0.4
 
-# --- Parameter für Austritt aus Schiff ---
-@export var exit_plank_count: int = 10
+@export var exit_plank_count: int = 15
 @export var exit_plank_impulse: float = 10
+@export_range(0.0, 1.0) var exit_direction_alignment: float = 0.4
+
 
 @onready var hit_area: Area3D = $HitArea
 
 var splash_spawned := false
 var _time_passed: float = 0.0
 
-# Wird von der Kanone gesetzt
+# Wird von der Kanone gesetzt (Richtung, in die die Kugel fliegt)
 var shoot_direction: Vector3 = Vector3.FORWARD
 
 
@@ -27,7 +28,7 @@ func _ready() -> void:
 	angular_damp = 0.0
 	randomize()
 
-	# Kugel ist komplett "geistig": keine physikalischen Kollisionen
+	# Kugel ist "geistig": keine physikalischen Kollisionen
 	collision_layer = 0
 	collision_mask = 0
 
@@ -60,22 +61,40 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
 		print("ENTER hit:", body.name)
-		# Einschlag -> Bretter fliegen ZUR Kugel hin (also GEGEN ihre Richtung)
-		_spawn_planks(body as PhysicsBody3D, enter_plank_count, enter_plank_impulse, -1.0)
+		# Einschlag -> Bretter eher ZUR Kugel hin (gegen ihre Richtung)
+		_spawn_planks(
+			body as PhysicsBody3D,
+			enter_plank_count,
+			enter_plank_impulse,
+			-1.0,                        # gegen Kugelrichtung
+			enter_direction_alignment
+		)
 
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
 		print("EXIT hit:", body.name)
-		# Austritt -> Bretter fliegen MIT der Kugel
-		_spawn_planks(body as PhysicsBody3D, exit_plank_count, exit_plank_impulse, 1.0)
+		# Austritt -> Bretter eher MIT der Kugel
+		_spawn_planks(
+			body as PhysicsBody3D,
+			exit_plank_count,
+			exit_plank_impulse,
+			1.0,                         # mit Kugelrichtung
+			exit_direction_alignment
+		)
 
 
 # -------------------------------------------------------------------------
 #                   PLANK SPAWNING
 # -------------------------------------------------------------------------
 
-func _spawn_planks(ship_body: PhysicsBody3D, count: int, impulse: float, dir_sign: float) -> void:
+func _spawn_planks(
+		ship_body: PhysicsBody3D,
+		count: int,
+		impulse: float,
+		dir_sign: float,
+		alignment: float
+	) -> void:
 	if plank_scene == null:
 		push_warning("plank_scene ist not set")
 		return
@@ -118,16 +137,20 @@ func _spawn_planks(ship_body: PhysicsBody3D, count: int, impulse: float, dir_sig
 
 		parent.add_child(plank)
 
-		# Richtung = Haupt-Richtung +/- etwas Zufall
-		var spread := Vector3(
-			randf_range(-0.3, 0.3),
-			randf_range(-0.1, 0.3),   # etwas nach oben
-			randf_range(-0.3, 0.3)
-		)
-		var dir := (main_dir + spread).normalized()
+		# Zufallsrichtung (für Streuung)
+		var random_dir := Vector3(
+			randf_range(-1.0, 1.0),
+			randf_range(0.2, 1.0),     # etwas nach oben
+			randf_range(-1.0, 1.0)
+		).normalized()
 
+		# Mischung aus Haupt-Richtung und Zufall
+		var dir := (main_dir * alignment + random_dir * (1.0 - alignment)).normalized()
+
+		# Impuls durch Aufprall
 		plank.apply_impulse(dir * impulse)
 
+		# Drehimpuls
 		var torque := Vector3(
 			randf_range(-1.0, 1.0),
 			randf_range(-1.0, 1.0),
