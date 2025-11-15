@@ -2,6 +2,7 @@ class_name Ship
 extends Node3D
 @export var winkel = 0;
 @export var speed := 0.0;
+var kippen = 0;
 
 @export var speed_slow := 7.0
 @export var speed_fast := 16.0
@@ -66,12 +67,18 @@ func _process(delta: float) -> void:
 	
 	var normal = calculateNormal(global_2d)
 	
-	var basis = Basis()               # identity basis
-	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
+	if abs(kippen) > 0:
+		kippen *= 0.95;
+	
+	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0 + kippen).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
 	basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
 	basis.z = basis.x.cross(basis.y).normalized()
 
 	global_transform = Transform3D(basis, position)
+
+func SetKippen(k: float):
+	kippen += k
+
 
 func calculateNormal(xz: Vector2) -> Vector3:
 	# A small offset value to sample neighboring points

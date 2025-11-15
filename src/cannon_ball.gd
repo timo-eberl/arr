@@ -5,11 +5,13 @@ extends RigidBody3D
 
 @export var plank_scene: PackedScene
 
-@export var enter_plank_count: int = 7
+@export var enter_plank_count: int = 5
 @export var enter_plank_impulse: float = 10.0
 @export_range(0.0, 1.0) var enter_direction_alignment: float = 0.4
 
-@export var exit_plank_count: int = 15
+@export_range(0.0, 1.0) var enter_speed_factor: float = 0.5
+
+@export var exit_plank_count: int = 10
 @export var exit_plank_impulse: float = 10
 @export_range(0.0, 1.0) var exit_direction_alignment: float = 0.4
 
@@ -28,7 +30,6 @@ func _ready() -> void:
 	angular_damp = 0.0
 	randomize()
 
-	# Kugel ist "geistig": keine physikalischen Kollisionen
 	collision_layer = 0
 	collision_mask = 0
 
@@ -53,22 +54,19 @@ func _physics_process(delta: float) -> void:
 			self.linear_velocity *= 0.7
 			splash_spawned = true
 
-
-# -------------------------------------------------------------------------
-#                   SIGNAL HANDLER
-# -------------------------------------------------------------------------
-
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
 		print("ENTER hit:", body.name)
-		# Einschlag -> Bretter eher ZUR Kugel hin (gegen ihre Richtung)
 		_spawn_planks(
 			body as PhysicsBody3D,
 			enter_plank_count,
 			enter_plank_impulse,
-			-1.0,                        # gegen Kugelrichtung
+			-1.0,
 			enter_direction_alignment
 		)
+
+
+
 
 
 func _on_body_exited(body: Node) -> void:
@@ -79,14 +77,12 @@ func _on_body_exited(body: Node) -> void:
 			body as PhysicsBody3D,
 			exit_plank_count,
 			exit_plank_impulse,
-			1.0,                         # mit Kugelrichtung
+			1.0,
 			exit_direction_alignment
 		)
-
-
-# -------------------------------------------------------------------------
-#                   PLANK SPAWNING
-# -------------------------------------------------------------------------
+		
+		if enter_speed_factor < 1.0:
+			linear_velocity *= enter_speed_factor
 
 func _spawn_planks(
 		ship_body: PhysicsBody3D,
@@ -106,7 +102,7 @@ func _spawn_planks(
 	var main_dir := shoot_direction
 	if main_dir.length() < 0.001:
 		main_dir = Vector3.FORWARD
-	main_dir = main_dir.normalized() * dir_sign   # -1 = zur Kugel, +1 = mit Kugel
+	main_dir = main_dir.normalized() * dir_sign
 
 	for i in range(count):
 		var plank := plank_scene.instantiate() as RigidBody3D
@@ -140,7 +136,7 @@ func _spawn_planks(
 		# Zufallsrichtung (für Streuung)
 		var random_dir := Vector3(
 			randf_range(-1.0, 1.0),
-			randf_range(0.2, 1.0),     # etwas nach oben
+			randf_range(0.2, 1.0),
 			randf_range(-1.0, 1.0)
 		).normalized()
 

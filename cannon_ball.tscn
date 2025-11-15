@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djmvuu3bc31c1" path="res://plank.tscn" id="2_k1y7j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gskqm"]
-albedo_color = Color(0, 0, 0, 1)
+albedo_color = Color(0.099985994, 0.099985994, 0.099985994, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_gskqm"]
 
