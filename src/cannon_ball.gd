@@ -1,6 +1,7 @@
 extends RigidBody3D
 
 @export var life_time: float = 3.0
+@onready var water : Water = get_tree().root.get_node("World/Water")
 
 @export var plank_scene: PackedScene
 
@@ -17,6 +18,7 @@ extends RigidBody3D
 
 @onready var hit_area: Area3D = $HitArea
 
+var splash_spawned := false
 var _time_passed: float = 0.0
 
 # Wird von der Kanone gesetzt (Richtung, in die die Kugel fliegt)
@@ -43,6 +45,14 @@ func _physics_process(delta: float) -> void:
 	_time_passed += delta
 	if _time_passed >= life_time:
 		queue_free()
+	
+	if not splash_spawned:
+		var water_height := WaveHeight.height(Vector2(global_position.x, global_position.z))
+		if water_height > self.global_position.y:
+			water.add_splash(global_position)
+			water.add_foam(global_position, 8.0)
+			self.linear_velocity *= 0.7
+			splash_spawned = true
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:

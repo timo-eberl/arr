@@ -24,15 +24,20 @@ func _ready():
 	splash_positions.resize(MAX_SPLASHES)
 	splash_times.resize(MAX_SPLASHES)
 	splash_positions.fill(Vector3.ZERO)
-	splash_times.fill(-100.0)
+	splash_times.fill(-10000.0)
 
 	# Initialize foam arrays
 	foam_positions.resize(MAX_FOAM)
 	foam_times.resize(MAX_FOAM)
 	foam_sizes.resize(MAX_FOAM) # <-- NEW: Resize the sizes array
 	foam_positions.fill(Vector3.ZERO)
-	foam_times.fill(-100.0)
+	foam_times.fill(-10000.0)
 	foam_sizes.fill(1.0) # <-- NEW: Fill with a default size
+	
+	var mat = get_active_material(0) as ShaderMaterial
+	if not mat: return
+	mat.set_shader_parameter("foam_times", foam_times)
+	mat.set_shader_parameter("splash_start_times", splash_times)
 
 func _process(_delta: float) -> void:
 	var time_ms := Time.get_ticks_msec()
@@ -71,12 +76,3 @@ func add_foam(position_xyz: Vector3, size: float = 8.0):
 	mat.set_shader_parameter("foam_sizes", foam_sizes) # <-- NEW: Send sizes to the shader
 	
 	foam_index = (foam_index + 1) % MAX_FOAM
-
-# Example usage: Create a splash and foam with a specific size when clicking
-func _input(event):
-	if event is InputEventMouseButton and event.pressed:
-		var impact_position = Vector3(0, 0, 0)
-		
-		add_splash(impact_position)
-		# MODIFIED: Pass a custom size to the foam effect.
-		add_foam(impact_position, 8.0) # This foam will be larger
