@@ -8,6 +8,8 @@ extends Node3D
 @export var collision_mask: int = 2
 @export var camera_path: NodePath
 
+@export var shoot_up_amount: float = 0.1
+
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
 @onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 @onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
@@ -53,8 +55,13 @@ func fire() -> void:
 	var bullet := bullet_scene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(bullet)
 
+	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
 	dir.y = 0.0
+	dir = dir.normalized()
+
+	# 2) Leichten Up-Kick dazugeben
+	dir.y += shoot_up_amount
 	dir = dir.normalized()
 
 	var spawn_offset: float = 2.0
@@ -65,6 +72,7 @@ func fire() -> void:
 	t.basis = Basis.looking_at(dir, Vector3.UP)
 	bullet.global_transform = t
 
+	# Schussrichtung an die Kugel weitergeben (inkl. Up-Kick)
 	bullet.shoot_direction = dir
 
 	var ship_body := _find_ship_body()
@@ -72,7 +80,6 @@ func fire() -> void:
 		bullet.add_collision_exception_with(ship_body)
 
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
-
 
 
 

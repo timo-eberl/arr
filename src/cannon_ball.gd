@@ -9,7 +9,7 @@ extends RigidBody3D
 @export var enter_plank_impulse: float = 10.0
 @export_range(0.0, 1.0) var enter_direction_alignment: float = 0.4
 
-@export_range(0.0, 1.0) var enter_speed_factor: float = 0.4
+@export_range(0.0, 1.0) var enter_speed_factor: float = 0.5
 
 @export var exit_plank_count: int = 15
 @export var exit_plank_impulse: float = 10
@@ -65,8 +65,7 @@ func _on_body_entered(body: Node) -> void:
 			enter_direction_alignment
 		)
 
-		if enter_speed_factor < 1.0:
-			linear_velocity *= enter_speed_factor
+
 
 
 
@@ -81,6 +80,9 @@ func _on_body_exited(body: Node) -> void:
 			1.0,
 			exit_direction_alignment
 		)
+		
+		if enter_speed_factor < 1.0:
+			linear_velocity *= enter_speed_factor
 
 func _spawn_planks(
 		ship_body: PhysicsBody3D,
