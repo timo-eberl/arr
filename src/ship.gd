@@ -1,23 +1,20 @@
 class_name Ship
-extends Node3D
+extends RigidBody3D
 @export var winkel = 0;
 @export var speed := 0.0;
 var kippen = 0;
 
-@export var speed_slow := 7.0
-@export var speed_fast := 16.0
+@export var max_speed := 16.0
 
 @export var cam_dist_idle := 40
-@export var cam_dist_slow := 50
 @export var cam_dist_fast := 70
 
 @onready var camera_controller : CameraController = $CameraTarget
 
 @export var sails : Array[Node3D]
 
-var speed_mode : SPEED_MODE
+var sail_down := 0.0
 
-enum SPEED_MODE { NO, SLOW, FAST }
 var target_sail_scale := 0.0
 var sail_scale := 0.2
 
@@ -29,67 +26,61 @@ func setShipLength() -> void:
 		schiffLaenge = Laenge;
 	pass
 
-func get_target_speed() -> float:
-	if speed_mode == SPEED_MODE.SLOW:
-		return speed_slow
-	elif speed_mode == SPEED_MODE.FAST:
-		return speed_fast
-	return 0.0
-
 func _ready() -> void:
 	camera_controller.target_cam_distance = cam_dist_idle
 
 func _process(delta: float) -> void:
-	var lenkinput = Input.get_axis("LinksLenken", "RechtsLenken")
-	
-	if Input.is_action_just_pressed("Gasgeben"):
-		if speed_mode == SPEED_MODE.NO:
-			speed_mode = SPEED_MODE.SLOW
-			target_sail_scale = 0.5
-			camera_controller.target_cam_distance = cam_dist_slow
-		elif speed_mode == SPEED_MODE.SLOW:
-			speed_mode = SPEED_MODE.FAST
-			target_sail_scale = 1
-			camera_controller.target_cam_distance = cam_dist_fast
-	if Input.is_action_just_pressed("Brenmsen"):
-		if speed_mode == SPEED_MODE.FAST:
-			speed_mode = SPEED_MODE.SLOW
-			target_sail_scale = 0.5
-			camera_controller.target_cam_distance = cam_dist_slow
-		elif speed_mode == SPEED_MODE.SLOW:
-			speed_mode = SPEED_MODE.NO
-			target_sail_scale = 0.2
-			camera_controller.target_cam_distance = cam_dist_idle
+	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
 	for sail in sails:
 		sail.scale = Vector3(1,sail_scale,1)
-	
-	winkel += lenkinput * delta * (speed / 10.0);
-	speed = lerp(speed, -get_target_speed(), delta)
-	
-
 	#$"../RigidBody3D".add_constant_force(transform.basis.x * lenkinput * _delta * 20.0, transform.basis.y * 2.0);
 	
-	global_transform.origin += -global_transform.basis.z * speed * delta;
-	
-	var global_2d := Vector2(self.global_position.x, self.global_position.z)
-	self.global_position.y = WaveHeight.height(global_2d)
-	
-	var normal = calculateNormal(global_2d)
+	#global_transform.origin += -global_transform.basis.z * speed * delta;
 	
 	if abs(kippen) > 0:
 		kippen *= 0.95;
 	
-	basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0 + kippen).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
-	basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
-	basis.z = basis.x.cross(basis.y).normalized()
-
-	global_transform = Transform3D(basis, position)
+	#basis.y = normal.normalized().rotated(global_basis.z, lenkinput / 4.0 + kippen).rotated(global_basis.x, -0.15 * abs(lenkinput))     # set the UP direction
+	#basis.x = basis.y.cross(-Vector3.FORWARD.rotated(Vector3(0, 1, 0), winkel)).normalized()
+	#basis.z = basis.x.cross(basis.y).normalized()
 
 func SetKippen(k: float):
 	kippen += k
 
+func _physics_process(delta: float) -> void:
+	var global_2d := Vector2(self.global_position.x, self.global_position.z)
+	var target_height := WaveHeight.height(global_2d)
+	var d : float = target_height - global_position.y
+	linear_velocity.y = d
+	
+	var lenkinput := Input.get_axis("RechtsLenken", "LinksLenken")
+	angular_velocity.y += lenkinput * 4 * delta
+	
+	var normal = calculateNormal(global_2d)
+	var myBasis = Basis()
+	myBasis.y = normal.normalized()        # UP-Richtung setzen
+	myBasis.x = myBasis.y.cross(-Vector3.FORWARD).normalized()
+	myBasis.z = myBasis.x.cross(myBasis.y).normalized()
+
+	var current_up = global_transform.basis.y
+	var target_up = myBasis.y
+
+	var rotation_axis = current_up.cross(target_up)
+	var angle = current_up.angle_to(target_up)
+	var up_strength = 0.05
+
+	if rotation_axis.length() > 0.0001:
+		angular_velocity += rotation_axis.normalized() * angle * up_strength
+	
+	var lenkWinkel = Vector3(linear_velocity.x, 0, linear_velocity.z).signed_angle_to(basis.z, Vector3.UP)
+	print(lenkWinkel)
+	
+	linear_velocity = linear_velocity.rotated(Vector3(0,1.0,0), lenkWinkel / 2.0)
+	
+	if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
+		self.apply_central_force(self.global_basis.z * 2000 * delta)
 
 func calculateNormal(xz: Vector2) -> Vector3:
 	# A small offset value to sample neighboring points

@@ -3,7 +3,7 @@ extends Node3D
 @onready var water : Water = $"../../Water"
 @export var time_diff_from := 1.0
 @export var time_diff_to := 0.2
-@onready var ship : Ship = $"../../Ship"
+@onready var ship : Ship = $".."
 
 func _ready() -> void:
 	while true:
