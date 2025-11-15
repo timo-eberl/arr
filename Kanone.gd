@@ -65,12 +65,14 @@ func fire() -> void:
 	t.basis = Basis.looking_at(dir, Vector3.UP)
 	bullet.global_transform = t
 
+	bullet.shoot_direction = dir
+
 	var ship_body := _find_ship_body()
 	if ship_body != null:
 		bullet.add_collision_exception_with(ship_body)
 
-	# Geschwindigkeit setzen
 	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
+
 
 
 

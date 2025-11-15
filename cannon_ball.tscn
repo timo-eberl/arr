@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2m8v11boo7pp"]
+[gd_scene load_steps=7 format=3 uid="uid://c2m8v11boo7pp"]
 
 [ext_resource type="Script" uid="uid://bphwo7n5sk46g" path="res://src/cannon_ball.gd" id="1_gskqm"]
 [ext_resource type="PackedScene" uid="uid://djmvuu3bc31c1" path="res://plank.tscn" id="2_k1y7j"]
@@ -10,7 +10,11 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k1y7j"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_sepv1"]
+
 [node name="RigidBody3D" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_gskqm")
 plank_scene = ExtResource("2_k1y7j")
 
@@ -20,3 +24,11 @@ mesh = SubResource("SphereMesh_gskqm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_k1y7j")
+
+[node name="HitArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("SphereShape3D_sepv1")
