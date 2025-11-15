@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="Script" uid="uid://c2jpj4f4qafxa" path="res://src/play_random_sound.gd" id="10_2o6r5"]
 [ext_resource type="AudioStream" uid="uid://b2vmqfrng7dea" path="res://Sounds/cannon1.wav" id="11_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
@@ -23,7 +23,6 @@
 [ext_resource type="AudioStream" uid="uid://bn2pd4m88p7ek" path="res://Sounds/cannon5.wav" id="15_il2jm"]
 [ext_resource type="AudioStream" uid="uid://c40jhxs3mcfrh" path="res://Sounds/cannon6.wav" id="16_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="AudioStream" uid="uid://ds2xtts3v1m25" path="res://Sounds/ocean_waves.wav" id="24_wjb0r"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(500, 500)
@@ -1204,9 +1203,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.195816)
 
 [node name="Target4" type="Marker3D" parent="Targets"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.034138, 0, -49.086514)
-
-[node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(0.013211776, 0, 0.99991274, 0, 1, 0, -0.99991274, 0, 0.013211776, -123.83129, 2.9888377, 25.38221)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
