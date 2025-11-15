@@ -67,7 +67,7 @@ float gameplay_height(vec2 xz) {
 	// Calculate the first Gerstner wave and only take its height (y-component)
 	vec3 wave_1_displacement = gerstner_wave(xz, dir_1, steepness_1, amp_1, freq_1, speed_1, time);
 	height += wave_1_displacement.y;
-	
+
 
 	// --- Wave 2 ---
 	float steepness_2 = 0.6;     // A slightly sharper secondary wave
@@ -79,7 +79,7 @@ float gameplay_height(vec2 xz) {
 	// Calculate the second Gerstner wave and add its height
 	vec3 wave_2_displacement = gerstner_wave(xz, dir_2, steepness_2, amp_2, freq_2, speed_2, time);
 	height += wave_2_displacement.y;
-	
+
 	return height;
 }
 
@@ -87,13 +87,13 @@ float visual_height(vec2 xz) {
 	float time = time_ms * 0.001;
 	time *= 0.7;
 	float height = 0.0;
-	
+
 	float  amp = 0.1;
 	vec2 freq = vec2(0.9,0.7)*0.7;
 	vec2 diff = vec2(1.03, 0.96);
 	// The 'speed' variable was not used in the original function.
 	// You might want to integrate it into the time calculation, for example: time * speed
-	float speed = 5.0; 
+	float speed = 5.0;
 
 	for (int i = 0; i < 7; i++) {
 		// Rotate the coordinates for each wave layer.
@@ -104,7 +104,7 @@ float visual_height(vec2 xz) {
 			sin(p.x*freq.x + time*diff.x+sin(p.y*freq.y+time*0.3))
 			+ sin((p.y+sin(p.x*freq.x+time*0.7))*freq.y + time*diff.y)
 		) * amp;
-		
+
 		amp *= 0.7;
 		freq *= 1.3;
 		diff += 1.7;
@@ -182,11 +182,13 @@ void fragment() {
 	reflectionFactor = mix(1.0, reflectionFactor, 0.7);
 	ALBEDO += clamp(1. - waterDist*0.1, 0.0, 0.3);
 
-	ALBEDO += pow(
+
+	ALBEDO += clamp(pow(
 		(visual_height(vertex_world.xz)
 		+gameplay_height(vertex_world.xz)*0.45
 		+texture(foam_noise, vertex_world.zx*0.01).x)*worldNormal.y*0.6,4.
-	);
+	), 0.0, 1.0);
+
 
 	float t = clamp(pow(waterDist * 0.5, 2.0), 0.0, 1.0);
 	ALBEDO = mix(ALBEDO + reflectionFactor, ALBEDO, t);
