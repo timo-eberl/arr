@@ -26,6 +26,11 @@ var Laenge = 1;
 
 var ship_sound: AudioStreamPlayer = AudioStreamPlayer.new()
 
+var sail_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var sail_sounds = ["res://Sounds/sail1.wav", "res://Sounds/sail2.wav", "res://Sounds/sail3.wav"]
+
+var previous_action_accelerate: bool = false
+
 func setShipLength() -> void:
 	if Laenge != schiffLaenge:
 		schiffLaenge = Laenge;
@@ -38,8 +43,12 @@ func SetSail() -> void:
 
 func _ready() -> void:
 	camera_controller.target_cam_distance = cam_dist_idle
+
 	ship_sound.stream = load("res://Sounds/wind_in_sail.wav")
 	self.add_child(ship_sound)
+	
+	self.add_child(sail_sound_player)
+
 
 func _process(delta: float) -> void:
 	
@@ -50,6 +59,7 @@ func _process(delta: float) -> void:
 		get_tree().current_scene.show_end_screen()
 	
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
+	camera_controller.target_cam_distance = remap(linear_velocity.length(), 0, max_speed, cam_dist_idle, cam_dist_fast)
 	SetSail()
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
@@ -67,7 +77,8 @@ func _process(delta: float) -> void:
 	#basis.z = basis.x.cross(basis.y).normalized()
 
 func SetKippen(k: float):
-	kippen += k
+	linear_velocity += basis.z * k * 10.0
+	angular_velocity += basis.z * k * 5.0
 
 func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
@@ -78,7 +89,7 @@ func _physics_process(delta: float) -> void:
 	var lenkinput := Input.get_axis("RechtsLenken", "LinksLenken")
 	angular_velocity.y += lenkinput * 4 * delta
 	
-	var normal = calculateNormal(global_2d)
+	var normal = WaveHeight.calculateNormal(global_2d)
 	var myBasis = Basis()
 	myBasis.y = normal.normalized()        # UP-Richtung setzen
 	myBasis.x = myBasis.y.cross(-Vector3.FORWARD).normalized()
@@ -100,10 +111,19 @@ func _physics_process(delta: float) -> void:
 	
 	linear_velocity = linear_velocity.rotated(Vector3(0,1.0,0), lenkWinkel / 2.0)
 	
-	var speedInput := Input.get_axis("Brenmsen", "Gasgeben") 
-	sail_down += speedInput * 0.01
+	var speedInput := Input.get_axis("Brenmsen", "Gasgeben")
+	sail_down += speedInput * 0.04
 	sail_down = clamp(sail_down, -.1, 1.0)
 	#print(sail_down)
+
+	if(speedInput != 0.0):
+		var accelerate = (speedInput > 0.0)
+		if(accelerate != previous_action_accelerate):
+			previous_action_accelerate = accelerate
+			sail_sound_player.stream = load(sail_sounds.pick_random())
+			#sail_sound_player.position = self.global_position
+			sail_sound_player.volume_db = -18
+			sail_sound_player.play()
 	
 	#if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
 	self.apply_central_force(global_basis.z * sail_down * 15)
@@ -114,24 +134,6 @@ func _physics_process(delta: float) -> void:
 	#print(" VOLUME    ", sail_down)
 	if(!ship_sound.playing):
 		ship_sound.play()
-
-func calculateNormal(xz: Vector2) -> Vector3:
-	# A small offset value to sample neighboring points
-	var epsilon = 0.05;
-
-	# Sample the height at the current point and at points slightly offset in x and z
-	var h = WaveHeight.height(xz);
-	var hx = WaveHeight.height(Vector2(xz.x + epsilon, xz.y));
-	var hz = WaveHeight.height(Vector2(xz.x, xz.y + epsilon));
-
-	# Create two tangent vectors
-	var tangentX = Vector3(epsilon, hx - h, 0.0).normalized();
-	var tangentZ = Vector3(0.0, hz - h, epsilon).normalized();
-
-	# The normal is the cross product of the two tangents
-	var normal = tangentZ.cross(tangentX);
-
-	return normal;
 	
 func get_carried_treasure_amount() -> int:
 	return collected_treasure_parent.get_child_count()
@@ -143,7 +145,7 @@ func deposit_treasure() -> void:
 
 	GameState.add_gold(amount)
 
-	var player := AudioStreamPlayer3D.new()
+	var player := AudioStreamPlayer.new()
 	add_child(player)
 	player.stream = load("res://Sounds/treasure_delivered.wav")
 	player.volume_db = -15
@@ -154,3 +156,5 @@ func deposit_treasure() -> void:
 
 	await player.finished
 	player.queue_free()
+
+	DynamicMusic.update(collected_treasure_parent, $"../MusicPlayer")

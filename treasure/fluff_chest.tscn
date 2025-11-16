@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://g1h1u4880e3j"]
+
+[ext_resource type="Script" uid="uid://cpc5nxbgrqywi" path="res://src/floating_fluff.gd" id="1_l7ptx"]
+[ext_resource type="PackedScene" uid="uid://bnk6t6x3bl4ti" path="res://Modelle/chest.blend" id="2_3e0lb"]
+
+[node name="FluffChest" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_l7ptx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="chest" parent="MeshInstance3D" instance=ExtResource("2_3e0lb")]
+transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, -0.6093769, 0)

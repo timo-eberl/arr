@@ -1,7 +1,8 @@
-class_name CollectableTreasure
-extends Area3D
+class_name FloatingFluff
+extends Node3D
 
-@export var collected_variant : PackedScene
+func _ready() -> void:
+	get_child(0).rotate_z(randf_range(0.0, TAU))
 
 func _physics_process(delta: float) -> void:
 	var target_y := WaveHeight.height(
@@ -11,3 +12,7 @@ func _physics_process(delta: float) -> void:
 		self.global_position.y += delta * 5.0
 	else:
 		self.global_position.y = lerp(global_position.y, target_y, delta * 5)
+	
+	var target_normal := WaveHeight.calculateNormal(Vector2(global_position.x,global_position.z)).normalized()
+	self.look_at(global_position + target_normal, Vector3.RIGHT)
+	

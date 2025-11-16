@@ -19,6 +19,9 @@ var is_initialized := false
 
 @onready var wood_mesh: MeshInstance3D = $pirateShip_applied_material/PirateShip
 
+var sink_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var sink_sounds = ["res://Sounds/ship_sinking1.wav", "res://Sounds/ship_sinking2.wav", "res://Sounds/ship_sinking3.wav"]
+
 var hole_counter := 0
 
 var is_sinking := false
@@ -33,6 +36,9 @@ func _ready() -> void:
 	gravity_scale = 0.0
 	linear_damp = 0.1
 	angular_damp = 0.2
+
+	sink_sound_player.stream = load(sink_sounds.pick_random())
+	get_tree().root.add_child(sink_sound_player)
 
 	add_to_group("enemy_ship")
 
@@ -66,7 +72,7 @@ func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(global_position.x, global_position.z)
 	global_position.y = WaveHeight.height(global_2d)
 
-	var normal = calculateNormal(global_2d)
+	var normal = WaveHeight.calculateNormal(global_2d)
 	var myBasis = Basis()
 	myBasis.y = normal.normalized()        # UP-Richtung setzen
 	myBasis.x = myBasis.y.cross(-Vector3.FORWARD).normalized()
@@ -190,20 +196,6 @@ func _pick_new_random_target() -> void:
 
 	_set_current_target(new_target)
 
-
-func calculateNormal(xz: Vector2) -> Vector3:
-	var epsilon = 0.05
-
-	var h = WaveHeight.height(xz)
-	var hx = WaveHeight.height(Vector2(xz.x + epsilon, xz.y))
-	var hz = WaveHeight.height(Vector2(xz.x, xz.y + epsilon))
-
-	var tangentX = Vector3(epsilon, hx - h, 0.0).normalized()
-	var tangentZ = Vector3(0.0, hz - h, epsilon).normalized()
-
-	var normal = tangentZ.cross(tangentX)
-	return normal
-
 func set_target_container(container: Node3D) -> void:
 	target_container = container
 
@@ -240,6 +232,9 @@ func ball_exit(_pos : Vector3, _vel: Vector3):
 	pass
 
 func sink():
+	sink_sound_player.position = self.global_position
+	sink_sound_player.play()
+
 	self.gravity_scale = 0.3
 	self.apply_central_impulse(Vector3(0,-0.2,0))
 	axis_lock_linear_y = false
@@ -253,12 +248,15 @@ func sink():
 		water.add_foam(wave.global_position, 8.0)
 		await get_tree().create_timer(0.5).timeout
 	for child in get_children():
-		if child is CollectableTreasure:
+		if child is CollectableTreasure or child is FloatingFluff:
 			child.process_mode = Node.PROCESS_MODE_INHERIT
 			child.visible = true
 			var old_global_pos = child.global_position
 			child.get_parent().remove_child(child)
-			get_tree().root.get_node("World/Collectable").add_child(child)
+			if child is CollectableTreasure:
+				get_tree().root.get_node("World/Collectable").add_child(child)
+			else:
+				get_tree().root.add_child(child)
 			child.global_position = old_global_pos
 	await get_tree().create_timer(10).timeout
 	

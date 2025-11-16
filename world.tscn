@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=54 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
@@ -14,9 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
+[ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="12_bo7i5"]
 [ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
+[ext_resource type="PackedScene" uid="uid://bkx2w30nwns7f" path="res://treasure/fluff_barrel.tscn" id="13_4h6ng"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
+[ext_resource type="PackedScene" uid="uid://g1h1u4880e3j" path="res://treasure/fluff_chest.tscn" id="14_o3ebs"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
 [ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
@@ -24,6 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="Shader" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
+[ext_resource type="PackedScene" uid="uid://be1b8kuvkkrwf" path="res://Modelle/Rand.blend" id="27_4h6ng"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
 [ext_resource type="AudioStream" uid="uid://cgsdoor5octni" path="res://Music/main5.wav" id="28_jjr1n"]
 
@@ -42,13 +46,19 @@ friction = 0.0
 size = Vector3(3.2790527, 1.9439087, 10.192383)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wjb0r"]
-size = Vector3(3.2790527, 2.1187897, 3.6865234)
+size = Vector3(3.2790527, 2.2926712, 3.5200195)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k83mh"]
+size = Vector3(3.2790527, 2.4098854, 1.489624)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gbfbk"]
-size = Vector3(0.34899902, 2.413803, 10.192383)
+size = Vector3(0.34899902, 2.470211, 10.192383)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ioo17"]
-size = Vector3(3.2790527, 1.1716385, 0.4580078)
+size = Vector3(3.2790527, 1.3852558, 0.4580078)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qktwf"]
+size = Vector3(3.2790527, 1.0842295, 0.4580078)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ioo17"]
 radius = 3.0
@@ -129,7 +139,7 @@ stream_4/stream = ExtResource("28_jjr1n")
 stream_4/volume = -60.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
-radius = 0.1
+radius = 0.15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mc2jv"]
 render_priority = 0
@@ -174,7 +184,7 @@ linear_damp = 1.0
 angular_damp = 2.0
 script = ExtResource("2_fj7yv")
 cam_dist_idle = 30
-cam_dist_fast = 80
+cam_dist_fast = 60
 
 [node name="SchiffExport" parent="RigidBody3D" instance=ExtResource("4_036b0")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
@@ -188,8 +198,6 @@ transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9
 [node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
-
 [node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 collision_layer = 2
@@ -200,30 +208,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47195435, 0)
 shape = SubResource("BoxShape3D_pkg7o")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47997785, -3.25293)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5669186, -3.3361819)
 shape = SubResource("BoxShape3D_wjb0r")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8229337, -3.6818967)
+shape = SubResource("BoxShape3D_k83mh")
 
 [node name="CollisionShape3DRight" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4650269, 0.70690155, 0)
 shape = SubResource("BoxShape3D_gbfbk")
 
 [node name="CollisionShape3DLeft" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.828204, 0)
 shape = SubResource("BoxShape3D_gbfbk")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6449567, -2.3964844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7517654, -3.1601276)
 shape = SubResource("BoxShape3D_ioo17")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6301899, 2.1922903)
-shape = SubResource("BoxShape3D_ioo17")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4796767, 2.1922903)
+shape = SubResource("BoxShape3D_qktwf")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="RigidBody3D"]
 remote_path = NodePath("../VaultArea")
 
 [node name="TreasureSpawn" type="Marker3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5741878, -2.0746303)
+transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0, 1.2381203, -1.4981371)
 
 [node name="TreasureCollectArea" type="Area3D" parent="RigidBody3D"]
 collision_layer = 0
@@ -263,7 +275,7 @@ shape = SubResource("ConvexPolygonShape3D_bc84e")
 transform = Transform3D(0.99999994, 0, 0, 0, 0.8038568, 0.5948228, 0, -0.59482276, 0.80385685, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraLookAt"]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 61.835)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 40)
 cull_mask = 1048573
 fov = 40.0
 
@@ -313,17 +325,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.276439, -2.8149917, 8.5756
 [node name="CollectableGold2" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.035714, -2.8149917, 18.05299)
 
+[node name="CollectableGold17" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.47467, -2.8149917, 16.619127)
+
+[node name="CollectableGold18" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.162933, -2.8149917, 15.810055)
+
+[node name="CollectableGold19" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.395887, -3.9514775, 13.14095)
+
 [node name="CollectableGold3" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.670265, -2.8149917, 22.233467)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.670265, -3.9514775, 22.233467)
 
 [node name="CollectableGold4" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.779102, -2.8149917, 19.495068)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.779102, -3.9514775, 19.495068)
 
 [node name="CollectableGold5" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.453755, -2.8149917, 13.88822)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.453755, -3.9514775, 13.88822)
 
 [node name="CollectableGold6" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.14413, -2.8149917, 14.648547)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.14413, -3.9514775, 14.648547)
 
 [node name="CollectableGold7" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.273265, -2.8149917, 16.018467)
@@ -355,34 +376,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.487354, -2.8149917, 18.17
 [node name="CollectableGold16" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.076965, -2.8149917, 18.88744)
 
+[node name="FLoatingFluff" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.076965, -2.8149917, 18.88744)
+
+[node name="FluffPlank" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.7336636, 0, 1.3790874)
+
+[node name="FluffPlank2" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 4.718648, 0, 3.3476944)
+
+[node name="FluffPlank5" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 30.577778, 0, -6.6331043)
+
+[node name="FluffPlank3" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.484476, 1.4210855e-14, -1.1182256)
+
+[node name="FluffPlank4" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 27.227524, -9.536743e-07, 2.316187)
+
+[node name="FluffBarrel" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 30.68314, 9.536743e-07, -4.557184)
+
+[node name="FluffChest" parent="FLoatingFluff" instance=ExtResource("14_o3ebs")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 28.935154, 9.536743e-07, -9.533276)
+
+[node name="FluffBarrel2" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 6.6205807, 2.861023e-06, 1.0781479)
+
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -7.813917, 0)
-
-[node name="Plane" parent="terrain_collapsed" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.83144, 0)
-
-[node name="Plane_001" parent="terrain_collapsed" index="1"]
-visible = false
-
-[node name="SchiffGanz" parent="terrain_collapsed" index="2"]
-visible = false
-
-[node name="SchiffHinten" parent="terrain_collapsed" index="3"]
-visible = false
-
-[node name="SchiffMitte" parent="terrain_collapsed" index="4"]
-visible = false
-
-[node name="SchiffVorne" parent="terrain_collapsed" index="5"]
-visible = false
-
-[node name="Plane_002" parent="terrain_collapsed" index="6"]
-transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1071.3148, 14.342306, 13.6048765)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -4.036, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="terrain_collapsed"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="terrain_collapsed/StaticBody3D"]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 8.83144, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_bc84e")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="terrain_collapsed/StaticBody3D"]
@@ -390,7 +417,7 @@ transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1071.
 shape = SubResource("ConcavePolygonShape3D_mc2jv")
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 1.9687147, 43.77764)
+transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -109.381, 2.629, 37.182)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(0.9999993, 0.00047018714, 0.0011124103, -0.00047161293, 0.99999917, 0.0012597489, -0.0011118066, -0.0012602819, 0.99999857, -0.029472351, 0.13349533, -0.13118744)
@@ -464,7 +491,7 @@ transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069,
 layers = 2
 
 [node name="TreasureDeposit" type="Area3D" parent="." node_paths=PackedStringArray("ship")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.44942, 0, 31.768154)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.43156, -0.14997911, 25.172712)
 script = ExtResource("22_wukud")
 ship = NodePath("../RigidBody3D")
 
@@ -473,7 +500,7 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 shape = SubResource("SphereShape3D_wjb0r")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="TreasureDeposit"]
-transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 0, 0)
+transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 1.3374236, -5.8460635e-08)
 mesh = SubResource("QuadMesh_bo7i5")
 skeleton = NodePath("../..")
 
@@ -551,6 +578,8 @@ theme_override_fonts/font = ExtResource("12_wjb0r")
 theme_override_font_sizes/font_size = 60
 shortcut = SubResource("Shortcut_bo7i5")
 text = "Restart"
+[node name="Rand" parent="." instance=ExtResource("27_4h6ng")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.45, 0)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 [connection signal="pressed" from="Endscreen/EndScreenUI/Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvlgypxs3oh2r"]
+
+[ext_resource type="Script" uid="uid://cpc5nxbgrqywi" path="res://src/floating_fluff.gd" id="1_bm24o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n00cy"]
+albedo_color = Color(0.41, 0.27094167, 0.1845, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4h6ng"]
+material = SubResource("StandardMaterial3D_n00cy")
+
+[node name="FluffPlank" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_bm24o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.75, 0, 0, 0, -6.5567085e-09, 0.3, 0, -0.15, -1.3113417e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_4h6ng")
