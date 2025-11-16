@@ -12,10 +12,9 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="Script" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="PackedScene" uid="uid://dhy2beikmdk0d" path="res://Modelle/pirateShip_applied_material.blend" id="23_wjb0r"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
@@ -1242,6 +1241,7 @@ autoplay = true
 transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, -114.383, 10.069, 53.013)
 layers = 2
 mesh = SubResource("SphereMesh_wjb0r")
+
 [node name="pirateShip_applied_material" parent="." instance=ExtResource("23_wjb0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.76088, 67.3528, -98.66516)
 
