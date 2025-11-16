@@ -230,12 +230,7 @@ cam_dist_fast = 60
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
 script = ExtResource("4_dwbse")
 bullet_scene = ExtResource("5_gbfbk")
-bullet_speed = null
-fire_rate = null
-ray_length = null
-collision_mask = null
 camera_path = NodePath("../../CameraLookAt/Camera3D")
-shoot_up_amount = null
 
 [node name="MuzzleKanone2" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone2" index="0"]
 transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9999999, -4.3711385e-08, 0, 4.8739967, 2.1304919e-07)

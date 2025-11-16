@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Arr"
+config/name="Unlooted"
 run/main_scene="uid://u3cc6pte4xly"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="uid://4q335xxs2p"
+config/icon="uid://b2ndmrjvurlhs"
 
 [autoload]
 
