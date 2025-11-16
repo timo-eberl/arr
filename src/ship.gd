@@ -133,10 +133,16 @@ func deposit_treasure() -> void:
 	if amount <= 0:
 		return
 
-	# Gold zum globalen Counter hinzufügen
-	print(amount)
 	GameState.add_gold(amount)
 
-	# Alle Treasure-Objekte vom Schiff entfernen
+	var player := AudioStreamPlayer3D.new()
+	add_child(player)
+	player.stream = load("res://Sounds/treasure_delivered.wav")
+	player.volume_db = -25
+	player.play()
+
+	await player.finished
+	player.queue_free()
+
 	for child in collected_treasure_parent.get_children():
 		child.queue_free()

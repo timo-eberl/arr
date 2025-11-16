@@ -1,13 +1,23 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dno5j8nj5rphm"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dno5j8nj5rphm"]
 
 [ext_resource type="Shader" uid="uid://b1oxi2lgqn3w7" path="res://shaders/ship_wood.gdshader" id="1_nq3eg"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nq3eg"]
+noise_type = 2
+frequency = 0.1
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_nmbia"]
+noise = SubResource("FastNoiseLite_nq3eg")
+seamless = true
 
 [resource]
 resource_name = "PiratenschiffMaterial1"
 render_priority = 0
 shader = ExtResource("1_nq3eg")
-shader_parameter/destruction = 0.0
+shader_parameter/cracks_texture = SubResource("NoiseTexture3D_nmbia")
 shader_parameter/albedo = Color(0.46834797, 0.23860489, 0.1289676, 1)
+shader_parameter/albedo_destruction = Color(0.22, 0.036666673, 0, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.5
