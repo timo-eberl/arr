@@ -1207,10 +1207,9 @@ volume_db = -12.0
 autoplay = true
 
 [node name="pirateShip_applied_material" parent="." instance=ExtResource("23_wjb0r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.52458, 42.374073, -27.772623)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.76088, 67.3528, -98.66516)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
 [editable path="RigidBody3D/SchiffExport"]
 [editable path="terrain_collapsed"]
-[editable path="pirateShip_applied_material"]
