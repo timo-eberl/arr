@@ -3,6 +3,8 @@
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
 
+uniform sampler3D cracks_texture : repeat_enable;
+
 instance uniform float destruction : hint_range(0.0, 1.0, 0.01);
 
 instance uniform vec3 hole_position_0;
@@ -13,6 +15,7 @@ instance uniform vec3 hole_position_2;
 instance uniform vec3 hole_direction_2;
 
 uniform vec4 albedo : source_color;
+uniform vec3 albedo_destruction : source_color;
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
 uniform ivec2 albedo_texture_size;
 uniform float point_size : hint_range(0.1, 128.0, 0.1);
@@ -45,6 +48,16 @@ float distance_to_line(vec3 p, vec3 a, vec3 b) {
   return length(cross(ap, b)) / length(b);
 }
 
+float scaled_distance_to_line(vec3 p, vec3 a, vec3 b, vec3 scale) {
+  // Apply the scaling to all input vectors first
+  vec3 scaled_p = p * scale;
+  vec3 scaled_a = a * scale;
+  vec3 scaled_b = b * scale;
+
+  // Now, calculate the distance in the new "scaled space"
+  return distance_to_line(scaled_p, scaled_a, scaled_b);
+}
+
 void fragment() {
 	vec2 base_uv = UV;
 
@@ -59,21 +72,28 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 
-	ALBEDO *= (1.0 - destruction * 0.4);
+	float dest = pow(texture(cracks_texture, local_pos*0.03).x*1.5,5.0) * destruction;
+	dest *= 0.4;
+	ALBEDO = mix(ALBEDO, albedo_destruction, dest);
 
+	vec3 s = vec3(1,0.3,1);
 	float darkening = 1.0;
 	{
-		float d = distance_to_line(local_pos, hole_position_0, hole_direction_0);
+		float d = scaled_distance_to_line(local_pos, hole_position_0, hole_direction_0, s);
 		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
 	{
-		float d = distance_to_line(local_pos, hole_position_1, hole_direction_1);
+		float d = scaled_distance_to_line(local_pos, hole_position_1, hole_direction_1, s);
 		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
 	{
-		float d = distance_to_line(local_pos, hole_position_2, hole_direction_2);
+		float d = scaled_distance_to_line(local_pos, hole_position_2, hole_direction_2, s);
 		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
+	darkening = 1.0 - darkening;
+	darkening -= pow(texture(cracks_texture, local_pos*0.03).x,2.0)*1.2;
+	darkening = 1.0 - darkening;
+	darkening = clamp(darkening, 0,1);
 
 	ALBEDO *= darkening;
 }
