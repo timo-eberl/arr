@@ -30,7 +30,7 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [node name="TestEnemy" type="RigidBody3D" groups=["enemy_ship"]]
-collision_layer = 2
+collision_layer = 3
 axis_lock_linear_y = true
 gravity_scale = 0.0
 linear_damp = 5.0
