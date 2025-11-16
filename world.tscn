@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=52 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -18,7 +18,7 @@
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" path="res://treasure_deposit.gd" id="22_wukud"]
+[ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
@@ -387,7 +387,7 @@ shape = SubResource("CapsuleShape3D_ioo17")
 [node name="FoamSpawner" type="Node3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.64001226)
 script = ExtResource("8_2o6r5")
-time_diff_from = 1.2
+time_diff_to = 0.15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RigidBody3D"]
 libraries = {
@@ -416,7 +416,7 @@ animation = "sail_animation_3"
 script = ExtResource("5_dwbse")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="RigidBody3D"]
-transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 25.624155, 27.585207, 27.054192)
+transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 10.978679, 11.818892, 11.591376)
 current = true
 
 [node name="Pfeil" type="Node3D" parent="RigidBody3D"]
@@ -1207,7 +1207,7 @@ transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.851
 transform = Transform3D(0.8518184, 0, 0.52383727, 0, 1, 0, -0.52383727, 0, 0.8518184, 50.57934, 0, 61.552956)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -6.9961224, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -7.813917, 0)
 
 [node name="Plane" parent="terrain_collapsed" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.83144, 0)
@@ -1238,7 +1238,7 @@ transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1072.
 shape = SubResource("ConcavePolygonShape3D_wukud")
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 3.2717075, 43.77764)
+transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 1.9687147, 43.77764)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_2o6r5")
@@ -1302,8 +1302,16 @@ stream = SubResource("AudioStreamSynchronized_gggvi")
 volume_db = -12.0
 autoplay = true
 
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -81.747986, 9.843842, 27.327166)
+light_color = Color(0.83656675, 0.83601403, 1, 1)
+light_energy = 120.0
+spot_range = 20.0
+spot_angle = 62.04
+spot_angle_attenuation = 0.23325826
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, -74.689125, 10.069, 19.728004)
+transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069, 26.875145)
 layers = 2
 mesh = SubResource("SphereMesh_wjb0r")
 

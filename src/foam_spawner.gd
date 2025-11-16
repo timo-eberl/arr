@@ -7,6 +7,6 @@ extends Node3D
 
 func _ready() -> void:
 	while true:
-		var time_diff := remap(abs(ship.speed), 0.0, 17.0, time_diff_from, time_diff_to)
+		var time_diff := remap(abs(ship.linear_velocity.length()), 0.0, 17.0, time_diff_from, time_diff_to)
 		water.add_foam(self.global_position, 12.0)
 		await get_tree().create_timer(time_diff).timeout
