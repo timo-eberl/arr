@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var winkel = 0;
 @export var speed := 0.0;
 var kippen = 0;
-var timer = 120
+var timer = 180
 
 @export var max_speed := 16.0
 
@@ -43,10 +43,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	$"../UI/RichTextLabel".text = "Time remaining: %d seconds" % timer
+	$"../UI/RichTextLabel".text = "Time: %d seconds" % timer
 	timer -= delta
 	
+	if timer <= 0:
+		get_tree().current_scene.show_end_screen()
+	
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
+	camera_controller.target_cam_distance = remap(linear_velocity.length(), 0, max_speed, cam_dist_idle, cam_dist_fast)
 	SetSail()
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
@@ -98,8 +102,8 @@ func _physics_process(delta: float) -> void:
 	
 	linear_velocity = linear_velocity.rotated(Vector3(0,1.0,0), lenkWinkel / 2.0)
 	
-	var speedInput := Input.get_axis("Brenmsen", "Gasgeben") 
-	sail_down += speedInput * 0.01
+	var speedInput := Input.get_axis("Brenmsen", "Gasgeben")
+	sail_down += speedInput * 0.04
 	sail_down = clamp(sail_down, -.1, 1.0)
 	#print(sail_down)
 	

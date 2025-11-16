@@ -11,12 +11,13 @@ extends Node3D
 @export var shoot_up_amount: float = 0.1
 
 @onready var cam: Camera3D = get_node(camera_path) as Camera3D
-@onready var left_muzzle: Marker3D = $Kanone1/MuzzleKanone1
-@onready var right_muzzle: Marker3D = $Kanone2/MuzzleKanone2
+@onready var left_muzzle: Marker3D = $Kanone2/MuzzleKanone2
+@onready var right_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 
 var cannon_sounds = ["res://Sounds/cannon1.wav", "res://Sounds/cannon2.wav", "res://Sounds/cannon3.wav", "res://Sounds/cannon4.wav"]
 
-var _cooldown: float = 0.0
+var _cooldown_left: float = 0.0
+var _cooldown_right: float = 0.0
 
 var _ship_velocity: Vector3 = Vector3.ZERO
 var _last_global_pos: Vector3
@@ -35,32 +36,39 @@ func _physics_process(delta: float) -> void:
 	_last_global_pos = current_pos
 
 	# Feuerrate / Input wie vorher
-	if _cooldown > 0.0:
-		_cooldown -= delta
+	if _cooldown_left > 0.0:
+		_cooldown_left -= delta
+	if _cooldown_right > 0.0:
+		_cooldown_right -= delta
+		
+	if Input.is_action_just_pressed("shoot"):
+		fire(not is_target_on_right_side())
 
-	if Input.is_action_pressed("shoot"):
-		fire()
+	if Input.is_action_pressed("left_shoot"):
+		fire(true)
+	if Input.is_action_pressed("right_shoot"):
+		fire(false)
 
-
-func fire() -> void:
-	if _cooldown > 0.0:
-		return
-	_cooldown = fire_rate
-
-	if bullet_scene == null:
-		push_warning("No cannon ball scene")
-		return
-
-	var use_right: bool = is_target_on_right_side()
-	var muzzle: Marker3D = right_muzzle if use_right else left_muzzle
+func fire(left : bool) -> void:
+	var muzzle: Marker3D
+	if left:
+		if _cooldown_left > 0.0:
+			return
+		_cooldown_left = fire_rate
+		muzzle = left_muzzle
+	else:
+		if _cooldown_right > 0.0:
+			return
+		_cooldown_right = fire_rate
+		muzzle = right_muzzle
 	
 	var bullet := bullet_scene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(bullet)
 	
-	if use_right:
-		$"..".SetKippen(.25)
-	else:
+	if left:
 		$"..".SetKippen(-.25)
+	else:
+		$"..".SetKippen(.25)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
