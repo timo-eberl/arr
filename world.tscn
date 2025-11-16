@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=50 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="12_bo7i5"]
-[ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
+[ext_resource type="Script" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
+[ext_resource type="PackedScene" uid="uid://be1b8kuvkkrwf" path="res://Modelle/Rand.blend" id="27_4h6ng"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
 [ext_resource type="AudioStream" uid="uid://cgsdoor5octni" path="res://Music/main5.wav" id="28_jjr1n"]
 
@@ -362,7 +363,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.48
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.450881, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -4.036, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="terrain_collapsed"]
 
@@ -375,7 +376,7 @@ transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1071.
 shape = SubResource("ConcavePolygonShape3D_mc2jv")
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -109.38057, 1.8187356, 37.182198)
+transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -109.381, 2.629, 37.182)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029472351, 0.13349533, -0.13118744)
@@ -499,6 +500,9 @@ offset_top = 6.0
 offset_right = 258.0
 offset_bottom = 56.0
 text = "Time remaining:"
+
+[node name="Rand" parent="." instance=ExtResource("27_4h6ng")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.45, 0)
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
