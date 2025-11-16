@@ -19,8 +19,6 @@ var _spawn_timer: float = 0.0
 func _ready() -> void:
 	randomize()
 
-	_spawn_until_full()
-
 
 func _physics_process(delta: float) -> void:
 	_spawn_timer += delta
