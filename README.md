@@ -19,4 +19,4 @@ Devteam:
 - Runa - 3D Graphics, Animation
 
 Various CC-licensed sounds have been used. Sources and attribution can be found
-in [Sounds/sources.txt].
+in [Sounds/sources.txt](Sounds/sources.txt).
