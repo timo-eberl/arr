@@ -13,7 +13,7 @@ var kippen = 0;
 
 @export var sails : Array[Node3D]
 
-@onready var collected_treasure_parent: Node3D = $CollectedTreasure
+@onready var collected_treasure_parent: Node3D = $"../CollectedTreasure"
 
 var sail_down := 0.0
 
