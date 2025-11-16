@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=48 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -17,7 +17,7 @@
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" path="res://treasure_deposit.gd" id="22_wukud"]
+[ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
@@ -129,6 +129,16 @@ stream_4/volume = -60.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
 radius = 0.822
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mc2jv"]
+render_priority = 0
+shader = ExtResource("25_mc2jv")
+shader_parameter/radius = 5.4
+shader_parameter/thickness = 0.05
+shader_parameter/ring_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_bo7i5"]
+material = SubResource("ShaderMaterial_mc2jv")
 
 [node name="World" type="Node3D"]
 
@@ -477,6 +487,10 @@ ship = NodePath("../RigidBody3D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TreasureDeposit"]
 transform = Transform3D(12.855753, 0, -15.3208885, 0, 20, 0, 15.3208885, 0, 12.855753, -88.33879, 0, 30.174828)
 shape = SubResource("SphereShape3D_wjb0r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, -8.742278e-07, 20, 0, -20, -8.742278e-07, -80.700714, 0.531867, 27.679136)
+mesh = SubResource("QuadMesh_bo7i5")
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
