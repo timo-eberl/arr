@@ -12,10 +12,10 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
+[ext_resource type="Script" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" path="res://enemy_spawner.gd" id="23_il2jm"]
+[ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
@@ -1212,16 +1212,22 @@ size = Vector3(300, 1, 300)
 [node name="Targets" type="Node3D" parent="."]
 
 [node name="Target1" type="Marker3D" parent="Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.402016, 0, 0.3976593)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.222076, 0, 70.053246)
 
 [node name="Target2" type="Marker3D" parent="Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -59.868095)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.35656, 0, 43.887268)
 
 [node name="Target3" type="Marker3D" parent="Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.195816)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.4834, 0, -87.427376)
 
 [node name="Target4" type="Marker3D" parent="Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.034138, 0, -49.086514)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.20145, 0, -49.086514)
+
+[node name="Target5" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.042778, 0, 22.665024)
+
+[node name="Target6" type="Marker3D" parent="Targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.87431, 0, 23.774979)
 
 [node name="EnemySpawner" type="Node3D" parent="."]
 script = ExtResource("23_il2jm")
