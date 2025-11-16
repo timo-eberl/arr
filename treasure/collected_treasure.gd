@@ -9,6 +9,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if self.global_position.y < -10.0:
+		DynamicMusic.update($"../../CollectedTreasure", $"../../MusicPlayer")
+		
 		queue_free()
 		
 		splash_sound_player.position = self.global_position

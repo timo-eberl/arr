@@ -134,3 +134,5 @@ func deposit_treasure() -> void:
 
 	await player.finished
 	player.queue_free()
+
+	DynamicMusic.update(collected_treasure_parent, $"../MusicPlayer")
