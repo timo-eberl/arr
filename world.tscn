@@ -128,7 +128,7 @@ stream_4/stream = ExtResource("28_jjr1n")
 stream_4/volume = -60.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
-radius = 0.1
+radius = 0.15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mc2jv"]
 render_priority = 0
