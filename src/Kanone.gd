@@ -40,71 +40,35 @@ func _physics_process(delta: float) -> void:
 		_cooldown_left -= delta
 	if _cooldown_right > 0.0:
 		_cooldown_right -= delta
+		
+	if Input.is_action_just_pressed("shoot"):
+		fire(not is_target_on_right_side())
 
 	if Input.is_action_pressed("left_shoot"):
-		fire_left()
+		fire(true)
 	if Input.is_action_pressed("right_shoot"):
-		fire_right()
-		
-func fire_right() -> void:
-	if _cooldown_right > 0.0:
-		return
-	_cooldown_right = fire_rate
+		fire(false)
+
+func fire(left : bool) -> void:
+	var muzzle: Marker3D
+	if left:
+		if _cooldown_left > 0.0:
+			return
+		_cooldown_left = fire_rate
+		muzzle = left_muzzle
+	else:
+		if _cooldown_right > 0.0:
+			return
+		_cooldown_right = fire_rate
+		muzzle = right_muzzle
 	
-	var muzzle: Marker3D = right_muzzle
 	var bullet := bullet_scene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(bullet)
 	
-	$"..".SetKippen(.25)
-	
-	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
-	var dir: Vector3 = -muzzle.global_transform.basis.z
-	dir.y = 0.0
-	dir = dir.normalized()
-
-	# 2) Leichten Up-Kick dazugeben
-	dir.y += shoot_up_amount
-	dir = dir.normalized()
-
-	var spawn_offset: float = 2.0
-	var spawn_pos: Vector3 = muzzle.global_transform.origin + dir * spawn_offset
-
-	var t := bullet.global_transform
-	t.origin = spawn_pos
-	t.basis = Basis.looking_at(dir, Vector3.UP)
-	bullet.global_transform = t
-
-	# Schussrichtung an die Kugel weitergeben (inkl. Up-Kick)
-	bullet.shoot_direction = dir
-
-	var ship_body := _find_ship_body()
-	if ship_body != null:
-		bullet.add_collision_exception_with(ship_body)
-
-	bullet.linear_velocity = _ship_velocity + dir * bullet_speed
-
-	#cannon_sound_player.play_sound()
-	var cannon_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
-	cannon_sound_player.stream = load(cannon_sounds.pick_random())
-	get_tree().root.add_child(cannon_sound_player)
-	cannon_sound_player.position = self.global_position
-	cannon_sound_player.volume_db = -6
-	cannon_sound_player.play()
-
-	# Free cannon sound player once it finished playing
-	await cannon_sound_player.finished
-	cannon_sound_player.queue_free()
-
-func fire_left() -> void:
-	if _cooldown_left > 0.0:
-		return
-	_cooldown_left = fire_rate
-	
-	var muzzle: Marker3D = left_muzzle
-	var bullet := bullet_scene.instantiate() as RigidBody3D
-	get_tree().current_scene.add_child(bullet)
-	
-	$"..".SetKippen(-.25)
+	if left:
+		$"..".SetKippen(-.25)
+	else:
+		$"..".SetKippen(.25)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z
