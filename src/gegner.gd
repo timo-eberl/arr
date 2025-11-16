@@ -239,12 +239,15 @@ func sink():
 		water.add_foam(wave.global_position, 8.0)
 		await get_tree().create_timer(0.5).timeout
 	for child in get_children():
-		if child is CollectableTreasure:
+		if child is CollectableTreasure or child is FloatingFluff:
 			child.process_mode = Node.PROCESS_MODE_INHERIT
 			child.visible = true
 			var old_global_pos = child.global_position
 			child.get_parent().remove_child(child)
-			get_tree().root.get_node("World/Collectable").add_child(child)
+			if child is CollectableTreasure:
+				get_tree().root.get_node("World/Collectable").add_child(child)
+			else:
+				get_tree().root.add_child(child)
 			child.global_position = old_global_pos
 	await get_tree().create_timer(10).timeout
 	

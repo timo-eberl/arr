@@ -353,13 +353,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.076965, -2.8149917, 18.88
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.7336636, 0, 1.3790874)
 
 [node name="FluffPlank2" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
-transform = Transform3D(0.7009217, -0.71323824, 0, -3.1176633e-08, -3.063826e-08, -1, 0.71323824, 0.7009217, -4.371139e-08, 4.718648, 0, 3.3476944)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 4.718648, 0, 3.3476944)
 
 [node name="FluffPlank3" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
-transform = Transform3D(0.5529117, 0.83323985, 0, 3.6422072e-08, -2.4168536e-08, -1, -0.83323985, 0.5529117, -4.371139e-08, 8.484476, 1.4210855e-14, -1.1182256)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.484476, 1.4210855e-14, -1.1182256)
 
 [node name="FluffPlank4" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
-transform = Transform3D(0.5109932, -0.8595848, 0, -3.7573642e-08, -2.233622e-08, -1, 0.8595848, 0.5109932, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -7.813917, 0)

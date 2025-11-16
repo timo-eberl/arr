@@ -1,6 +1,11 @@
 class_name FloatingFluff
 extends Node3D
 
+@onready var mesh : MeshInstance3D = $MeshInstance3D
+
+func _ready() -> void:
+	mesh.rotate_z(randf_range(0.0, TAU))
+
 func _physics_process(delta: float) -> void:
 	var target_y := WaveHeight.height(
 		Vector2(self.global_position.x, self.global_position.z)
@@ -13,3 +18,4 @@ func _physics_process(delta: float) -> void:
 	var target_normal := WaveHeight.calculateNormal(Vector2(global_position.x,global_position.z)).normalized()
 	print("target_normal: ", target_normal)
 	self.look_at(global_position + target_normal, Vector3.RIGHT)
+	

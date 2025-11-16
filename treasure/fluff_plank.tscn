@@ -12,6 +12,6 @@ material = SubResource("StandardMaterial3D_n00cy")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 script = ExtResource("1_bm24o")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.75, 0, 0, 0, -6.5567085e-09, 0.3, 0, -0.15, -1.3113417e-08, 0, 0, 0)
 mesh = SubResource("BoxMesh_4h6ng")

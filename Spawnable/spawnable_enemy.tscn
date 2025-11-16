@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://crhavc22gfhgg"]
+[gd_scene load_steps=9 format=4 uid="uid://crhavc22gfhgg"]
 
 [ext_resource type="Script" uid="uid://dpeb0nphkfwxj" path="res://src/gegner.gd" id="1_c05d7"]
 [ext_resource type="PackedScene" uid="uid://dhy2beikmdk0d" path="res://Modelle/pirateShip_applied_material.blend" id="3_8qp5j"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="4_ap880"]
+[ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="4_pxu8d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8qp5j"]
 friction = 0.0
@@ -236,6 +237,51 @@ visible = false
 [node name="CollectableGold33" parent="." instance=ExtResource("4_ap880")]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1184702, 1.1723773, 0.8625946)
+visible = false
+
+[node name="FluffPlank" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(0.6194502, -0.7850359, 0, -3.4315008e-08, -2.7077029e-08, -1, 0.7850359, 0.6194502, -4.371139e-08, -0.08059502, -0.50359154, 0.58701944)
+visible = false
+
+[node name="FluffPlank2" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.67652893, -0.736416, 0, -3.218976e-08, 2.9572021e-08, -1, 0.736416, -0.67652893, -4.371139e-08, -1.7636485, -0.5035915, 3.426427)
+visible = false
+
+[node name="FluffPlank3" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.9743072, 0.2252231, 0, 9.844818e-09, 4.258832e-08, -1, -0.2252231, -0.9743072, -4.371139e-08, -1.7256376, -0.79785126, 1.6894869)
+visible = false
+
+[node name="FluffPlank4" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.2617682, -0.9200351, 0.2915696, -3.7252903e-08, -0.30210373, -0.9532751, 0.9651308, -0.24953708, 0.07908109, 1.0109067, 0.37319422, 2.9085605)
+visible = false
+
+[node name="FluffPlank5" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.994478, 0.10004145, -0.031704277, 7.450581e-09, -0.30210364, -0.9532751, -0.104945004, -0.9480111, 0.30043545, -1.1435277, 0.37319422, -6.2780175)
+visible = false
+
+[node name="FluffPlank6" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.39927718, 0.87399143, -0.2769778, 3.7252903e-08, -0.30210364, -0.9532751, -0.91683024, -0.38062102, 0.12062307, -1.1543247, 0.07893443, 4.100056)
+visible = false
+
+[node name="FluffPlank7" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.2617682, -0.9200351, 0.2915696, -3.7252903e-08, -0.30210373, -0.9532751, 0.9651308, -0.24953708, 0.07908109, 1.5432148, 0.37319422, -2.6870859)
+visible = false
+
+[node name="FluffPlank8" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.994478, 0.10004145, -0.031704277, 7.450581e-09, -0.30210364, -0.9532751, -0.104945004, -0.9480111, 0.30043545, -0.022656877, 0.37319422, -5.962678)
+visible = false
+
+[node name="FluffPlank9" parent="." instance=ExtResource("4_pxu8d")]
+process_mode = 4
+transform = Transform3D(-0.39927718, 0.87399143, -0.2769778, 3.7252903e-08, -0.30210364, -0.9532751, -0.91683024, -0.38062102, 0.12062307, -2.1261272, 0.07893443, -1.4871645)
 visible = false
 
 [editable path="pirateShip_applied_material"]
