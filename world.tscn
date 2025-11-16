@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
 [ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
-[ext_resource type="Script" uid="uid://bx2qth4na6e3y" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
@@ -1270,7 +1269,7 @@ volume_db = -12.0
 autoplay = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, -114.383, 10.069, 53.013)
+transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, -74.689125, 10.069, 19.728004)
 layers = 2
 mesh = SubResource("SphereMesh_wjb0r")
 
