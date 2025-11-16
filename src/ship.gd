@@ -64,7 +64,8 @@ func _process(delta: float) -> void:
 	#basis.z = basis.x.cross(basis.y).normalized()
 
 func SetKippen(k: float):
-	kippen += k
+	linear_velocity += basis.z * k * 10.0
+	angular_velocity += basis.z * k * 5.0
 
 func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
@@ -122,7 +123,7 @@ func deposit_treasure() -> void:
 
 	GameState.add_gold(amount)
 
-	var player := AudioStreamPlayer3D.new()
+	var player := AudioStreamPlayer.new()
 	add_child(player)
 	player.stream = load("res://Sounds/treasure_delivered.wav")
 	player.volume_db = -15

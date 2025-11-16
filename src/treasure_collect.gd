@@ -21,11 +21,11 @@ func _on_area_entered(area: Area3D) -> void:
 		
 		area.queue_free()
 
-		var gold_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+		var gold_sound_player: AudioStreamPlayer = AudioStreamPlayer.new()
 		gold_sound_player.stream = load(gold_sounds.pick_random())
 		get_tree().root.add_child(gold_sound_player)
-		gold_sound_player.position = global_position
-		gold_sound_player.volume_db = -24
+		#gold_sound_player.position = global_position
+		gold_sound_player.volume_db = -12
 		gold_sound_player.play()
 		
 		# Very unfinished dynamic music based on collected treasure
