@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var winkel = 0;
 @export var speed := 0.0;
 var kippen = 0;
-var timer = 5
+var timer = 180
 
 @export var max_speed := 16.0
 

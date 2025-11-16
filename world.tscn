@@ -1,6 +1,6 @@
 [gd_scene load_steps=61 format=4 uid="uid://u3cc6pte4xly"]
 
-[ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
+[ext_resource type="Script" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
-[ext_resource type="Shader" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
+[ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
 [ext_resource type="PackedScene" uid="uid://be1b8kuvkkrwf" path="res://Modelle/Rand.blend" id="27_4h6ng"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
