@@ -58,22 +58,22 @@ void fragment() {
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
-	
+
 	ALBEDO *= (1.0 - destruction * 0.4);
-	
+
 	float darkening = 1.0;
 	{
 		float d = distance_to_line(local_pos, hole_position_0, hole_direction_0);
-		darkening *= clamp(d*0.05, 0.0, 1.0);
+		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
 	{
 		float d = distance_to_line(local_pos, hole_position_1, hole_direction_1);
-		darkening *= clamp(d*0.05, 0.0, 1.0);
+		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
 	{
 		float d = distance_to_line(local_pos, hole_position_2, hole_direction_2);
-		darkening *= clamp(d*0.05, 0.0, 1.0);
+		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
-	
+
 	ALBEDO *= darkening;
 }
