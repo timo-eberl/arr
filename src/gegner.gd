@@ -19,6 +19,9 @@ var is_initialized := false
 
 @onready var wood_mesh: MeshInstance3D = $pirateShip_applied_material/PirateShip
 
+var sink_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var sink_sounds = ["res://Sounds/ship_sinking1.wav", "res://Sounds/ship_sinking2.wav", "res://Sounds/ship_sinking3.wav"]
+
 var hole_counter := 0
 
 var is_sinking := false
@@ -33,6 +36,9 @@ func _ready() -> void:
 	gravity_scale = 0.0
 	linear_damp = 0.1
 	angular_damp = 0.2
+
+	sink_sound_player.stream = load(sink_sounds.pick_random())
+	get_tree().root.add_child(sink_sound_player)
 
 	add_to_group("enemy_ship")
 
@@ -226,6 +232,9 @@ func ball_exit(_pos : Vector3, _vel: Vector3):
 	pass
 
 func sink():
+	sink_sound_player.position = self.global_position
+	sink_sound_player.play()
+
 	self.gravity_scale = 0.3
 	self.apply_central_impulse(Vector3(0,-0.2,0))
 	axis_lock_linear_y = false
