@@ -128,7 +128,7 @@ stream_4/stream = ExtResource("28_jjr1n")
 stream_4/volume = -60.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
-radius = 0.3
+radius = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mc2jv"]
 render_priority = 0
@@ -291,34 +291,6 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 181.36992, -3.0505996e-07)
-
-[node name="UI" type="Control" parent="Minimap"]
-layout_mode = 2
-script = ExtResource("12_mc2jv")
-
-[node name="GoldLabel" type="Label" parent="Minimap/UI"]
-layout_mode = 0
-offset_left = 968.0
-offset_top = 219.0
-offset_right = 1092.0
-offset_bottom = 264.0
-theme_override_fonts/font = ExtResource("12_wjb0r")
-theme_override_font_sizes/font_size = 25
-text = "24"
-vertical_alignment = 1
-
-[node name="TextureRect2" type="TextureRect" parent="Minimap/UI"]
-layout_mode = 0
-offset_left = 930.0
-offset_top = 224.0
-offset_right = 962.0
-offset_bottom = 256.0
-texture = ExtResource("13_mc2jv")
-expand_mode = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Minimap"]
-layout_mode = 2
-text = "Zeit verbleibend: "
 
 [node name="CollectedTreasure" type="Node3D" parent="."]
 
@@ -493,6 +465,44 @@ shape = SubResource("SphereShape3D_wjb0r")
 transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 0, 0)
 mesh = SubResource("QuadMesh_bo7i5")
 skeleton = NodePath("../..")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_mc2jv")
+
+[node name="GoldLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 219.0
+offset_right = 1092.0
+offset_bottom = 264.0
+theme_override_fonts/font = ExtResource("12_wjb0r")
+theme_override_font_sizes/font_size = 25
+text = "24"
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_left = 930.0
+offset_top = 224.0
+offset_right = 962.0
+offset_bottom = 256.0
+texture = ExtResource("13_mc2jv")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 1
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 258.0
+offset_bottom = 56.0
+text = "Time remaining:"
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 

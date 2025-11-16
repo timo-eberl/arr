@@ -43,7 +43,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	$"../Minimap/RichTextLabel".text = "Time remaining: %d seconds" % timer
+	$"../UI/RichTextLabel".text = "Time remaining: %d seconds" % timer
 	timer -= delta
 	
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
