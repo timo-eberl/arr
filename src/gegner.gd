@@ -3,12 +3,16 @@ extends RigidBody3D
 
 var is_initialized := false
 
+@onready var water : Water = get_tree().root.get_node("World/Water")
+
 @export var forward_speed: float = 5.0
 @export var turn_strength: float = 1.5
 
 @export var target_container_path: NodePath 
 @export var wait_at_target_time: float = 0.0
 @export var arrival_distance: float = 3.0   
+
+@export var wave_spawns_on_death : Array[Node3D]
 
 @onready var nav_agent: NavigationAgent3D = $NavAgent
 @onready var target_container: Node3D = get_node_or_null(target_container_path)
@@ -244,5 +248,9 @@ func sink():
 	collision_mask = 0
 	collision_layer = 0
 	$Pfeil.visible = false
+	for wave in wave_spawns_on_death:
+		water.add_splash(wave.global_position)
+		water.add_foam(wave.global_position, 8.0)
+		await get_tree().create_timer(0.6).timeout
 	await get_tree().create_timer(10).timeout
 	queue_free()

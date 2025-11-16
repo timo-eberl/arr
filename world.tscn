@@ -323,6 +323,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_dwbse")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["ship"]]
+transform = Transform3D(0.57131535, 0, -0.8207306, 0, 1, 0, 0.8207306, 0, 0.57131535, 0, 0, 0)
 physics_material_override = SubResource("PhysicsMaterial_bc84e")
 gravity_scale = 0.0
 linear_damp = 1.0
@@ -433,7 +434,7 @@ transform = Transform3D(2.0030958e-08, 0, -1.6797618, 0, 1.6797618, 0, 1.6797618
 shape = SubResource("ConvexPolygonShape3D_bc84e")
 
 [node name="CameraLookAt" type="Node3D" parent="."]
-transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 0, 0, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.8038568, 0.5948228, 0, -0.59482276, 0.80385685, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraLookAt"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 61.835)
@@ -1281,24 +1282,22 @@ target_container_path = NodePath("../Targets")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27.148647)
 
 [node name="Spawn1" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7.831609e-06, 0, 81.0443)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.014805, 17.44748, 81.0443)
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Spawn2" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 92.61075, 1.5258789e-05, 92.6608)
 
-[node name="Spawn2" type="Marker3D" parent="Node3D"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 103.15134, 0, 222.68344)
+[node name="Spawn3" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 118.50525, -1.5258789e-05, -56.649925)
 
-[node name="Spawn3" type="Marker3D" parent="Node3D"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 200.97827, 0, 48.530697)
+[node name="Spawn4" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 124.64481, 0, -145.55861)
 
-[node name="Spawn4" type="Marker3D" parent="Node3D"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 205.47083, 0, -91.38945)
+[node name="Spawn5" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.92413, 0, -151.89117)
 
-[node name="Spawn5" type="Marker3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.07016, 0, -203.85133)
-
-[node name="Spawn6" type="Marker3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.896175, 0, -199.25504)
+[node name="Spawn6" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.113884, 0, -151.08067)
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamSynchronized_gggvi")

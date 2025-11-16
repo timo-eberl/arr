@@ -29,13 +29,14 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[node name="TestEnemy" type="RigidBody3D" groups=["enemy_ship"]]
+[node name="TestEnemy" type="RigidBody3D" node_paths=PackedStringArray("wave_spawns_on_death") groups=["enemy_ship"]]
 collision_layer = 3
 axis_lock_linear_y = true
 gravity_scale = 0.0
 linear_damp = 5.0
 angular_damp = 25.0
 script = ExtResource("1_c05d7")
+wave_spawns_on_death = [NodePath("WaveSpawnPoint"), NodePath("WaveSpawnPoint2"), NodePath("WaveSpawnPoint3"), NodePath("WaveSpawnPoint4")]
 
 [node name="SchiffExport" parent="." instance=ExtResource("1_a2ych")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
@@ -64,6 +65,18 @@ transform = Transform3D(6.938398, 0, 0, 0, 6.938398, 0, 0, 0, 6.938398, 0, 1.517
 layers = 2
 mesh = SubResource("ArrayMesh_ap880")
 skeleton = NodePath("")
+
+[node name="WaveSpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3467188, -4.7683716e-07, 3.4641223)
+
+[node name="WaveSpawnPoint2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1501341, -4.7683716e-07, 1.4318159)
+
+[node name="WaveSpawnPoint3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0342455, -4.7683716e-07, -3.5137465)
+
+[node name="WaveSpawnPoint4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6988242, -4.7683716e-07, -5.7258096)
 
 [editable path="SchiffExport"]
 [editable path="pirateShip_applied_material"]
