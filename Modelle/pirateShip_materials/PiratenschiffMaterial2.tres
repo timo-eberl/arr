@@ -1,7 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://pc7imotmm0b0"]
-
-[resource]
-resource_name = "PiratenschiffMaterial2"
-cull_mode = 2
-albedo_color = Color(0.31012553, 0.18235882, 0.16355819, 1)
-roughness = 0.5

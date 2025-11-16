@@ -95,7 +95,7 @@ _subresources={
 "use_external/path": "uid://dno5j8nj5rphm"
 },
 "PiratenschiffMaterial2": {
-"use_external/enabled": true,
+"use_external/enabled": false,
 "use_external/fallback_path": "res://Modelle/pirateShip_materials/PiratenschiffMaterial2.tres",
 "use_external/path": "uid://pc7imotmm0b0"
 },
@@ -105,7 +105,7 @@ _subresources={
 "use_external/path": "uid://bx2i60i0f58j"
 },
 "Schiff1": {
-"use_external/enabled": true,
+"use_external/enabled": false,
 "use_external/fallback_path": "res://Modelle/pirateShip_materials/Schiff1.tres",
 "use_external/path": "uid://c0nd31bemg1a4"
 }

@@ -1,3 +1,4 @@
+class_name Gegner
 extends RigidBody3D
 
 var is_initialized := false
@@ -12,10 +13,14 @@ var is_initialized := false
 @onready var nav_agent: NavigationAgent3D = $NavAgent
 @onready var target_container: Node3D = get_node_or_null(target_container_path)
 
+@onready var wood_mesh: MeshInstance3D = $pirateShip_applied_material/PirateShip
+
+var hole_counter := 0
+
+var health := 100.0
 var current_target: Node3D = null
 var is_waiting: bool = false
 var wait_timer: float = 0.0
-
 
 func _ready() -> void:
 	randomize()
@@ -34,6 +39,13 @@ func _ready() -> void:
 	
 	if target_container != null:
 		_pick_new_random_target()
+	
+	wood_mesh.set_instance_shader_parameter("hole_position_0", Vector3(0,1000,0))
+	wood_mesh.set_instance_shader_parameter("hole_position_1", Vector3(0,1000,0))
+	wood_mesh.set_instance_shader_parameter("hole_position_2", Vector3(0,1000,0))
+	wood_mesh.set_instance_shader_parameter("hole_direction_0", Vector3(1,0,0))
+	wood_mesh.set_instance_shader_parameter("hole_direction_1", Vector3(1,0,0))
+	wood_mesh.set_instance_shader_parameter("hole_direction_2", Vector3(1,0,0))
 
 
 func _physics_process(delta: float) -> void:
@@ -165,3 +177,26 @@ func set_target_container(container: Node3D) -> void:
 
 	if is_initialized:
 		_pick_new_random_target()
+
+func ball_enter(pos : Vector3, vel: Vector3):
+	health -= 40.0
+	print(self.name, " hit, new hp: ", health)
+	
+	var destruction := (1.0 - health/100.0)
+	destruction = clampf(destruction, 0.0, 1.0)
+	wood_mesh.set_instance_shader_parameter("destruction", destruction)
+	if hole_counter == 0:
+		wood_mesh.set_instance_shader_parameter("hole_position_0", wood_mesh.to_local(pos))
+		wood_mesh.set_instance_shader_parameter("hole_direction_0", (wood_mesh.global_basis.inverse() * vel).normalized())
+		hole_counter += 1
+	elif hole_counter == 1:
+		wood_mesh.set_instance_shader_parameter("hole_position_1", wood_mesh.to_local(pos))
+		wood_mesh.set_instance_shader_parameter("hole_direction_1", (wood_mesh.global_basis.inverse() * vel).normalized())
+		hole_counter += 1
+	elif hole_counter == 2:
+		wood_mesh.set_instance_shader_parameter("hole_position_2", wood_mesh.to_local(pos))
+		wood_mesh.set_instance_shader_parameter("hole_direction_2", (wood_mesh.global_basis.inverse() * vel).normalized())
+		hole_counter += 1
+
+func ball_exit(pos : Vector3, vel: Vector3):
+	pass

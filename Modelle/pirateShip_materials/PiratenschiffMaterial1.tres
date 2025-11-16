@@ -1,7 +1,20 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://dno5j8nj5rphm"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dno5j8nj5rphm"]
+
+[ext_resource type="Shader" uid="uid://b1oxi2lgqn3w7" path="res://shaders/ship_wood.gdshader" id="1_nq3eg"]
 
 [resource]
 resource_name = "PiratenschiffMaterial1"
-cull_mode = 2
-albedo_color = Color(0.46834797, 0.23860489, 0.1289676, 1)
-roughness = 0.5
+render_priority = 0
+shader = ExtResource("1_nq3eg")
+shader_parameter/destruction = 0.0
+shader_parameter/albedo = Color(0.46834797, 0.23860489, 0.1289676, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.5
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)

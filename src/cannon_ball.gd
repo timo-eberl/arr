@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
+	if body.is_in_group("enemy_ship") and body is Gegner:
 		print("ENTER hit:", body.name)
 		_spawn_planks(
 			body as PhysicsBody3D,
@@ -78,13 +78,14 @@ func _on_body_entered(body: Node) -> void:
 		)
 		explosion_sound_player.position = self.global_position
 		explosion_sound_player.play()
+		body.ball_enter(self.global_position, self.linear_velocity)
 
 
 
 
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("enemy_ship") and body is PhysicsBody3D:
+	if body.is_in_group("enemy_ship") and body is Gegner:
 		print("EXIT hit:", body.name)
 		# Austritt -> Bretter eher MIT der Kugel
 		_spawn_planks(
@@ -97,6 +98,7 @@ func _on_body_exited(body: Node) -> void:
 		
 		if enter_speed_factor < 1.0:
 			linear_velocity *= enter_speed_factor
+		body.ball_exit(self.global_position, self.linear_velocity)
 
 func _spawn_planks(
 		ship_body: PhysicsBody3D,
