@@ -12,6 +12,7 @@ material = SubResource("StandardMaterial3D_n00cy")
 size = Vector3(1, 0.05, 0.15)
 
 [node name="Plank" type="RigidBody3D"]
+collision_layer = 0
 mass = 0.1
 script = ExtResource("1_pkcor")
 

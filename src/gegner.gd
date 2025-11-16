@@ -206,7 +206,7 @@ func ball_enter(pos : Vector3, vel: Vector3):
 	
 	if health <= 0.0:
 		sink()
-		self.apply_impulse(vel * 0.005, pos)
+		self.apply_impulse(vel * 0.002, pos)
 
 func ball_exit(_pos : Vector3, _vel: Vector3):
 	pass
