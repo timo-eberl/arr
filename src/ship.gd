@@ -26,6 +26,11 @@ var Laenge = 1;
 
 var ship_sound: AudioStreamPlayer = AudioStreamPlayer.new()
 
+var sail_sound_player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+var sail_sounds = ["res://Sounds/sail1.wav", "res://Sounds/sail2.wav", "res://Sounds/sail3.wav"]
+
+var previous_action_accelerate: bool = false
+
 func setShipLength() -> void:
 	if Laenge != schiffLaenge:
 		schiffLaenge = Laenge;
@@ -38,8 +43,12 @@ func SetSail() -> void:
 
 func _ready() -> void:
 	camera_controller.target_cam_distance = cam_dist_idle
+
 	ship_sound.stream = load("res://Sounds/wind_in_sail.wav")
 	self.add_child(ship_sound)
+	
+	self.add_child(sail_sound_player)
+
 
 func _process(delta: float) -> void:
 	
@@ -102,6 +111,15 @@ func _physics_process(delta: float) -> void:
 	sail_down += speedInput * 0.04
 	sail_down = clamp(sail_down, -.1, 1.0)
 	#print(sail_down)
+
+	if(speedInput != 0.0):
+		var accelerate = (speedInput > 0.0)
+		if(accelerate != previous_action_accelerate):
+			previous_action_accelerate = accelerate
+			sail_sound_player.stream = load(sail_sounds.pick_random())
+			#sail_sound_player.position = self.global_position
+			sail_sound_player.volume_db = -18
+			sail_sound_player.play()
 	
 	#if Input.is_action_pressed("Gasgeben") and linear_velocity.length() < max_speed:
 	self.apply_central_force(global_basis.z * sail_down * 15)
@@ -134,3 +152,5 @@ func deposit_treasure() -> void:
 
 	await player.finished
 	player.queue_free()
+
+	DynamicMusic.update(collected_treasure_parent, $"../MusicPlayer")
