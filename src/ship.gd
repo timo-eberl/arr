@@ -28,6 +28,11 @@ func setShipLength() -> void:
 		schiffLaenge = Laenge;
 	pass
 
+func SetSail() -> void:
+	$SchiffExport/Sail.set_blend_shape_value(0, max(0, 1.0 - sail_down));
+	$SchiffExport/Sail_001.set_blend_shape_value(0, max(0, 1.0 -  sail_down));
+	$SchiffExport/Sail_002.set_blend_shape_value(0, max(0, 1.0 -  sail_down));
+
 func _ready() -> void:
 	camera_controller.target_cam_distance = cam_dist_idle
 	ship_sound.stream = load("res://Sounds/wind_in_sail.wav")
@@ -35,6 +40,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
+	SetSail()
 	
 	sail_scale = lerp(sail_scale, target_sail_scale, delta * 1.5)
 	for sail in sails:
