@@ -140,7 +140,7 @@ func deposit_treasure() -> void:
 
 	GameState.add_gold(amount)
 
-	var player := AudioStreamPlayer3D.new()
+	var player := AudioStreamPlayer.new()
 	add_child(player)
 	player.stream = load("res://Sounds/treasure_delivered.wav")
 	player.volume_db = -15
