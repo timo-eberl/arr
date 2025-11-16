@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=49 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
+[ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="12_bo7i5"]
 [ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
@@ -162,6 +163,9 @@ gravity_scale = 0.0
 linear_damp = 1.0
 angular_damp = 2.0
 script = ExtResource("2_fj7yv")
+winkel = null
+speed = null
+max_speed = null
 cam_dist_idle = 30
 cam_dist_fast = 80
 
@@ -176,8 +180,6 @@ transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9
 
 [node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
-
-[node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
 
 [node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -344,6 +346,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.487354, -2.8149917, 18.17
 [node name="CollectableGold16" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.076965, -2.8149917, 18.88744)
 
+[node name="FLoatingFluff" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.076965, -2.8149917, 18.88744)
+
+[node name="FluffPlank" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.7336636, 0, 1.3790874)
+
+[node name="FluffPlank2" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(0.7009217, -0.71323824, 0, -3.1176633e-08, -3.063826e-08, -1, 0.71323824, 0.7009217, -4.371139e-08, 4.718648, 0, 3.3476944)
+
+[node name="FluffPlank3" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(0.5529117, 0.83323985, 0, 3.6422072e-08, -2.4168536e-08, -1, -0.83323985, 0.5529117, -4.371139e-08, 8.484476, 1.4210855e-14, -1.1182256)
+
+[node name="FluffPlank4" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(0.5109932, -0.8595848, 0, -3.7573642e-08, -2.233622e-08, -1, 0.8595848, 0.5109932, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
+
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -7.813917, 0)
 
@@ -462,7 +479,7 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 shape = SubResource("SphereShape3D_wjb0r")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="TreasureDeposit"]
-transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 0, 0)
+transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 1.3374236, -5.8460635e-08)
 mesh = SubResource("QuadMesh_bo7i5")
 skeleton = NodePath("../..")
 

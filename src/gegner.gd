@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(global_position.x, global_position.z)
 	global_position.y = WaveHeight.height(global_2d)
 
-	var normal = calculateNormal(global_2d)
+	var normal = WaveHeight.calculateNormal(global_2d)
 	var myBasis = Basis()
 	myBasis.y = normal.normalized()        # UP-Richtung setzen
 	myBasis.x = myBasis.y.cross(-Vector3.FORWARD).normalized()
@@ -189,20 +189,6 @@ func _pick_new_random_target() -> void:
 	print("Neues Ziel gewählt für ", name, ": ", new_target.name)
 
 	_set_current_target(new_target)
-
-
-func calculateNormal(xz: Vector2) -> Vector3:
-	var epsilon = 0.05
-
-	var h = WaveHeight.height(xz)
-	var hx = WaveHeight.height(Vector2(xz.x + epsilon, xz.y))
-	var hz = WaveHeight.height(Vector2(xz.x, xz.y + epsilon))
-
-	var tangentX = Vector3(epsilon, hx - h, 0.0).normalized()
-	var tangentZ = Vector3(0.0, hz - h, epsilon).normalized()
-
-	var normal = tangentZ.cross(tangentX)
-	return normal
 
 func set_target_container(container: Node3D) -> void:
 	target_container = container

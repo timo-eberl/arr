@@ -53,3 +53,21 @@ static func height(xz: Vector2) -> float:
 	h += wave_2_disp.y
 	
 	return h
+
+static func calculateNormal(xz: Vector2) -> Vector3:
+	# A small offset value to sample neighboring points
+	var epsilon = 0.05;
+
+	# Sample the height at the current point and at points slightly offset in x and z
+	var h = WaveHeight.height(xz);
+	var hx = WaveHeight.height(Vector2(xz.x + epsilon, xz.y));
+	var hz = WaveHeight.height(Vector2(xz.x, xz.y + epsilon));
+
+	# Create two tangent vectors
+	var tangentX = Vector3(epsilon, hx - h, 0.0).normalized();
+	var tangentZ = Vector3(0.0, hz - h, epsilon).normalized();
+
+	# The normal is the cross product of the two tangents
+	var normal = tangentZ.cross(tangentX);
+
+	return normal;
