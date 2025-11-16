@@ -2,7 +2,7 @@ extends Node3D
 
 @export var enemy_scene: PackedScene
 @export var spawn_points_path: NodePath
-@export var max_ships: int = 6
+@export var max_ships: int = 8
 @export var spawn_check_interval: float = 2.0
 @export var min_spawn_distance: float = 6.0
 

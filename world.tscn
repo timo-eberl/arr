@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=51 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -18,6 +18,7 @@
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://bkx2w30nwns7f" path="res://treasure/fluff_barrel.tscn" id="13_4h6ng"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
+[ext_resource type="PackedScene" uid="uid://g1h1u4880e3j" path="res://treasure/fluff_chest.tscn" id="14_o3ebs"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
 [ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
@@ -46,10 +47,10 @@ size = Vector3(3.2790527, 1.9439087, 10.192383)
 size = Vector3(3.2790527, 2.1187897, 3.6865234)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gbfbk"]
-size = Vector3(0.34899902, 2.413803, 10.192383)
+size = Vector3(0.34899902, 2.470211, 10.192383)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ioo17"]
-size = Vector3(3.2790527, 1.1716385, 0.4580078)
+size = Vector3(3.2790527, 1.2507362, 0.4580078)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ioo17"]
 radius = 3.0
@@ -164,11 +165,8 @@ gravity_scale = 0.0
 linear_damp = 1.0
 angular_damp = 2.0
 script = ExtResource("2_fj7yv")
-winkel = null
-speed = null
-max_speed = null
 cam_dist_idle = 30
-cam_dist_fast = 80
+cam_dist_fast = 60
 
 [node name="SchiffExport" parent="RigidBody3D" instance=ExtResource("4_036b0")]
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
@@ -200,11 +198,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4650269, 0.70690155, 0)
 shape = SubResource("BoxShape3D_gbfbk")
 
 [node name="CollisionShape3DLeft" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.828204, 0)
 shape = SubResource("BoxShape3D_gbfbk")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6449567, -2.3964844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6845056, -2.3964844)
 shape = SubResource("BoxShape3D_ioo17")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
@@ -255,7 +253,7 @@ shape = SubResource("ConvexPolygonShape3D_bc84e")
 transform = Transform3D(0.99999994, 0, 0, 0, 0.8038568, 0.5948228, 0, -0.59482276, 0.80385685, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraLookAt"]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 61.835)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 40)
 cull_mask = 1048573
 fov = 40.0
 
@@ -305,17 +303,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.276439, -2.8149917, 8.5756
 [node name="CollectableGold2" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.035714, -2.8149917, 18.05299)
 
+[node name="CollectableGold17" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.47467, -2.8149917, 16.619127)
+
+[node name="CollectableGold18" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.162933, -2.8149917, 15.810055)
+
+[node name="CollectableGold19" parent="Collectable" instance=ExtResource("9_ioo17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.395887, -3.9514775, 13.14095)
+
 [node name="CollectableGold3" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.670265, -2.8149917, 22.233467)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.670265, -3.9514775, 22.233467)
 
 [node name="CollectableGold4" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.779102, -2.8149917, 19.495068)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.779102, -3.9514775, 19.495068)
 
 [node name="CollectableGold5" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.453755, -2.8149917, 13.88822)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.453755, -3.9514775, 13.88822)
 
 [node name="CollectableGold6" parent="Collectable" instance=ExtResource("9_ioo17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.14413, -2.8149917, 14.648547)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.14413, -3.9514775, 14.648547)
 
 [node name="CollectableGold7" parent="Collectable" instance=ExtResource("9_ioo17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.273265, -2.8149917, 16.018467)
@@ -367,6 +374,9 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 27.2
 
 [node name="FluffBarrel" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 30.68314, 9.536743e-07, -4.557184)
+
+[node name="FluffChest" parent="FLoatingFluff" instance=ExtResource("14_o3ebs")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 28.935154, 9.536743e-07, -9.533276)
 
 [node name="FluffBarrel2" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 6.6205807, 2.861023e-06, 1.0781479)
