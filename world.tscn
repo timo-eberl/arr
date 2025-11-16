@@ -367,7 +367,7 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.450881, 0)
 [node name="StaticBody3D" type="StaticBody3D" parent="terrain_collapsed"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="terrain_collapsed/StaticBody3D"]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 8.83144, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_bc84e")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="terrain_collapsed/StaticBody3D"]
