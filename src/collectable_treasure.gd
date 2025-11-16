@@ -8,4 +8,4 @@ func _physics_process(delta: float) -> void:
 		Vector2(self.global_position.x, self.global_position.z)
 	)
 	if self.global_position.y < target_y:
-		self.global_position.y += delta * 0.5
+		self.global_position.y += delta * 3.0
