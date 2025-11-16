@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
+[ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
 [ext_resource type="AudioStream" uid="uid://cgsdoor5octni" path="res://Music/main5.wav" id="28_jjr1n"]
@@ -480,7 +481,7 @@ transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069,
 layers = 2
 
 [node name="TreasureDeposit" type="Area3D" parent="." node_paths=PackedStringArray("ship")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.06518, 0, 32.806606)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.44942, 0, 31.768154)
 script = ExtResource("22_wukud")
 ship = NodePath("../RigidBody3D")
 
@@ -488,9 +489,10 @@ ship = NodePath("../RigidBody3D")
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 shape = SubResource("SphereShape3D_wjb0r")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(20, 0, 0, 0, -8.742278e-07, 20, 0, -20, -8.742278e-07, -80.700714, 0.531867, 27.679136)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TreasureDeposit"]
+transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 0, 0)
 mesh = SubResource("QuadMesh_bo7i5")
+skeleton = NodePath("../..")
 
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
 
