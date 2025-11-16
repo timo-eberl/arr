@@ -157,11 +157,14 @@ void fragment() {
 	if(dist > outer)
 		ALPHA = 0.0;
 	else
-		if(dist > outer - thickness)
-			ALPHA = 1.0;
+	{
+		float range = thickness * mix(abs(cos(TIME)), 2.0, 0.5);
+		float diff = dist - outer;
+		if (diff > -range)
+			ALPHA = (0.7 + 0.2*sin(2.*TIME+3.14*0.9)) * clamp((2.0*range+diff*4.0)/range, 0.0, 1.0) * clamp(30.0*(outer-dist), 0.0, 1.0);
 		else
 			ALPHA = 0.0;
-			
+	}		
 	ALBEDO = ring_color;
 }"
 
