@@ -52,7 +52,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	$"../UI/RichTextLabel".text = "Time remaining: %d seconds" % timer
+	$"../UI/RichTextLabel".text = "Time: %d seconds" % timer
 	timer -= delta
 	
 	if timer <= 0:

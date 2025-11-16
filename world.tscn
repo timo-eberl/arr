@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=61 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
@@ -151,6 +151,16 @@ shader_parameter/ring_color = Color(1, 0, 0, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_bo7i5"]
 material = SubResource("ShaderMaterial_mc2jv")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qktwf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh8nc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjr1n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gggvi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w44yn"]
+
 [sub_resource type="Shortcut" id="Shortcut_bo7i5"]
 
 [node name="World" type="Node3D"]
@@ -302,14 +312,14 @@ size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_036b0")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Minimap/PanelContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(170, 170)
 layout_mode = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Minimap/PanelContainer/SubViewportContainer"]
 handle_input_locally = false
 scaling_3d_scale = 2.0
-size = Vector2i(200, 200)
+size = Vector2i(170, 170)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
@@ -515,10 +525,11 @@ script = ExtResource("12_mc2jv")
 
 [node name="GoldLabel" type="Label" parent="UI"]
 layout_mode = 0
-offset_left = 968.0
-offset_top = 235.0
-offset_right = 1092.0
-offset_bottom = 280.0
+offset_left = 999.0
+offset_top = 207.0
+offset_right = 1123.0
+offset_bottom = 252.0
+theme_override_colors/font_color = Color(0.25490198, 0.15294118, 0.07058824, 1)
 theme_override_fonts/font = ExtResource("12_wjb0r")
 theme_override_font_sizes/font_size = 25
 text = "24"
@@ -526,10 +537,10 @@ vertical_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="UI"]
 layout_mode = 0
-offset_left = 930.0
-offset_top = 240.0
-offset_right = 962.0
-offset_bottom = 272.0
+offset_left = 959.0
+offset_top = 211.0
+offset_right = 991.0
+offset_bottom = 243.0
 texture = ExtResource("13_mc2jv")
 expand_mode = 1
 
@@ -540,14 +551,17 @@ offset_left = 8.0
 offset_top = 12.0
 offset_right = 896.0
 offset_bottom = 62.0
+theme_override_colors/default_color = Color(0.25490198, 0.15294118, 0.07058824, 1)
 theme_override_fonts/normal_font = ExtResource("12_wjb0r")
+theme_override_font_sizes/normal_font_size = 24
 text = "Time remaining:"
 
 [node name="Endscreen" type="Node" parent="."]
 
 [node name="EndCamera" type="Camera3D" parent="Endscreen"]
-transform = Transform3D(-0.18307635, 0, -0.98309875, 0, 1, 0, 0.98309875, 0, -0.18307635, -123.708145, 9.559604, 24.63946)
+transform = Transform3D(0.092893876, 0.36154717, -0.9277147, -0.029193316, 0.9323319, 0.36042345, 0.995248, -0.006398063, 0.097162746, -129.72226, 10.885325, 32.337467)
 cull_mask = 1048573
+fov = 40.0
 
 [node name="EndShipMarker" type="Node3D" parent="Endscreen"]
 transform = Transform3D(-0.58569354, 0, -0.81053257, 0, 1, 0, 0.81053257, 0, -0.58569354, -56.034866, 0, 54.094635)
@@ -555,14 +569,14 @@ transform = Transform3D(-0.58569354, 0, -0.81053257, 0, 1, 0, 0.81053257, 0, -0.
 [node name="EndScreenUI" type="CanvasLayer" parent="Endscreen"]
 
 [node name="Label" type="Label" parent="Endscreen/EndScreenUI"]
-offset_left = 1.0
-offset_top = -117.0
-offset_right = 1153.0
-offset_bottom = 534.0
+offset_left = 3.0
+offset_top = -194.0
+offset_right = 1155.0
+offset_bottom = 457.0
 theme_override_colors/font_color = Color(0.25621673, 0.15228325, 0.0723703, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.827451)
 theme_override_fonts/font = ExtResource("12_wjb0r")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 45
 text = "Test Label"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -576,8 +590,14 @@ theme_override_colors/font_color = Color(0.25490198, 0.15294118, 0.07058824, 1)
 theme_override_colors/font_hover_color = Color(0.5041458, 0.3228372, 0.17718664, 1)
 theme_override_fonts/font = ExtResource("12_wjb0r")
 theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qktwf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bh8nc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jjr1n")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gggvi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w44yn")
 shortcut = SubResource("Shortcut_bo7i5")
 text = "Restart"
+
 [node name="Rand" parent="." instance=ExtResource("27_4h6ng")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.45, 0)
 

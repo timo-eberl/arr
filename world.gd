@@ -24,25 +24,11 @@ func _ready() -> void:
 	end_screen_ui.visible = false
 
 func show_end_screen() -> void:
-	# 1) Steuerung/Physik des Spielerschiffs deaktivieren (falls nötig)
-	if player.has_method("set_process"):
-		player.set_process(false)
-	if player.has_method("set_physics_process"):
-		player.set_physics_process(false)
 
-	# 2) Spieler an End-Position teleportieren
-	if player is Node3D:
-		var t: Transform3D = player.global_transform
-		t.origin = end_ship_marker.global_transform.origin
-		player.global_transform = t
-
-	# 3) Auf Endkamera umschalten
 	end_camera.current = true
 
-	# 4) Münzanzahl updaten
 	coins_label.text = "Treasure collected: " + str(GameState.gold)
 
-	# 5) UI einblenden
 	end_screen_ui.visible = true
 	
 	if ui:
