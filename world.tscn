@@ -25,7 +25,6 @@
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
-[ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
 [ext_resource type="PackedScene" uid="uid://be1b8kuvkkrwf" path="res://Modelle/Rand.blend" id="27_4h6ng"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
@@ -141,15 +140,40 @@ stream_4/volume = -60.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
 radius = 0.15
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mc2jv"]
+[sub_resource type="Shader" id="Shader_k83mh"]
+code = "shader_type spatial;
+
+uniform float radius : hint_range(0.0, 1.0) = 5.4;      // Inner radius of the ring
+uniform float thickness : hint_range(0.0, 1.0) = 0.05;  // Width of the ring
+uniform vec3 ring_color : source_color = vec3(1.0, 0.0, 0.0); // Red
+
+void fragment() {
+    vec2 uv = UV * 2.0 - 1.0;        // Convert UV to range [-1,1]
+    float dist = length(uv);         // Distance from center
+	
+	float outer = abs(sin(TIME));
+	outer = 0.75 + outer / 4.0;
+	
+	if(dist > outer)
+		ALPHA = 0.0;
+	else
+		if(dist > outer - thickness)
+			ALPHA = 1.0;
+		else
+			ALPHA = 0.0;
+			
+	ALBEDO = ring_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k83mh"]
 render_priority = 0
-shader = ExtResource("25_mc2jv")
-shader_parameter/radius = 5.4
-shader_parameter/thickness = 0.05
-shader_parameter/ring_color = Color(1, 0, 0, 1)
+shader = SubResource("Shader_k83mh")
+shader_parameter/radius = 1.0
+shader_parameter/thickness = 0.30000001425
+shader_parameter/ring_color = Color(0, 0.32941177, 0.52156866, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_bo7i5"]
-material = SubResource("ShaderMaterial_mc2jv")
+material = SubResource("ShaderMaterial_k83mh")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qktwf"]
 
@@ -324,6 +348,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Minimap/PanelContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 181.36992, -3.0505996e-07)
+cull_mask = 1048571
 
 [node name="CollectedTreasure" type="Node3D" parent="."]
 
@@ -517,6 +542,13 @@ shape = SubResource("SphereShape3D_wjb0r")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="TreasureDeposit"]
 transform = Transform3D(12, 0, 0, 0, -5.2453663e-07, 12, 0, -12, -5.2453663e-07, 0, 1.3374236, -5.8460635e-08)
+layers = 4
+mesh = SubResource("QuadMesh_bo7i5")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="TreasureDeposit"]
+transform = Transform3D(25, 0, 0, 0, -1.0927847e-06, 25, 0, -25, -1.0927847e-06, 26.834534, 55.349133, -8.0937195)
+layers = 2
 mesh = SubResource("QuadMesh_bo7i5")
 skeleton = NodePath("../..")
 
