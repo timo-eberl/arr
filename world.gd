@@ -36,7 +36,8 @@ func show_end_screen() -> void:
 	if minimap:
 		minimap.visible = false
 		
-	get_node("TreasureDeposit/CollisionShape3D").disabled = true
+	$TreasureDeposit/CollisionShape3D.disabled = true
+	$TreasureDeposit/MeshInstance3D2.visible = false
 
 func _on_button_pressed() -> void:
 	get_tree().reload_current_scene()

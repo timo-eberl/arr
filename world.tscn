@@ -1,6 +1,6 @@
 [gd_scene load_steps=61 format=4 uid="uid://u3cc6pte4xly"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_bo7i5"]
+[ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
