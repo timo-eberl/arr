@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkx2w30nwns7f"]
+
+[ext_resource type="Script" uid="uid://cpc5nxbgrqywi" path="res://src/floating_fluff.gd" id="1_x5kpt"]
+[ext_resource type="PackedScene" uid="uid://b31y5fremme7e" path="res://Modelle/barrel.blend" id="2_jus4m"]
+
+[node name="FluffBarrel" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_x5kpt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="barrel" parent="MeshInstance3D" instance=ExtResource("2_jus4m")]
+transform = Transform3D(-0.0013404043, -0.39999777, 0, 0.39999777, -0.0013404043, 0, 0, 0, 0.4, 0.91494465, 0, 0)

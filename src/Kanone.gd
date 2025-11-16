@@ -58,9 +58,9 @@ func fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	if use_right:
-		$"..".SetKippen(.4)
+		$"..".SetKippen(.25)
 	else:
-		$"..".SetKippen(-.4)
+		$"..".SetKippen(-.25)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z

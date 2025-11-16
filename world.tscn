@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=50 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="12_bo7i5"]
 [ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
+[ext_resource type="PackedScene" uid="uid://bkx2w30nwns7f" path="res://treasure/fluff_barrel.tscn" id="13_4h6ng"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
 [ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
@@ -355,11 +356,20 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.73
 [node name="FluffPlank2" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 4.718648, 0, 3.3476944)
 
+[node name="FluffPlank5" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 30.577778, 0, -6.6331043)
+
 [node name="FluffPlank3" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.484476, 1.4210855e-14, -1.1182256)
 
 [node name="FluffPlank4" parent="FLoatingFluff" instance=ExtResource("12_bo7i5")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 27.227524, -9.536743e-07, 2.316187)
+
+[node name="FluffBarrel" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 30.68314, 9.536743e-07, -4.557184)
+
+[node name="FluffBarrel2" parent="FLoatingFluff" instance=ExtResource("13_4h6ng")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 6.6205807, 2.861023e-06, 1.0781479)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.450881, 0)
