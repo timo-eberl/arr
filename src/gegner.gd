@@ -50,6 +50,11 @@ func _ready() -> void:
 	wood_mesh.set_instance_shader_parameter("hole_direction_2", Vector3(1,0,0))
 
 
+func _exit_tree() -> void:
+	# Beim Entfernen des Schiffs das Ziel freigeben
+	_set_current_target(null)
+
+
 func _physics_process(delta: float) -> void:
 	if is_sinking:
 		return
@@ -80,7 +85,6 @@ func _physics_process(delta: float) -> void:
 			_pick_new_random_target()
 		# Während des Wartens nicht weiterfahren
 		linear_velocity = Vector3.ZERO
-		# Wellen kippen das Schiff weiter schön → daher kein return vor der Wellenlogik
 		return
 
 
@@ -141,26 +145,46 @@ func _physics_process(delta: float) -> void:
 		linear_velocity = move_forward * forward_speed
 
 
+# Helper: kümmert sich um exklusives Ziel-Besitzen
+func _set_current_target(target: Node3D) -> void:
+	# altes Ziel freigeben
+	if current_target != null and current_target.is_inside_tree():
+		if current_target.has_meta("assigned_ship") and current_target.get_meta("assigned_ship") == self:
+			current_target.set_meta("assigned_ship", null)
+
+	# neues Ziel setzen
+	current_target = target
+
+	# neues Ziel belegen
+	if current_target != null:
+		current_target.set_meta("assigned_ship", self)
+		nav_agent.target_position = current_target.global_transform.origin
+
+
 func _pick_new_random_target() -> void:
 	if target_container == null:
 		print("Kein target_container gesetzt")
-		current_target = null
+		_set_current_target(null)
 		return
 
-	var candidates: Array[Node3D] = []
+	var free_candidates: Array[Node3D] = []
+
 	for child in target_container.get_children():
 		if child is Node3D:
-			candidates.append(child)
+			var assigned_ship = child.get_meta("assigned_ship") if child.has_meta("assigned_ship") else null
+			# Nur Ziele ohne aktuelles Schiff
+			if assigned_ship == null:
+				free_candidates.append(child)
 
-	if candidates.is_empty():
-		print("target_container hat keine Node3D-Kinder")
-		current_target = null
+	if free_candidates.is_empty():
+		print("Keine freien Ziele im target_container")
+		# aktuelles Ziel behalten, falls vorhanden
 		return
 
-	current_target = candidates[randi() % candidates.size()]
-	print("Neues Ziel gewählt:", current_target.name)
+	var new_target: Node3D = free_candidates[randi() % free_candidates.size()]
+	print("Neues Ziel gewählt für ", name, ": ", new_target.name)
 
-	nav_agent.target_position = current_target.global_transform.origin
+	_set_current_target(new_target)
 
 
 func calculateNormal(xz: Vector2) -> Vector3:
