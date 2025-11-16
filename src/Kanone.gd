@@ -138,7 +138,6 @@ func fire(left : bool) -> void:
 	cannon_sound_player.stream = load(cannon_sounds.pick_random())
 	get_tree().root.add_child(cannon_sound_player)
 	cannon_sound_player.position = self.global_position
-	cannon_sound_player.volume_db = -6
 	cannon_sound_player.play()
 
 	# Free cannon sound player once it finished playing
