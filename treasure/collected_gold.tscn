@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddxl3y1ygux51"]
+[gd_scene load_steps=6 format=3 uid="uid://ddxl3y1ygux51"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://c754gwxb37cd4" path="res://treasure/treasure_physics.tres" id="1_kqw4f"]
+[ext_resource type="Script" uid="uid://hyk450t816ey" path="res://treasure/collected_treasure.gd" id="2_up50y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pkg7o"]
 margin = 0.1
@@ -19,6 +20,7 @@ collision_layer = 2
 collision_mask = 2
 physics_material_override = ExtResource("1_kqw4f")
 gravity_scale = 3.0
+script = ExtResource("2_up50y")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_pkg7o")
