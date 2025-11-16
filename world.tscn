@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=46 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -29,6 +29,9 @@ subdivide_depth = 256
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dwbse"]
 size = Vector3(300, 1, 300)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bc84e"]
+friction = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pkg7o"]
 size = Vector3(3.2790527, 2.0118408, 10.192383)
@@ -236,6 +239,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bc84e"]
+points = PackedVector3Array(1.481194, 4.993663, 0.0824242, 1.481194, 4.993663, -0.12017947, 3.71568, 1.2378398, -0.12017947, -2.0728602, 1.5423517, 0.996626, -2.6823812, 1.5423517, -0.93298006, 1.3793951, 0.932801, 0.996626, 1.2782325, 1.0344807, -1.0345801, -2.3776207, 3.572256, 0.0824242, 1.7700047, -0.16576697, -0.018977046, -2.4577396, 0.5982462, 0.6631629, -1.9342769, -0.1444463, -0.018977046, -0.2449336, 0.22209764, -0.93298006, 3.613881, 1.4406722, 0.18402427, -0.28436878, 0.3818295, 0.8248699, -2.6823812, 1.5423517, 0.89502597, -2.2758217, 3.572256, -0.12017947, -1.4633392, 1.3389926, -1.0345801, 1.3793951, 1.1361603, 0.996626, -2.5609632, 0.595126, -0.21395779, 3.71568, 1.4406722, -0.12017947, -2.78418, 1.5423517, 0.38722444, -2.3455582, 0.66366583, -0.6747581, 3.613881, 1.2378398, 0.18402427, 1.2782325, 0.932801, -1.0345801, 1.2782325, 4.993663, -0.12017947, 1.2782325, 4.993663, 0.0824242, -2.78418, 1.5423517, -0.4249797, 1.2150271, 0.4777548, 0.7302267, -0.7526556, 1.3389926, -1.0345801, -1.4980717, -0.17441578, -0.018977046, -1.7680998, 1.5423517, 0.996626, -0.28195265, 0.66825086, 0.9156512)
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_036b0"]
 panorama = ExtResource("4_aqk2v")
 
@@ -307,6 +313,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_dwbse")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["ship"]]
+physics_material_override = SubResource("PhysicsMaterial_bc84e")
 gravity_scale = 0.0
 linear_damp = 1.0
 angular_damp = 2.0
@@ -329,6 +336,8 @@ transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e
 [node name="CPUParticles3D" type="CPUParticles3D" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1"]
 
 [node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5059204, 0)
@@ -408,6 +417,10 @@ transform = Transform3D(6.938398, 0, 0, 0, 6.938398, 0, 0, 0, 6.938398, 0, 1.517
 layers = 2
 mesh = SubResource("ArrayMesh_il2jm")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(2.0030958e-08, 0, -1.6797618, 0, 1.6797618, 0, 1.6797618, 0, 2.0030958e-08, 0, -0.24362478, 0)
+shape = SubResource("ConvexPolygonShape3D_bc84e")
 
 [node name="CameraLookAt" type="Node3D" parent="."]
 transform = Transform3D(0.7260348, -0.40915036, 0.55269283, -3.7252903e-09, 0.8037323, 0.59499115, -0.68765795, -0.43198425, 0.5835376, 0, 0, 0)

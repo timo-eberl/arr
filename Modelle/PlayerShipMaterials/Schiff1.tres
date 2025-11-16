@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dlpont0o6fcma"]
+
+[resource]
+resource_name = "Schiff1"
+cull_mode = 2
+albedo_color = Color(0.6329084, 0.41072264, 0.22803442, 1)
+roughness = 0.5

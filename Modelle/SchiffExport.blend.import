@@ -38,6 +38,28 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={
+"materials": {
+"Kanone": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/PlayerShipMaterials/Kanone.tres",
+"use_external/path": "uid://di53igo157l0t"
+},
+"Schiff1": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/PlayerShipMaterials/Schiff1.tres",
+"use_external/path": "uid://dlpont0o6fcma"
+},
+"Schiff2": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/PlayerShipMaterials/Schiff2.tres",
+"use_external/path": "uid://7p3tify448va"
+},
+"Segel": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Modelle/PlayerShipMaterials/Segel.tres",
+"use_external/path": "uid://dqd3tqsaxdybv"
+}
+},
 "meshes": {
 "SchiffExport_Plane_002": {
 "generate/lightmap_uv": 0,
