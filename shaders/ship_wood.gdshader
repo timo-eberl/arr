@@ -85,7 +85,10 @@ void fragment() {
 	{
 		float d = scaled_distance_to_line(local_pos, hole_position_1, hole_direction_1, s);
 		darkening *= clamp(d*0.08, 0.0, 1.0);
- 0.0, 1.0);
+	}
+	{
+		float d = scaled_distance_to_line(local_pos, hole_position_2, hole_direction_2, s);
+		darkening *= clamp(d*0.08, 0.0, 1.0);
 	}
 	darkening = 1.0 - darkening;
 	darkening -= pow(texture(cracks_texture, local_pos*0.03).x,2.0)*1.2;
