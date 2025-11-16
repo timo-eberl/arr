@@ -17,6 +17,8 @@ var is_initialized := false
 
 var hole_counter := 0
 
+var is_sinking := false
+
 var health := 100.0
 var current_target: Node3D = null
 var is_waiting: bool = false
@@ -49,6 +51,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_sinking:
+		return
 
 	var global_2d := Vector2(global_position.x, global_position.z)
 	global_position.y = WaveHeight.height(global_2d)
@@ -184,6 +188,8 @@ func ball_enter(pos : Vector3, vel: Vector3):
 	
 	var destruction := (1.0 - health/100.0)
 	destruction = clampf(destruction, 0.0, 1.0)
+	if health <= 0.0:
+		destruction = 3.0
 	wood_mesh.set_instance_shader_parameter("destruction", destruction)
 	if hole_counter == 0:
 		wood_mesh.set_instance_shader_parameter("hole_position_0", wood_mesh.to_local(pos))
@@ -197,6 +203,20 @@ func ball_enter(pos : Vector3, vel: Vector3):
 		wood_mesh.set_instance_shader_parameter("hole_position_2", wood_mesh.to_local(pos))
 		wood_mesh.set_instance_shader_parameter("hole_direction_2", (wood_mesh.global_basis.inverse() * vel).normalized())
 		hole_counter += 1
+	
+	if health <= 0.0:
+		sink()
+		self.apply_impulse(vel * 0.005, pos)
 
-func ball_exit(pos : Vector3, vel: Vector3):
+func ball_exit(_pos : Vector3, _vel: Vector3):
 	pass
+
+func sink():
+	self.gravity_scale = 0.3
+	axis_lock_linear_y = false
+	is_sinking = true
+	collision_mask = 0
+	collision_layer = 0
+	$Pfeil.visible = false
+	await get_tree().create_timer(5).timeout
+	queue_free()
