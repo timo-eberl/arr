@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var winkel = 0;
 @export var speed := 0.0;
 var kippen = 0;
-var timer = 5000
+var timer = 120
 
 @export var max_speed := 16.0
 
@@ -43,7 +43,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	$"../Minimap/RichTextLabel".text = "Zeit verbleibend: %d" % timer
+	$"../Minimap/RichTextLabel".text = "Time remaining: %d seconds" % timer
 	timer -= delta
 	
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
