@@ -13,6 +13,8 @@ var kippen = 0;
 
 @export var sails : Array[Node3D]
 
+@onready var collected_treasure_parent: Node3D = $CollectedTreasure
+
 var sail_down := 0.0
 
 var target_sail_scale := 0.0
@@ -116,3 +118,19 @@ func calculateNormal(xz: Vector2) -> Vector3:
 	var normal = tangentZ.cross(tangentX);
 
 	return normal;
+	
+func get_carried_treasure_amount() -> int:
+	return collected_treasure_parent.get_child_count()
+
+func deposit_treasure() -> void:
+	var amount := get_carried_treasure_amount()
+	if amount <= 0:
+		return
+
+	# Gold zum globalen Counter hinzufügen
+	print(amount)
+	GameState.add_gold(amount)
+
+	# Alle Treasure-Objekte vom Schiff entfernen
+	for child in collected_treasure_parent.get_children():
+		child.queue_free()
