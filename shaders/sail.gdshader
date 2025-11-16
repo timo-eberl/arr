@@ -26,7 +26,7 @@ void vertex() {
 	vec4 global_pos = MODEL_MATRIX * vec4(VERTEX, 1.0);
 	
 	
-	VERTEX *= vec3(1.0, 1.0 * (1.0 + sin(cos(VERTEX.x + VERTEX.y) * 2.0 + TIME * 7.0 + VERTEX.z * .5) * 0.22),1.0);
+	VERTEX *= vec3(1.0, 1.0 * (1.0 + sin(cos(VERTEX.x + VERTEX.y) * 2.0 + TIME * 7.0 + VERTEX.z * .5) * 0.44),1.0);
 }
 
 void fragment() {
