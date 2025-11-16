@@ -64,7 +64,8 @@ func _process(delta: float) -> void:
 	#basis.z = basis.x.cross(basis.y).normalized()
 
 func SetKippen(k: float):
-	kippen += k
+	linear_velocity += basis.z * k * 10.0
+	angular_velocity += basis.z * k * 5.0
 
 func _physics_process(delta: float) -> void:
 	var global_2d := Vector2(self.global_position.x, self.global_position.z)
