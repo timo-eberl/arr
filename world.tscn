@@ -469,7 +469,6 @@ autoplay = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069, 26.875145)
 layers = 2
-mesh = SubResource("SphereMesh_wjb0r")
 
 [node name="TreasureDeposit" type="Area3D" parent="." node_paths=PackedStringArray("ship")]
 script = ExtResource("22_wukud")
