@@ -9,3 +9,4 @@ func _on_body_entered(body: Node3D) -> void:
 	if body == ship:
 		if ship.has_method("deposit_treasure"):
 			ship.deposit_treasure()
+			
