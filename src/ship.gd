@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var winkel = 0;
 @export var speed := 0.0;
 var kippen = 0;
-var timer = 120
+var timer = 5
 
 @export var max_speed := 16.0
 
@@ -45,6 +45,9 @@ func _process(delta: float) -> void:
 	
 	$"../UI/RichTextLabel".text = "Time remaining: %d seconds" % timer
 	timer -= delta
+	
+	if timer <= 0:
+		get_tree().current_scene.show_end_screen()
 	
 	# TODO set target_sail_scale and camera_controller.target_cam_distance based on velocity
 	SetSail()

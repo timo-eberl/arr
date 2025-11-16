@@ -1,5 +1,6 @@
-[gd_scene load_steps=48 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=50 format=4 uid="uid://u3cc6pte4xly"]
 
+[ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://cwg1tvwktnnwf" path="res://src/water.gd" id="2_tlwt5"]
@@ -21,7 +22,7 @@
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
-[ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
+[ext_resource type="Shader" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
 [ext_resource type="AudioStream" uid="uid://cgsdoor5octni" path="res://Music/main5.wav" id="28_jjr1n"]
@@ -140,7 +141,17 @@ shader_parameter/ring_color = Color(1, 0, 0, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_bo7i5"]
 material = SubResource("ShaderMaterial_mc2jv")
 
+[sub_resource type="Shortcut" id="Shortcut_bo7i5"]
+
 [node name="World" type="Node3D"]
+script = ExtResource("1_bo7i5")
+player_path = NodePath("RigidBody3D")
+end_camera_path = NodePath("Endscreen/EndCamera")
+end_ship_marker_path = NodePath("Endscreen/EndShipMarker")
+end_screen_ui_path = NodePath("Endscreen/EndScreenUI")
+coins_label_path = NodePath("Endscreen/EndScreenUI/Label")
+ui_path = NodePath("UI")
+minimap_path = NodePath("Minimap")
 
 [node name="Water" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_fj7yv")
@@ -382,7 +393,7 @@ shape = SubResource("ConcavePolygonShape3D_mc2jv")
 transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 1.9687147, 43.77764)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029472351, 0.13349533, -0.13118744)
+transform = Transform3D(0.9999993, 0.00047018714, 0.0011124103, -0.00047161293, 0.99999917, 0.0012597489, -0.0011118066, -0.0012602819, 0.99999857, -0.029472351, 0.13349533, -0.13118744)
 navigation_mesh = SubResource("NavigationMesh_2o6r5")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
@@ -478,9 +489,9 @@ script = ExtResource("12_mc2jv")
 [node name="GoldLabel" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 968.0
-offset_top = 219.0
+offset_top = 235.0
 offset_right = 1092.0
-offset_bottom = 264.0
+offset_bottom = 280.0
 theme_override_fonts/font = ExtResource("12_wjb0r")
 theme_override_font_sizes/font_size = 25
 text = "24"
@@ -489,9 +500,9 @@ vertical_alignment = 1
 [node name="TextureRect2" type="TextureRect" parent="UI"]
 layout_mode = 0
 offset_left = 930.0
-offset_top = 224.0
+offset_top = 240.0
 offset_right = 962.0
-offset_bottom = 256.0
+offset_bottom = 272.0
 texture = ExtResource("13_mc2jv")
 expand_mode = 1
 
@@ -499,12 +510,50 @@ expand_mode = 1
 custom_minimum_size = Vector2(250, 50)
 layout_mode = 1
 offset_left = 8.0
-offset_top = 6.0
-offset_right = 258.0
-offset_bottom = 56.0
+offset_top = 12.0
+offset_right = 896.0
+offset_bottom = 62.0
+theme_override_fonts/normal_font = ExtResource("12_wjb0r")
 text = "Time remaining:"
 
+[node name="Endscreen" type="Node" parent="."]
+
+[node name="EndCamera" type="Camera3D" parent="Endscreen"]
+transform = Transform3D(-0.18307635, 0, -0.98309875, 0, 1, 0, 0.98309875, 0, -0.18307635, -123.708145, 9.559604, 24.63946)
+cull_mask = 1048573
+
+[node name="EndShipMarker" type="Node3D" parent="Endscreen"]
+transform = Transform3D(-0.58569354, 0, -0.81053257, 0, 1, 0, 0.81053257, 0, -0.58569354, -56.034866, 0, 54.094635)
+
+[node name="EndScreenUI" type="CanvasLayer" parent="Endscreen"]
+
+[node name="Label" type="Label" parent="Endscreen/EndScreenUI"]
+offset_left = 1.0
+offset_top = -117.0
+offset_right = 1153.0
+offset_bottom = 534.0
+theme_override_colors/font_color = Color(0.25621673, 0.15228325, 0.0723703, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.827451)
+theme_override_fonts/font = ExtResource("12_wjb0r")
+theme_override_font_sizes/font_size = 60
+text = "Test Label"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Endscreen/EndScreenUI"]
+offset_left = 308.0
+offset_top = 463.0
+offset_right = 881.0
+offset_bottom = 614.0
+theme_override_colors/font_color = Color(0.25490198, 0.15294118, 0.07058824, 1)
+theme_override_colors/font_hover_color = Color(0.5041458, 0.3228372, 0.17718664, 1)
+theme_override_fonts/font = ExtResource("12_wjb0r")
+theme_override_font_sizes/font_size = 60
+shortcut = SubResource("Shortcut_bo7i5")
+text = "Restart"
+
 [connection signal="area_entered" from="RigidBody3D/TreasureCollectArea" to="RigidBody3D/TreasureCollectArea" method="_on_area_entered"]
+[connection signal="pressed" from="Endscreen/EndScreenUI/Button" to="." method="_on_button_pressed"]
 
 [editable path="RigidBody3D/SchiffExport"]
 [editable path="terrain_collapsed"]
