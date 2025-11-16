@@ -23,6 +23,7 @@ uniform vec3 uv2_offset;
 
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
+	VERTEX *= vec3(1.0,2.0 * sin(TIME),1.0);
 }
 
 void fragment() {
