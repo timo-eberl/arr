@@ -40,3 +40,5 @@ func show_end_screen() -> void:
 
 func _on_button_pressed() -> void:
 	get_tree().reload_current_scene()
+	GameState.gold = 0
+	#DynamicMusic.update(get_node("CollectedTreasure"), get_node("MusicPlayer"))
