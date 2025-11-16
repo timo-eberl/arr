@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=54 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://bvlgypxs3oh2r" path="res://treasure/fluff_plank.tscn" id="12_bo7i5"]
-[ext_resource type="Script" path="res://ui.gd" id="12_mc2jv"]
+[ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://bkx2w30nwns7f" path="res://treasure/fluff_barrel.tscn" id="13_4h6ng"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
@@ -45,13 +45,19 @@ friction = 0.0
 size = Vector3(3.2790527, 1.9439087, 10.192383)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wjb0r"]
-size = Vector3(3.2790527, 2.1187897, 3.6865234)
+size = Vector3(3.2790527, 2.2926712, 3.5200195)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k83mh"]
+size = Vector3(3.2790527, 2.4098854, 1.489624)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gbfbk"]
 size = Vector3(0.34899902, 2.470211, 10.192383)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ioo17"]
-size = Vector3(3.2790527, 1.2507362, 0.4580078)
+size = Vector3(3.2790527, 1.3852558, 0.4580078)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qktwf"]
+size = Vector3(3.2790527, 1.0842295, 0.4580078)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ioo17"]
 radius = 3.0
@@ -191,8 +197,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47195435, 0)
 shape = SubResource("BoxShape3D_pkg7o")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47997785, -3.25293)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5669186, -3.3361819)
 shape = SubResource("BoxShape3D_wjb0r")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8229337, -3.6818967)
+shape = SubResource("BoxShape3D_k83mh")
 
 [node name="CollisionShape3DRight" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4650269, 0.70690155, 0)
@@ -203,18 +213,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465, 0.828204, 0)
 shape = SubResource("BoxShape3D_gbfbk")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6845056, -2.3964844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7517654, -3.1601276)
 shape = SubResource("BoxShape3D_ioo17")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidBody3D/VaultArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6301899, 2.1922903)
-shape = SubResource("BoxShape3D_ioo17")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4796767, 2.1922903)
+shape = SubResource("BoxShape3D_qktwf")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="RigidBody3D"]
 remote_path = NodePath("../VaultArea")
 
 [node name="TreasureSpawn" type="Marker3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5741878, -2.0746303)
+transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0, 1.2381203, -1.4981371)
 
 [node name="TreasureCollectArea" type="Area3D" parent="RigidBody3D"]
 collision_layer = 0

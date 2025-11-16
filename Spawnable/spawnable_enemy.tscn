@@ -81,6 +81,31 @@ process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8142586, -0.50359154, -0.792068)
 visible = false
 
+[node name="CollectableGold31" parent="." instance=ExtResource("4_ap880")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8142586, -1.3686013, -2.213128)
+visible = false
+
+[node name="CollectableGold32" parent="." instance=ExtResource("4_ap880")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8142586, -1.3686013, 2.8070917)
+visible = false
+
+[node name="CollectableGold33" parent="." instance=ExtResource("4_ap880")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88287354, -1.3686013, -4.6714535)
+visible = false
+
+[node name="CollectableGold34" parent="." instance=ExtResource("4_ap880")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1091313, -1.3686013, 1.4930735)
+visible = false
+
+[node name="CollectableGold35" parent="." instance=ExtResource("4_ap880")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1091313, -1.3686013, 4.0476084)
+visible = false
+
 [node name="CollectableGold2" parent="." instance=ExtResource("4_ap880")]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90030646, -0.50359154, -0.792068)
