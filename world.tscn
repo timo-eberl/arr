@@ -13,14 +13,15 @@
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
-[ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
+[ext_resource type="Script" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
 [ext_resource type="Texture2D" uid="uid://bv52383ohr4ay" path="res://ui/coin.png" id="13_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://cmemsgqfrrv1d" path="res://Modelle/HausMitSteg.blend" id="21_bc84e"]
-[ext_resource type="Script" uid="uid://c8ia43uyjlwdj" path="res://treasure_deposit.gd" id="22_wukud"]
+[ext_resource type="Script" path="res://treasure_deposit.gd" id="22_wukud"]
 [ext_resource type="Script" uid="uid://bx2qth4na6e3y" path="res://enemy_spawner.gd" id="23_il2jm"]
 [ext_resource type="AudioStream" uid="uid://be8v5gjghsy0a" path="res://Music/main1.wav" id="24_o3ebs"]
 [ext_resource type="AudioStream" uid="uid://2fhyfejgphfj" path="res://Music/main2.wav" id="25_k83mh"]
+[ext_resource type="Shader" uid="uid://bvvcs8814p7er" path="res://shaders/DropZoneShader.gdshader" id="25_mc2jv"]
 [ext_resource type="AudioStream" uid="uid://b5mfgx2qks5mu" path="res://Music/main3.wav" id="26_qktwf"]
 [ext_resource type="AudioStream" uid="uid://mivbivf78fr8" path="res://Music/main4.wav" id="27_bh8nc"]
 [ext_resource type="AudioStream" uid="uid://cgsdoor5octni" path="res://Music/main5.wav" id="28_jjr1n"]
@@ -125,14 +126,6 @@ stream_3/stream = ExtResource("27_bh8nc")
 stream_3/volume = -60.0
 stream_4/stream = ExtResource("28_jjr1n")
 stream_4/volume = -60.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_il2jm"]
-albedo_color = Color(0, 0, 0, 1)
-emission_enabled = true
-emission = Color(0.029399972, 0.53638667, 0.98, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_wjb0r"]
-material = SubResource("StandardMaterial3D_il2jm")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wjb0r"]
 radius = 0.822
@@ -313,6 +306,10 @@ offset_bottom = 256.0
 texture = ExtResource("13_mc2jv")
 expand_mode = 1
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Minimap"]
+layout_mode = 2
+text = "Zeit verbleibend: "
+
 [node name="CollectedTreasure" type="Node3D" parent="."]
 
 [node name="Collectable" type="Node3D" parent="."]
@@ -403,6 +400,7 @@ shape = SubResource("ConcavePolygonShape3D_mc2jv")
 transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 1.9687147, 43.77764)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029472351, 0.13349533, -0.13118744)
 navigation_mesh = SubResource("NavigationMesh_2o6r5")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
@@ -471,7 +469,6 @@ autoplay = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069, 26.875145)
 layers = 2
-mesh = SubResource("SphereMesh_wjb0r")
 
 [node name="TreasureDeposit" type="Area3D" parent="." node_paths=PackedStringArray("ship")]
 script = ExtResource("22_wukud")
