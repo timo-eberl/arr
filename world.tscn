@@ -362,28 +362,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.48
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8.715476, -9.536743e-07, 3.8125644)
 
 [node name="terrain_collapsed" parent="." instance=ExtResource("11_ic0uy")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -7.813917, 0)
-
-[node name="Plane" parent="terrain_collapsed" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.83144, 0)
-
-[node name="Plane_001" parent="terrain_collapsed" index="1"]
-visible = false
-
-[node name="SchiffGanz" parent="terrain_collapsed" index="2"]
-visible = false
-
-[node name="SchiffHinten" parent="terrain_collapsed" index="3"]
-visible = false
-
-[node name="SchiffMitte" parent="terrain_collapsed" index="4"]
-visible = false
-
-[node name="SchiffVorne" parent="terrain_collapsed" index="5"]
-visible = false
-
-[node name="Plane_002" parent="terrain_collapsed" index="6"]
-transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1071.3148, 14.342306, 13.6048765)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.450881, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="terrain_collapsed"]
 
@@ -396,7 +375,7 @@ transform = Transform3D(27.863186, 0, 0, 0, 27.863186, 0, 0, 0, 27.863186, 1071.
 shape = SubResource("ConcavePolygonShape3D_mc2jv")
 
 [node name="HausMitSteg" parent="." instance=ExtResource("21_bc84e")]
-transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -106.39843, 1.9687147, 43.77764)
+transform = Transform3D(-0.592182, 0, 0.80580425, 0, 1, 0, -0.80580425, 0, -0.592182, -109.38057, 1.8187356, 37.182198)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029472351, 0.13349533, -0.13118744)
@@ -470,7 +449,7 @@ transform = Transform3D(22.57, 0, 0, 0, 0.376, 0, 0, 0, 22.57, -78.8757, 10.069,
 layers = 2
 
 [node name="TreasureDeposit" type="Area3D" parent="." node_paths=PackedStringArray("ship")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.44942, 0, 31.768154)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.43156, -0.14997911, 25.172712)
 script = ExtResource("22_wukud")
 ship = NodePath("../RigidBody3D")
 
