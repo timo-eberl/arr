@@ -40,6 +40,11 @@ func show_end_screen() -> void:
 	$TreasureDeposit/MeshInstance3D2.visible = false
 
 func _on_button_pressed() -> void:
+	# necessary for immediate dynamic score update
+	var treasure: Node3D = get_node("CollectedTreasure")
+	for n in treasure.get_children():
+		treasure.remove_child(n)
+		n.queue_free()
 	get_tree().reload_current_scene()
 	GameState.gold = 0
-	#DynamicMusic.update(get_node("CollectedTreasure"), get_node("MusicPlayer"))
+	DynamicMusic.update(treasure, get_node("MusicPlayer"))
