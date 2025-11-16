@@ -230,17 +230,19 @@ func ball_enter(pos : Vector3, vel: Vector3):
 	
 	if health <= 0.0:
 		sink()
-		self.apply_impulse(vel * 0.005, pos)
+		self.apply_impulse(vel * 0.003, pos)
 
 func ball_exit(_pos : Vector3, _vel: Vector3):
 	pass
 
 func sink():
 	self.gravity_scale = 0.3
+	self.apply_central_impulse(Vector3(0,-0.2,0))
 	axis_lock_linear_y = false
+	self.linear_damp = 1.5
 	is_sinking = true
 	collision_mask = 0
 	collision_layer = 0
 	$Pfeil.visible = false
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(10).timeout
 	queue_free()
