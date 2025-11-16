@@ -14,6 +14,7 @@ extends Node3D
 @onready var left_muzzle: Marker3D = $Kanone2/MuzzleKanone2
 @onready var right_muzzle: Marker3D = $Kanone1/MuzzleKanone1
 
+var arrow_visible := true
 var cannon_sounds = ["res://Sounds/cannon1.wav", "res://Sounds/cannon2.wav", "res://Sounds/cannon3.wav", "res://Sounds/cannon4.wav"]
 
 var _cooldown_left: float = 0.0
@@ -27,6 +28,39 @@ func _ready():
 	print("LEFT =", left_muzzle)
 	print("RIGHT =", right_muzzle)
 
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		arrow_visible = true
+
+func _process(delta: float) -> void:
+	$Kanone2/MuzzleKanone2/ZeigePfeil/Pfeil.visible = arrow_visible
+	$Kanone1/MuzzleKanone1/ZeigePfeil/Pfeil.visible = arrow_visible
+	
+	var muzzle: Marker3D
+	var left := not is_target_on_right_side()
+	if left:
+		muzzle = left_muzzle
+	else:
+		muzzle = right_muzzle
+	
+	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
+	var dir: Vector3 = -muzzle.global_transform.basis.z
+	dir.y = 0.0
+	dir = dir.normalized()
+
+	# 2) Leichten Up-Kick dazugeben
+	dir.y += shoot_up_amount
+	dir = dir.normalized()
+	
+	if left:
+		$Kanone2/MuzzleKanone2/ZeigePfeil.look_at($Kanone2/MuzzleKanone2/ZeigePfeil.global_position + dir)
+		$Kanone1/MuzzleKanone1/ZeigePfeil.visible = false
+		$Kanone2/MuzzleKanone2/ZeigePfeil.visible = true
+	else:
+		$Kanone1/MuzzleKanone1/ZeigePfeil.look_at($Kanone1/MuzzleKanone1/ZeigePfeil.global_position + dir)
+		$Kanone1/MuzzleKanone1/ZeigePfeil.visible = true
+		$Kanone2/MuzzleKanone2/ZeigePfeil.visible = false
 
 func _physics_process(delta: float) -> void:
 	# Schiffsgeschwindigkeit aus Positionsänderung berechnen
@@ -42,12 +76,15 @@ func _physics_process(delta: float) -> void:
 		_cooldown_right -= delta
 		
 	if Input.is_action_just_pressed("shoot"):
+		arrow_visible = true
 		fire(not is_target_on_right_side())
 
 	if Input.is_action_pressed("left_shoot"):
 		fire(true)
+		arrow_visible = false
 	if Input.is_action_pressed("right_shoot"):
 		fire(false)
+		arrow_visible = false
 
 func fire(left : bool) -> void:
 	var muzzle: Marker3D
@@ -66,9 +103,9 @@ func fire(left : bool) -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	if left:
-		$"..".SetKippen(-.25)
-	else:
 		$"..".SetKippen(.25)
+	else:
+		$"..".SetKippen(-.25)
 	
 	# 1) Basis-Richtung aus Mündung, aber erstmal flach (parallel zum Boden)
 	var dir: Vector3 = -muzzle.global_transform.basis.z

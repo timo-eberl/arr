@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=63 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Script" uid="uid://b7im6xmr7qcq7" path="res://world.gd" id="1_bo7i5"]
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c2m8v11boo7pp" path="res://cannon_ball.tscn" id="5_gbfbk"]
 [ext_resource type="Script" uid="uid://ddggw27hmojr2" path="res://src/treasure_collect.gd" id="5_wse8f"]
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
+[ext_resource type="PackedScene" uid="uid://disitxj3vvow7" path="res://Modelle/ZeigePfeil.blend" id="8_qktwf"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
@@ -40,6 +41,11 @@ size = Vector3(300, 1, 300)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bc84e"]
 friction = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qktwf"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(3.6098064e-07, 0.36732548, 0.29901776, 0.60784316)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pkg7o"]
 size = Vector3(3.2790527, 1.9439087, 10.192383)
@@ -224,13 +230,32 @@ cam_dist_fast = 60
 transform = Transform3D(1.7887322e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, 1.7887322e-09, 0, -0.6208427, 0)
 script = ExtResource("4_dwbse")
 bullet_scene = ExtResource("5_gbfbk")
+bullet_speed = null
+fire_rate = null
+ray_length = null
+collision_mask = null
 camera_path = NodePath("../../CameraLookAt/Camera3D")
+shoot_up_amount = null
 
 [node name="MuzzleKanone2" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone2" index="0"]
 transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.9999999, -4.3711385e-08, 0, 4.8739967, 2.1304919e-07)
 
+[node name="ZeigePfeil" parent="RigidBody3D/SchiffExport/Kanone2/MuzzleKanone2" instance=ExtResource("8_qktwf")]
+transform = Transform3D(0.5030457, 2.842171e-14, 8.526513e-14, -1.4210855e-13, 0.25222176, -1.4917809e-15, -5.684342e-14, -3.4871737e-15, 1.0024383, -4.8428757e-07, -0.07598317, 0.19223022)
+
+[node name="Pfeil" parent="RigidBody3D/SchiffExport/Kanone2/MuzzleKanone2/ZeigePfeil" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.9726463, 0.23229116, 0, -0.23229116, 0.9726463, 0, 0, -0.5226131)
+material_override = SubResource("StandardMaterial3D_qktwf")
+
 [node name="MuzzleKanone1" type="Marker3D" parent="RigidBody3D/SchiffExport/Kanone1" index="0"]
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.9999999, 4.371139e-08, -1.8654103e-14, 4.8815203, -2.1337806e-07)
+
+[node name="ZeigePfeil" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1" instance=ExtResource("8_qktwf")]
+transform = Transform3D(0.5030457, 2.842171e-14, 8.526513e-14, -1.4210855e-13, 0.25222176, -1.4917809e-15, -5.684342e-14, -3.4871737e-15, 1.0024383, -4.8428757e-07, -0.07598317, 0.19223022)
+
+[node name="Pfeil" parent="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1/ZeigePfeil" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.9727759, -0.2317479, 0, 0.2317479, 0.9727759, 0, 0, -0.5226131)
+material_override = SubResource("StandardMaterial3D_qktwf")
 
 [node name="VaultArea" type="AnimatableBody3D" parent="RigidBody3D"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -643,4 +668,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -5.45, 0)
 [connection signal="pressed" from="Endscreen/EndScreenUI/Button" to="." method="_on_button_pressed"]
 
 [editable path="RigidBody3D/SchiffExport"]
+[editable path="RigidBody3D/SchiffExport/Kanone2/MuzzleKanone2/ZeigePfeil"]
+[editable path="RigidBody3D/SchiffExport/Kanone1/MuzzleKanone1/ZeigePfeil"]
 [editable path="terrain_collapsed"]
