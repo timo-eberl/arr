@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://u3cc6pte4xly"]
+[gd_scene load_steps=46 format=4 uid="uid://u3cc6pte4xly"]
 
 [ext_resource type="Material" uid="uid://crg4khkalappj" path="res://materials/water.tres" id="1_fj7yv"]
 [ext_resource type="Script" uid="uid://bidftchqww0ab" path="res://src/ship.gd" id="2_fj7yv"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://bhmhxoof5q1v6" path="res://src/foam_spawner.gd" id="8_2o6r5"]
 [ext_resource type="PackedScene" uid="uid://crhavc22gfhgg" path="res://Spawnable/spawnable_enemy.tscn" id="9_70uel"]
 [ext_resource type="PackedScene" uid="uid://dkf8kdtpn8bst" path="res://treasure/collectable_gold.tscn" id="9_ioo17"]
-[ext_resource type="Script" uid="uid://cmd6x78ft1juo" path="res://src/start_anim_player.gd" id="9_wukud"]
 [ext_resource type="PackedScene" uid="uid://dgcc31c8yga13" path="res://Modelle/terrain_collapsed.blend" id="11_ic0uy"]
 [ext_resource type="Script" uid="uid://bpikbpn72utvq" path="res://ui.gd" id="12_mc2jv"]
 [ext_resource type="FontFile" uid="uid://bw7qwux6yl46p" path="res://fonts/TheRumIsGone-Wy1nG.ttf" id="12_wjb0r"]
@@ -29,6 +28,7 @@
 [sub_resource type="PlaneMesh" id="PlaneMesh_f3sb7"]
 size = Vector2(500, 500)
 subdivide_width = 256
+subdivide_depth = 256
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dwbse"]
 size = Vector3(300, 1, 300)
